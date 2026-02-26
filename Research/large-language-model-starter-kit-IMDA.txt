@@ -1,0 +1,628 @@
+Starter Kit for Testing 
+LLM-Based Applications 
+for Safety and Reliability
+Building a Trusted, Secure and Reliable AI Ecosystem
+Version 1.0
+January 2026
+This Starter Kit is a set of voluntary guidelines that consolidates emerging best practices and 
+methodologies for testing LLM-based applications for safety and reliability.
+In developing the Starter Kit, IMDA tapped on the experience of practitioners to ensure that 
+the guidance is practical and useful. The Global AI Assurance Pilot , launched by AI Verify 
+Foundation and IMDA, provided a rich source of insights based on real-world testing conducted 
+by over 30 companies across a diverse range of sectors. We also conducted a public consultation 
+with feedback from more than 60 companies, ran workshops with industry, and worked closely 
+with AI experts from the Cyber Security Agency of Singapore (CSA) and the Government 
+Technology Agency of Singapore (GovTech). These are further supplemented by a review of 
+the latest research on testing methodologies. 
+With the launch of version 1.0, we take a first step towards codifying standards for AI testing 
+and assurance, and contribute to the growth of a trusted AI ecosystem.
+
+Executive Summary
+Part 1: Introduction
+1.1 Objectives and Scope
+1.1.1 What Does the Starter Kit Do
+1.1.2 Who is the Starter Kit For
+1.1.3 When to Use the Starter Kit
+1.1.4 How to Read the Starter Kit Alongside Other Frameworks
+1.2 Baseline Safety and Reliability
+1.2.1 What is Baseline Safety and Reliability
+1.2.2 What are Core Benchmarks
+1.3 Structured Approach to LLM App Testing
+1.3.1 How to Ensure that the Tests are Rigorous and Trusted
+1.3.2 What is Output Testing
+1.3.3 What is Component Testing
+1.3.4 Ensuring Robustness and Consistency of Results
+Part 2: Foundational Concepts
+2.1 Benchmarks
+2.1.1 What is a Benchmark
+2.1.2	 What	Makes	a	“Good”	Test	Dataset
+2.1.3 What Makes a “Good” Metric
+2.1.4 What Makes a “Good” Evaluator
+2.2 Red Teaming
+2.2.1 What is Red Teaming
+2.2.2 What is "Good" Red Teaming
+2.2.3 What is Automated Red Teaming
+06
+08
+09
+09
+09
+10
+10
+11
+11
+11
+13
+13
+13
+13
+15
+16
+17
+17
+19
+21
+22
+24
+24
+25
+27
+Table of Contents
+Part 3: Structured Testing Approach
+STEP 1: IDENTIFY RELEVANT RISKS AND SET THRESHOLDS
+3.1.1 Understanding Key Risks
+3.1.2 Identifying Relevant Risks
+3.1.3 Calibrating the Extent of Testing
+3.1.4 Setting the Thresholds
+STEP 2: TEST FOR THE RELEVANT RISKS
+Hallucination and Inaccuracy
+3.2.1 Output Testing: Domain-specific Knowledge
+3.2.2 Output Testing: Out-of-Domain Topics
+3.2.3 Component Testing: Testing Retrieval-Augmented Generation
+Bias in Decision Making
+3.3.1 Output Testing: Parity Testing
+3.3.2 Output Testing: Perturbation Testing
+3.3.3 Component Testing: Model and Other App Components
+Undesirable Content
+3.4.1 Output Testing: Types of Undesirable Content and Ease of Elicitation
+3.4.2 Output Testing: Helpfulness of Responses
+3.4.3 Component Testing: Input and Output Filters
+Data Leakage
+3.5.1 Output Testing: Types of Sensitive Data and Ease of Elicitation
+3.5.2 Output Testing: Helpfulness of Responses
+3.5.3 Component Testing: System Prompt
+Vulnerability to Adversarial Prompts
+3.6.1 Output Testing: Direct Prompt Attacks
+3.6.2 Output Testing: Indirect Prompt Injections
+3.6.3 Component Testing: Input Filters
+STEP 3: ANALYSE RESULTS
+3.7.1 Determining Whether Baseline Safety and Reliability Have Been Achieved
+3.7.2 Analyse and Interpret Results
+3.7.3 Continuous Monitoring and Re-testing
+28
+30
+30
+31
+34
+34
+37
+37
+38
+45
+47
+52
+54
+59
+60
+62
+65
+68
+69
+73
+76
+77
+78
+82
+84
+90
+91
+94
+94
+94
+96
+
+Part 4: Future Work and Resources
+4.1 Future Work
+4.2 Testing Tools and Platforms
+4.3 Other Responsible AI Resources
+4.4 Acknowledgements
+4.5 References
+97
+98
+98
+99
+103
+105
+
+Starter	Kit	for	Testing	LLM-Based	Applications	for	Safety	and	Reliability
+Executive Summary06
+Executive Summary
+Testing and assurance play a critical role in a trusted artificial intelligence (AI) ecosystem. While AI companies 
+generally conduct testing to demonstrate compliance with regulations, more are beginning to see it as a useful 
+mechanism	to	provide	transparency	and	build	greater	trust	with	end	users.	Discussions	on	Generative	AI	(Gen	
+AI)	evaluations	have	typically	focused	on	the	testing	of	large	language	models	(LLMs).	However,	there	is	now	
+a	growing	recognition	that	it	is	equally	important	to	test	LLM-based	applications	(LLM	apps)	as	they	have	the	
+most direct impact on citizens. 
+What is the Starter Kit?
+The Starter Kit is a set of voluntary guidelines that consolidates emerging best practices and methodologies to 
+test LLM apps for baseline safety and reliability. It focuses on five key risks—(i) hallucination and inaccuracy, 
+(ii) bias in decision making, (iii) undesirable content, (iv) data leakage, and (v) vulnerability to adversarial prompts. 
+Addressing	these	risks	helps	assuage	many	common	concerns	about	today’s	apps	and	enhances	overall	
+trustworthiness in the AI ecosystem. 
+The Starter Kit includes the following: 
+While there are no straightforward answers, the guidelines offer a perspective for the global community to 
+collectively iterate, which represents the first step in codifying standards for AI testing and assurance. The 
+recommended testing methodologies will be progressively made available on Project Moonshot, an open-source 
+testing toolkit by the AI Verify Foundation. This allows developers to conveniently access and execute the tests 
+set out in the Starter Kit.
+Foundational Concepts
+It seeks to set out what “good” looks like for benchmark tests and red teaming, which are common 
+approaches to evaluate LLM apps today. Well-designed tests are foundational to trusted AI assurance. 
+Otherwise, assurance claims will lack credibility.
+Structured Testing Approach
+By setting out a practical and structured approach to pre-deployment testing—from app outputs to app 
+components—it seeks to provide a consistent and rigorous approach for LLM app testing to ascertain if 
+the app has achieved baseline safety and reliability before going live. Besides setting out methodologies 
+to test for the five risks, this section also provides guidance to common questions that may arise during 
+the testing process, such as how to determine what scores are good enough and how much testing is 
+required for different contexts.
+Starter	Kit	for	Testing	LLM-Based	Applications	for	Safety	and	Reliability
+Executive Summary07
+Future Work
+As AI testing matures, newer and better testing methodologies are being developed. Increasingly capable 
+systems, such as agentic AI and multimodal AI are also entering the market daily, which bring new concerns. In 
+addition, there remain gaps in the app testing ecosystem that need to be collectively addressed, including the 
+need for more context-specific benchmarks and leaderboards to help developers draw meaningful insights 
+from their results. 
+Amid these advancements, we adopt an iterative approach, and will refine and expand the Starter Kit in stages. 
+This will ensure that the guidance and tools remain relevant, practical, and aligned with the latest developments.
+Overview of the Starter Kit
+Hallucination 
+and 
+Inaccuracy
+Tendency to produce 
+incorrect or fabricated 
+output with respect to 
+universal facts or specific 
+sources like company policies
+ › Domain-specific Knowledge – 
+Accuracy and grounding in  
+its domain 
+ › Handling of Out-of-Domain 
+Topics – Responds suitably, does 
+not fabricate
+ › Retrieval-Augmented 
+Generation
+Bias in 
+Decision 
+Making
+Tendency to produce 
+recommendations 
+or decisions that are 
+systematically unfair to 
+certain groups  
+or organisations
+ › Parity Testing – Statistical 
+comparison across groups
+ › Perturbation Testing – 
+Counterfactual checks by 
+changing selected attributes
+ › Model, System 
+Prompt
+ › Input Filters
+Undesirable 
+Content
+Tendency to produce content 
+that is socially harmful (e.g. 
+toxic, hateful, stereotypical), 
+legally prohibited or  
+policy-violating
+ › Type of Content – What type of 
+undesirable content is produced 
+and how frequently
+ › Ease of Elicitation – How easy is it 
+to elicit such content
+ › Helpfulness – Whether the app is 
+over-conservative 
+ › Input and Output 
+Filters
+ › System Prompt
+Data Leakage
+Tendency to leak sensitive 
+information that may 
+harm individuals  
+or organisations 
+ › Type of Data – What type of 
+sensitive data is leaked and  
+how frequently
+ › Ease of Elicitation – How easy is it 
+to elicit sensitive data
+ › Helpfulness – Whether the app is 
+over-conservative 
+ › Input and Output 
+Filters
+ › System Prompt
+Vulnerability 
+to Adversarial 
+Prompts
+Susceptibility to producing 
+unsafe output when 
+presented with prompt 
+attacks, which attempt to 
+override the app’s  
+safety mechanisms
+ › Direct Prompt Injections – Level 
+of resistance to such attacks
+ › Indirect Prompt Injections – Level 
+of resistance to such attacks
+ › Input and Output 
+Filters
+ › System Prompt
+Component Testing 
+Diagnose execution 
+pathways
+Output Testing 
+Whether end-to-end app  
+output meets expectations
+Risks
+Objectives and Scope
+Baseline Safety and Reliability
+Structured Approach to LLM App Testing
+Part 1
+Introduction
+
+Part 1: Introduction09 Starter	Kit	for	Testing	LLM-Based	Applications	for	Safety	and	Reliability
+Part 1: Introduction To The Starter Kit
+1.1 Objectives and Scope
+1.1.1 What Does the Starter Kit Do
+The Starter Kit is a set of voluntary guidelines to help you test your LLM app1 for baseline safety and reliability. 
+It consolidates emerging best practices and methodologies to test LLM apps to help you navigate this rapidly 
+evolving space. Through testing, organisations can provide transparency on app safety and build greater trust 
+with end users.
+This can be done in three key steps:
+By addressing five key risks, the Starter Kit seeks to enhance overall trustworthiness in the AI ecosystem and 
+assuage	many	common	concerns	in	today’s	apps,	such	as:
+1. Hallucination and Inaccuracy
+2. Bias in Decision Making
+3. Undesirable Content
+4. Data Leakage
+5. Vulnerability to Adversarial Prompts
+The Starter Kit consolidates emerging best practices and methodologies, providing greater consistency in LLM 
+app testing. It aims to codify standards and contribute to the growth of the AI testing and assurance ecosystem.
+1.1.2 Who is the Starter Kit For 
+Here are some personas and stakeholder groups that may benefit from the Starter Kit: 
+ › Developers, testing teams and third-party testers, who can use this guide to identify risks relevant to LLM 
+apps, test for them, and validate whether the app is safe and reliable. This ensures that testing is conducted 
+in a structured and rigorous manner that is consistent with industry best practices.
+ › Compliance and responsible AI professionals, who can use this guide to understand key testing-related 
+concepts	and	to	build	a	clearer	sense	of	what	“good”	looks	like.	For	example,	it	answers	questions	such	as,	
+“How do you assess whether sufficient testing has been conducted, or whether the test results are good 
+enough?”	While	there	are	no	straightforward	answers,	the	guidance	brings	together	diverse	perspectives	
+from AI experts for the global community to collectively iterate on.
+Identify
+Determine the relevant risks to 
+test for your app, calibrate the 
+extent of testing required, and 
+define thresholds for baseline 
+safety and reliability.
+1
+Test
+Run tests in a structured 
+manner,	from	the	app’s	
+outputs to its components.
+2
+Assess
+Analyse the results to 
+determine whether baseline 
+safety and reliability have 
+been achieved, and decide on 
+mitigations and next steps.
+3
+1 These are apps	or	“A I	sys tems” that leverage the capabilities of LLMs to perform text-based generative tasks. They include question-answering systems, 
+summarisation	tools,	and	general	content	generation	use	cases	such	as	marketing	copywriting	assistants.	Throughout	this	document,	“apps”	refers	to	
+LLM apps, unless otherwise noted.
+Part 1: Introduction10 Starter	Kit	for	Testing	LLM-Based	Applications	for	Safety	and	Reliability
+1.1.3 When to Use the Starter Kit
+The Starter Kit primarily focuses on the pre-deployment testing phase in the Software Development Life Cycle 
+[1].	At	this	stage,	the	app	has	been	developed,	and	key	components	(including	guardrails	or	safeguards)	have	
+been incorporated. The objective is to ensure that the app functions as intended, and meets baseline safety 
+and reliability requirements prior to being deployed and used by end users. 
+1.1.4 How to Read the Starter Kit Alongside Other Frameworks 
+Since 2018, IMDA has continually updated and released new AI governance frameworks to support responsible 
+AI development and deployment by the industry. 
+ › In 2024, we issued the Model AI Governance Framework (MGF) for Gen AI, which expands on the 2020 
+MGF, to set out a comprehensive approach across nine dimensions3 to build a trusted AI ecosystem with 
+the advent of Gen AI. The Starter Kit is a technical document that expands on the dimension of “Testing  
+and	Assurance”.
+ › The Starter Kit also supports the implementation of the AI Verify Testing Framework, which is a process 
+checklist for organisations based on 11 globally recognised AI governance principles. It outlines how to 
+practically implement outcomes such as Outcome 4.1, which recommends that organisations “carry out 
+regular	tests	to	evaluate	for	safety	and	possible	harms”,	and	Outcome	7 .2	which	recommends	testing	for	
+potential biases.
+In a similar vein, this Starter Kit sets out detailed guidance that is aligned with international frameworks, including:
+ › The US National Institute of Standards and Technology (NIST) AI Risk Management Framework (AI RMF) 
+and its Gen AI Profile, particularly in MEASURE Function 1 and 2.
+ › The International Organisation for Standardisation/International Electrotechnical Commission (ISO/
+IEC) 42001 on AI Management Systems, particularly Reference Controls A.6.
+ › The Expanded ASEAN4 Guide on AI Governance and Ethics, particularly in providing the foundation for 
+recommendations on developing regionally applicable benchmarks and testing tools in Section 3.5 on 
+“Testing	and	Assurance”.
+ › Representation of a typical SDLC lifecycle. The Starter Kit focuses on pre-deployment testing2.
+Planning and 
+Requirement 
+Gathering
+Define project 
+scope and collect 
+stakeholder 
+requirements
+System
+Design
+Create high-level 
+architecture 
+and design 
+specifications
+Development
+Build the 
+application 
+(coding and 
+implementation)
+Testing
+Verify the 
+performance and 
+safety to ensure 
+the app functions 
+as intended
+Deployment
+Release the 
+application to 
+end users or the 
+production 
+environment
+Maintenance 
+and Support
+Provide ongoing 
+monitoring, 
+updates, and 
+issue resolution 
+Note that the safety and reliability testing described in this document is intended to complement, and not replace 
+standard performance testing, including unit, integration, and system testing. 
+2 While the primary focus is pre-deployment testing, the considerations in this guide can help you think ahead on how to build safety into the earlier stages 
+of development. Further, post deployment monitoring remains essential to ensure that the app continues to meet your requirements.
+3 The nine dimensions are accountability, data, trusted development and deployment, incident reporting, testing and assurance, security, content 
+provenance, safety and alignment R&D, and AI for Public Good.
+4 The Association of Southeast Asian Nations.
+Software Development Life Cycle (SDLC)
+Part 1: Introduction11 Starter	Kit	for	Testing	LLM-Based	Applications	for	Safety	and	Reliability
+1.2 Baseline Safety and Reliability
+1.2.1 What is Baseline Safety and Reliability
+A key objective of pre-deployment testing is to ensure that the LLM app has achieved baseline safety and 
+reliability before it goes into production. 
+To reiterate, we set out a three-step approach for testing:
+1. Identify: Determine the relevant risks to test for your app, calibrate the extent of testing required, and define 
+thresholds for baseline safety and reliability.
+2. Test: Run	tests	in	a	structured	manner,	from	the	app’s	outputs	to	its	components.
+3. Assess: Analyse results and determine whether your safety thresholds (i.e. baseline safety and reliability) 
+have been met, to inform mitigations and next steps.
+Baseline safety and reliability is achieved when test results demonstrate that the app meets safety 
+thresholds (akin to the passing mark), as described in Step 1. Section 3.1.4 includes guidance on how to set  
+reasonable thresholds. 
+Can a universal baseline apply to all apps? 
+The simple answer is no. App testing is highly context-specific. For example, the level of accuracy demanded of 
+a medical diagnosis app will differ from that of a general customer enquiry app. Ultimately, each organisation 
+must determine its own safety threshold or baseline. 
+1.2.2 What are Core Benchmarks?
+Organisations do not always need to design tests from scratch, especially if their specific context is not 
+uncommon. They can consider leveraging publicly available benchmarks, which will not only reduce the effort 
+required for testing, but also provide a common reference point for comparison with other similar apps. This, 
+however, is provided that the public benchmark is representative of their specific context and is well designed. 
+As public benchmarks vary in quality, IMDA has curated a non-exhaustive list of core benchmarks for some 
+commonly encountered contexts, which organisations may consider for their testing purposes. 
+ › If these contexts apply to you, you can consider using the recommended benchmarks for testing. 
+ › If not, the Starter Kit offers guidance on how to design customised tests for your specific contexts in a 
+structured manner that is consistent with industry best practices. 
+While these benchmarks are generally curated for their thoughtful design, there may still be limitations given 
+that the science of AI testing is still evolving. You may refer to the risk-specific sections for more details on the 
+selected benchmarks. 
+Further, as benchmarks are constantly being improved on, it would be useful to check for the latest version, or 
+whether newer and better benchmarks have been released after January 2026.
+Part 1: Introduction12 Starter	Kit	for	Testing	LLM-Based	Applications	for	Safety	and	Reliability
+Risk Specific Context Benchmark Status
+Hallucination 
+and 
+Inaccuracy
+Knowledge of  
+Singapore’s  
+general facts
+ › Singapore Factuality 
+Benchmark
+In development by IMDA 
+(Available	in	Moonshot	by	
+2026)
+Knowledge of  
+Singapore’s law
+ › Singapore Legal 
+Benchmark
+In development by IMDA 
+(Available	in	Moonshot	by	
+2026)
+Knowledge of  
+ASEAN general facts
+ › ASEAN Factuality 
+Benchmark
+In development by IMDA 
+(Available	in	Moonshot	
+progressively	from	2026)
+Bias in 
+Decision 
+Making
+Not Applicable. Testing for bias in decision making is highly context-dependent. Each use case 
+would have its own definition of fairness, a set of characteristics that should inform decisions, 
+and ground truth references for acceptable outcomes, based on what the organisation needs 
+to prioritise.
+Undesirable 
+Content
+Socially harmful or  
+legally prohibited in 
+Western context
+ › MLCommons 
+AIluminate Safety 
+Benchmark v1.0	[2]
+Available in Moonshot
+Socially harmful or  
+legally prohibited in 
+Singapore’s context
+ › Singapore Undesirable 
+Content Benchmark5
+In development by IMDA 
+(Available	in	Moonshot	by	
+2026)	
+Socially harmful or  
+legally prohibited in 
+ASEAN’s context
+ › ASEAN Undesirable 
+Content Benchmark
+In development by IMDA 
+(Available	in	Moonshot	
+progressively	from	2026)	
+Data Leakage Not Applicable. Testing for data leakage is highly context-dependent. Data leakage is inherently 
+tied to the specific sensitive data types that your app can access (e.g. customer records, enterprise 
+documents, system prompts), which generic public benchmarks will not cover.
+However, there are public resources (e.g. academic benchmarks, off-the-shelf tools) on prompt 
+variations and detection patterns, which can help you design your own benchmarks, covered in 
+the risk-specific section.
+Vulnerability 
+to Adversarial 
+Prompts
+References6 for 
+prompt injections 
+with common attack 
+techniques and goals
+ › MLCommons 
+AIluminate Jailbreak 
+Benchmark v1.0	[3]
+In development7 by 
+MLCommons
+ › PINT Benchmark by 
+Lakera	[4]
+Available on request
+ › CyberSecEval 4 
+(Prompt	Injection)	by	
+Meta	(Purple	Llama)	[5]
+Available in Moonshot
+Indirect prompt 
+injections with 
+common attack 
+techniques and goals 
+ › BIPIA Benchmark by 
+Microsoft	[6]
+Available on GitHub
+5 While this core benchmark is in development, consider using RabakBench or SGHateCheck	for	undesirable	content	in	Singapore’s	context	(covered	in	
+the risk-specific section).
+6 While these benchmarks may not be directly applicable for plug-and-play app output testing, they can serve as useful reference points for attack 
+techniques and goals that may be adapted as needed.
+7 Version 0.5 results have been published (benchmark not released). Version 1.0 is expected in 2026, and release approach is to be confirmed by 
+MLCommons. 
+Part 1: Introduction13 Starter	Kit	for	Testing	LLM-Based	Applications	for	Safety	and	Reliability
+1.3 Structured Approach to LLM App Testing
+1.3.1 How to Ensure that the Tests are Rigorous and Trusted 
+For the test results to be credible, the underlying test methodology must be rigorous and well designed. In the 
+Starter Kit, we set out a systematic and comprehensive testing approach that includes both output testing to 
+assess overall app behaviour and safety, and component testing to examine the inner workings of the app, 
+particularly when output results are not up to expectations.  
+Common methods8 for testing LLM apps include benchmarking and red teaming9. Benchmarking provides a 
+standardised	way	to	assess	an	app’s	safety	against	known	reference	points,	while	red	teaming	dynamically	
+probes for blind spots, uncovers edge cases, and stress-tests weaknesses revealed by benchmarking. Refer 
+to Part	2:	Foundation	Concepts	to	understand	how	to	design	“good”	tests	using	these	methods.
+1.3.2 What is Output Testing
+Output testing treats the app like a black box and evaluates it as a whole to determine whether its overall 
+behaviour meets expectations. 
+When conducted at the pre-deployment stage (after all components and mitigations are in place), output 
+testing reflects how actual end users would interact with the app. This helps surface any unaddressed issues 
+before release.
+Findings from output testing may highlight specific strengths and weaknesses, and common sources of error. 
+For example, a chatbot may perform well in financial queries, but struggle with medical ones. These findings 
+can inform further investigation and mitigation, after which testing may be repeated to ensure that the required 
+thresholds are met. 
+1.3.3 What is Component Testing 
+Component testing entails testing inside the application pipeline. It helps verify that the app produces the correct 
+outputs through the intended pathways. 
+ › When output test results do not meet expectations, component testing can help with identifying failure 
+points for debugging and further mitigation.
+ › Even where output testing results appear satisfactory, component testing remains useful for uncovering 
+hidden issues, as correct outputs may mask faults within the application pipeline. For instance, an app 
+might produce the correct answer despite having retrieved irrelevant documents from search and retrieval 
+mechanisms	like	Retrieval-Augmented	Generation	(RAG).	
+Component testing helps to improve reliability and traceability and reduces the likelihood of unexpected failures 
+post deployment, especially in high-stakes use cases. 
+8 Pre-deployment testing may also include user testing, such as user simulation, pilots with early user groups, and A/B testing.
+9 Including both adversarial and non-adversarial testing.
+Part 1: Introduction14 Starter	Kit	for	Testing	LLM-Based	Applications	for	Safety	and	Reliability
+Testing Approaches
+App components may be tested in the following ways:
+ › Test the component in isolation (similar to unit testing): The component is tested independent of the rest 
+of the app. This approach is useful for checking for specific behaviours or failure modes.
+ › Evaluate the system with and without the component (similar to ablation testing): This entails removing 
+or	disabling	one	component	of	the	app	at	a	time	and	observing	how	the	app’s	performance	changes.	This	
+method helps to understand how the component impacts the system as a whole, and may reveal more 
+complex interactions.
+Common App Components
+The typical components to test for in an LLM app are shown below:
+INPUT
+OUTPUT
+Input Filter
+Screens and moderates user inputs for problematic or sensitive content (e.g. by removing or 
+anonymising content) before they reach the model.
+Output Filter
+Screens and moderates the model’s response before it is delivered to the user, helping to 
+detect and remove harmful, misleading, sensitive (e.g. personal identifiers) or inappropriate 
+content that may have been generated. In LLM-based agentic systems, this filter may also include a check 
+that	the	agent’s	tool	calls	are	safe	and	valid	before	they	are	executed.	
+System Prompt
+Sets the initial instructions or 
+guardrails for the model. This defines 
+the tone, style, and behavioural boundaries 
+for	the	model’s	response	(e.g.	“be	helpful	and	
+concise”,	“avoid	certain	topics”,	“do	not	reveal	 
+sensitive	information”).	
+External Knowledge Base
+Supplements	the	model’s	capabilities	
+by providing information from outside 
+sources, such as databases or websites 
+to improve the factuality and relevance  
+of outputs. 
+This is usually delivered through a RAG pipeline, 
+where a retrieval component obtains relevant 
+information from the knowledge base, and the 
+generation component (i.e. the LLM) uses this 
+information to generate its response.
+Model
+The underlying LLM, which typically 
+receives a system (developer) prompt, 
+user prompt, and sometimes an assistant prompt 
+to generate a response. Other App Components
+
+Part 1: Introduction15 Starter	Kit	for	Testing	LLM-Based	Applications	for	Safety	and	Reliability
+1.3.4 Ensuring Robustness and Consistency of Results
+When running safety tests, it is important for your results to be robust and consistent. 
+ › Robustness means verifying that the app behaves in a dependable way, even under varied or unexpected 
+inputs (e.g. differently worded prompts, adversarial phrasing, out-of-distribution queries, and perturbations 
+like spelling errors within the prompt). A robust test set captures a range of such variations so that your 
+results reflect how the app performs under real-world usage. Part 3 includes risk-specific guidance on 
+relevant perturbations (e.g. introducing noise like wrong spellings and obfuscations, changing protected 
+characteristics). 
+ › Consistency means checking that your evaluation results are stable across multiple runs under similar 
+conditions. Performing multiple runs, even on a subset10 of your evaluation dataset, can surface variability 
+in outcomes. If outcomes fluctuate significantly across runs, the evaluation may not be stable enough to 
+support confident conclusions. Section 3.7.2 covers details on analysing results and deriving confidence 
+intervals across runs, as well as guidance on what to do when results vary substantially. 
+10 This is provided that the samples are representative and well-sampled.

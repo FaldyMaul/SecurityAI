@@ -1,0 +1,784 @@
+ 
+ 
+` 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+CATALOGUING       
+LLM 
+EVALUATIONS 
+ 
+                          
+ 
+Draft for Discussion (October 2023) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 2 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Contents 
+ 
+ 
+Introduction 03 
+Part 1 – Taxonomy and Catalogue 05 
+Part 2 – Observations and Future Work 16 
+Part 3 – Recommended Baseline for LLM Evaluation 22 
+Conclusion 29 
+Annex A -  References 30 
+Annex B – Catalogue of Evaluation Frameworks, Benchmarks 
+and Papers 34 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 3 
+ 
+Introduction 
+ 
+ 
+1. In an earlier paper titled “Generative AI: Implications for Trust and Governance” 
+(“Discussion Paper”),1 we had set out key factors necessary for enabling a trusted 
+ecosystem for Generative AI innovation, including Large Language Models 
+(“LLMs”). These factors include: 
+ 
+a. Accountability amongst the parties in the Generative AI developer lifecycle;  
+b. Data use in the training of Generative AI models; 
+c. Model development and deployment, which includes the development of 
+evaluation framework and tools; 
+d. Independent third-party evaluation and assurance; 
+e. Safety and alignment research  to ensure that human capacity to control 
+increasingly powerful AI systems keeps pace; and 
+f. Using Generative AI to achieve Public Good. 
+ 
+2. Systematic and robust evaluation  of models is a critical component of LLM 
+governance and helps form the bedrock of trust in the use of these technologies. 
+Through rigorous evaluation, the capabilities of a model are revealed, which can 
+assist in determining its intended uses and potential limitations. Moreover, 
+evaluation provides a vital roadmap for developers to make improvements.  
+ 
+3. In advancing the sciences of LLM evaluations, it is important to first achieve : (i) a 
+common understanding of the current LLM evaluation through a 
+standardised taxonomy; and (ii) a baseline set of pre -deployment safety 
+evaluations for LLMs. A comprehensive taxonomy categorises and organizes the 
+diverse branches of LLM evaluations, provides a holistic view of LLM performance 
+and safety, and enable s the global community to identify gaps and priorities for 
+further research and development  in LLM evaluation. A baseline set of evaluations 
+defines a minimal level of LLM safety and trustworthiness before deployment . At 
+this early stage, the proposed base line in this paper puts forth a starting point for 
+global discussions with the objective of facilitating multi-stakeholder consensus on 
+safety standards for LLMs.   
+ 
+4. This paper comprises 3 parts: 
+ 
+a. In Part 1, we introduce a taxonomy of the LLM evaluation landscape, 
+comprising of five categories: (i) General Capabilities; (ii) Domain Specific 
+Capabilities; (iii) Safety and Trustworthiness; (iv) Extreme Risks; and (v) 
+Undesirable Use Cases. These categories were identified based on both a top-
+down view of what organisations seeking to develop or deploy an LLM or LLM-
+based application2 in a safe and responsible manner  would need to consider , 
+ 
+1 This Discussion Paper was jointly published by the Infocomm Media Development Authority of 
+Singapore and Aicadium in June 2023. See 
+https://aiverifyfoundation.sg/downloads/Discussion_Paper.pdf  
+ 
+2 The focus of this paper is on evaluation and testing approaches for LLMs, includin g those embedded 
+in applications, but not other application-specific testing measures. LLMs can serve as the foundational 
+backbones for various applications (e.g., ChatGPT) that, like any software, undergo testing before 
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 4 
+ 
+and a bottom-up scan of major research papers in LLM evaluation. We then set 
+out a catalogue that organizes the various evaluation and testing approaches 
+we came across based on these five categories.  
+ 
+b. In Part 2, we provide an analysis of the LLM evaluation landscape, highlighting 
+key areas for further development, such as the need for more context -specific 
+evaluations, frontier model evaluations and the need for standards and best 
+practices in LLM evaluations. We also suggest future work in evaluations to 
+support governance, such as eval uations for training data quality, LLM 
+interpretability and explainability, and environmental impact assessments. 
+ 
+c. In Part 3, we recommend a baseline set of evaluations comprising five 
+attributes that LLMs should minimally be tested on pre-deployment to ensure a 
+minimal level of safety and trustworthiness : (i) bias; (ii) factuality; (iii) toxicity 
+generation; (iv) robustness; and (v) data governance. 
+ 
+5. To remain relevant, the taxonomy and catalogue must be constantly updated as 
+the field matures and evolves. The baseline will also improve as new evaluation 
+benchmarks and methods are developed. Nonetheless, these provide a common 
+understanding and foundation for further dialogue and refinem ent in the wider 
+community.  
+ 
+Call for Community Contributions 
+ 
+6. This paper is the first version of our exploration into the complex domain of LLM 
+evaluation and we acknowledge that it remains a work in development. While we 
+have gathered preliminary feedback from partners, we welcome insights, 
+comments and other contributions from the broader commun ity. Advances in this  
+domain are being made at an unparalleled pace and it is only through inclusive 
+collaboration that we can ensure the continued relevance and utility of this work. 
+ 
+7. To that end, we invite you to relay feedback and other contributions, such as new 
+benchmarkts or testing methods,  to us at info@aiverify.sg. As at the date of 
+publication, we are working towards establishing a more streamlined platform for 
+community engagement and contribution , as well as for the community to share 
+their testing outcomes. For the most up-to-date information on this endeavour, visit 
+www.aiverifyfoundation.sg.   
+ 
+deployment. Testing protocols such as integration, load, UI/UX, and penetration testing ensure the 
+application’s reliability, security, performance, and user experience. However, the primary focus of this 
+paper is not on these application or software testing protocols, but on the evaluation  and testing 
+approaches that specifically assess the LLMs (i.e., model evaluations of LLMs) that provide the 
+foundation for these applications. 
+ 
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 5 
+ 
+Part 1 – Taxonomy and Catalogue 
+ 
+Methodology 
+  
+8. To develop the taxonomy, we first surveyed the landscape of LLM evaluation and 
+testing approaches. This involved an in -depth review of key academic papers, 
+benchmarks, and research outputs from leading organizations in this field.3 
+  
+9. The taxonomy is intended to be a useful resource for an organisation that is 
+considering developing a LLM or deploying an LLM -driven application. We 
+therefore approached the next stage of taxonomy development from t he 
+perspective of such an organisation. The organisation would desire a clear 
+understanding of: (i) a LLM's general capabilities; (ii) its performance within a 
+specific domain (e.g., medicine); (iii) potential risks, vulnerabilities, and 
+catastrophic consequences that could arise from its deployment; and (iv) potential 
+areas where the model could be exploited for malicious or unethical purposes. In 
+this context, the organisation would need to know the benchmarks and tests 
+it can utilize to achieve the above understanding in an objective manner. 
+ 
+10. Through this exercise, we developed a  comprehensive, coherent, and non -
+exhaustive taxonomy, comprising of five main categories, that encompasses 
+all aspects of LLM evaluation. In deriving this taxonomy, we drew heavily on prior 
+research in this field. Works such as “Holistic Evaluation of Language Models 
+(HELM)4”, “Model Evaluation for Extreme Risks 5”, “DecodingTrust: A 
+Comprehensive Assessment of Trustworthiness in GPT Models 6”, and 
+“FLASK: Fine-Grained Language Model Evaluation Based on Alignment Skill 
+Sets7”, provided valuable insights in our journey to map the landscape of LLM 
+evaluation. 
+ 
+Overview of the Taxonomy 
+ 
+11. The following sections of the paper set out the detailed taxonomy across f ive 
+categories, including a brief description of their respective sub -categories. The 
+specific evaluation and testing approaches for each category are set out in the 
+catalogue (see Annex B)8.  
+12. For now, we set out a brief overview of each category and their respective sub -
+categories: 
+ 
+3 The complete list of papers, benchmarks, and other resources we referred to are set out in Annex A. 
+4 By Stanford University’s Centre for Research on Foundational Models 
+5 By DeepMind 
+6 By authors from University of Illinois at Urbana -Champaign, Stanford University, University of 
+California, Berkeley, Center for AI Safety and Microsoft Corporation 
+7 By the Korea Advanced Institute of Science and Technology 
+8 Certain benchmarks and evaluations may fall into multiple categories of the taxonomy, reflecting the 
+complex and cross -cutting nature of LLM evaluations. For example, assessments of an LLM’s 
+propensity to output adult content can be situated under both the “Undesirable Use Cases” and “Safety 
+and Trustworthiness” categories. Our proposed taxonomy is a structured representation of our 
+perspective in this dynamic field and is not intended to be definitive. As our understanding of LLMs 
+evolves, so too might the categories. 
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 6 
+ 
+ 
+a. General Capabilities:  This category assesses a LLM’s potential and 
+performance. The core idea is to understand what the model can do, how 
+well it can do it, and the circumstances under which it operates best. Its sub-
+categories include: (i) natural language understanding (e.g. , text 
+classification); (ii) reasoning; and (iii) knowledge and factuality. 
+ 
+b. Domain Specific Capabilities:  This category assesses a LLM’s 
+performance within the context of the unique requirements and challenges 
+of a particular domain or industry. Its sub -categories are: (i) law; (ii) 
+medicine; and (iii) finance. 
+ 
+c. Safety and Trustworthiness:  This category assesses the reliability of a 
+LLM’s operation and its inherent risks. This includes the ability to avoid 
+generating harmful or biased outputs, and to behav e predictably over a 
+broad spectrum of inputs. Its sub-categories include: (i) toxicity generation; 
+(ii) bias; and (iii) robustness (i.e., performance when faced with unexpected 
+or adversarial inputs). 
+ 
+d. Extreme Risks:  This category assesses potential catas trophic 
+consequences arising from a LLM with dangerous ‘frontier’ capabilities (e.g., 
+offensive cyber capabilities, deception, ability to acquire weapons) being 
+misused or harmfully applying its capabilities. Its sub -categories are: (i) 
+dangerous capabilities; and (ii) alignment risks. 
+ 
+e. Undesirable Use Cases:  This category examines potential scenarios 
+where LLMs could be used maliciously or unethically. Its sub -categories 
+include: (i) misinformation; and (ii) adult content. 
+ 
+Testing Approaches and Scoring Methods 
+ 
+13. There are several testing and evaluation terminologies which are introduced 
+alongside these categories within the catalogue. To draw a distinction, testing 
+approaches describe how a LLM evaluation will be conducted. This is 
+complemented by scoring methods  which assign qualitative or quantitative 
+scores to the outputs of a testing approach. 
+ 
+14. In our landscape scan, we came across broadly three types of  testing 
+approaches: 
+a. Benchmarking: Benchmarking employs the use of datasets of questions to 
+evaluate a LLM based on their output. It can be compared with the ground 
+truth or against some rules that are predefined. 
+ 
+b. Automated Red Teaming: This approach utilises another model to initiate 
+prompts and probe a LLM in order to achieve a target outcome (e.g., to 
+evaluate permutations of prompts which lead to the production of toxic 
+outputs). 
+ 
+c. Manual Red Teaming:  Manual red teaming utilises human interaction to 
+initiate prompts and probe a LLM in order to achieve a target outcome. 
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 7 
+ 
+ 
+15. These testing approaches can be coupled with a suitable scoring method: 
+ 
+a. Algorithmic Scoring: Scoring algorithms (e.g., ROUGE 9, BLEU 10) that 
+mathematically calculate scores, for instance, to determine absolute 
+similarity between two bodies of text. This also includes rule-based scoring 
+(e.g., fluency score). 
+ 
+b. Human Scoring: Human participants score model outputs. Participants can 
+vary from experts to ordinary users, and they may be asked to ra te the 
+relevance, coherence, or other qualitative aspects of outputs. Such 
+evaluations are useful when the output is open -ended or subjective. This 
+approach can provide nuanced insights into a model's performance that 
+automated metrics might overlook. 
+ 
+c. Model Scoring: These evaluations employ the use of a model (potentially 
+another LLM, or classical AI model) to assess the quality of an LLM's output. 
+Model scoring is often used in tandem with or to replace human scoring, as 
+it offers a more scalable approach without completely sacrificing qualitative 
+understanding. 
+ 
+ 
+  
+ 
+9 ROUGE stands for “Recall -Oriented Understudy for Gisting Evaluation” and is a set of metrics used 
+to evaluate the quality of machine -generated texts, such as summaries. These scores measure the 
+overlap between the generated text and a reference text. ROUGE typically scores range from 0 to 1, 
+with a higher score indicating greater similarity. 
+10 BLEU stands for “Bilingual Evaluation Understudy” and is commonly used to evaluate the quality of 
+machine-generated texts, such as translations. It measures the similarity between the generated text 
+and a reference text. A BLEU score ranges from 0 to 1, with higher scores indicating greater similarity. 
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 8 
+ 
+Detailed Taxonomy 
+ 
+1.  GENERAL CAPABILITIES 
+ 
+The evaluations in this category assess the capabilities of LLMs, focusing on 
+understanding the various abilities of the model, such as comprehension, 
+reasoning, and natural language generation. They seek to determine how 
+well the model can follow instructions, perform cognitive tasks, replicate 
+human-like language understanding, and adapt to novel problems. 
+ 
+Based on our landscape scan, t he evaluations in this category are primarily 
+based on a benchmarking approach. Most apply some form of algorithmic 
+scoring to score the outputs with the remainder using human or LLM based 
+scoring. Notably, red teaming is rarely used in the assessments of the 
+capabilities of LLMs. 
+ 
+1.1.  Natural 
+Language 
+Understanding 
+ 
+The evaluations in 
+this category, 
+while varied in 
+nature, seek to 
+discern a LLM’s 
+ability to 
+understand and 
+interpret the input 
+sequence (i.e., the 
+prompt) provided 
+to it. 
+Text classification 
+These evaluations assess a LLM’s ability to interpret 
+text and accurately categorize it into predefined 
+classes or labels. An effective classification capability 
+is critical for numerous real-world applications, such as 
+spam detection and document categorization.  
+ 
+Sentiment analysis 
+These evaluations assess a LLM’s ability to interpret 
+text and determine its emotional tone. Sentiment 
+analysis is a form of text classification.  
+ 
+Toxicity detection 
+These evaluations assess a LLM’s ability to interpret 
+text and determine whether it contains toxic content. 
+Toxicity detection is a form of text classification. 
+ 
+Information retrieval 
+These evaluations assess a LLM’s proficiency in 
+determining the relevant information or answers from 
+large textual corpora based on specific queries. The 
+evaluations gauge how adeptly the LLM can identify 
+information that aligns with an inquiry, ensuring that 
+the LLM can operate effectively in tasks akin to search 
+engines or knowledge-base query systems.  
+ 
+ 
+Sufficient information 
+These evaluations assess a LLM’s ability to discern 
+whether it possess sufficient information to provide a 
+valid response to a given query.  
+ 
+Natural language inference 
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 9 
+ 
+These evaluations assess a LLM’s ability to determine 
+the relationship between two sentences: whether they 
+contradict, entail, or are neutral to each other. Such 
+inference capability is key to a LLM understanding 
+context, drawing accurate conclusions, and responding 
+coherently in conversational interactions. 
+ 
+General English understanding 
+These evaluations assess a LLM’s understanding of 
+the English language,11 including specific 
+understanding of distinct linguistic phenomena. 
+ 
+1.2.  Natural 
+Language 
+Generation 
+ 
+The evaluations in 
+this category test a 
+LLM’s ability to 
+generate coherent 
+and contextually 
+appropriate text, 
+ensuring that the 
+model can 
+communicate 
+information 
+effectively and 
+responsively in 
+diverse 
+applications.  
+Summarization 
+These evaluations measure  a LLM’s proficiency in 
+distilling lengthy or complex texts into concise, coherent, 
+and accurate summaries. 
+ 
+Question generation and answering 
+These evaluations assess a LLM’s ability to generate 
+relevant and coherent questions based on the provided 
+content, and its proficiency in accurately and 
+contextually responding to queries. 
+ 
+Conversations and dialogue 
+These evaluations assess a LLM’s capability to maintain 
+context and coherence whilst engaging in conversations 
+and dialogues, ensuring that the model can sustain 
+meaningful interactions. 
+ 
+Paraphrasing 
+These evaluations assess a LLM’s ability to rephrase 
+provided text into different wording while retaining the 
+original meaning and context. 
+ 
+Other response qualities 
+These evaluations assess other qualities of a LLM’s 
+output, such as its readability and creativity.  
+ 
+Miscellaneous text generation 
+These evaluations assess a LLM’s ability to generate 
+text but do not fit into the categories above. 
+ 
+1.3.  Reasoning 
+These evaluations assess a LLM’s ability to process and reason about 
+information logically, draw the necessary inferences and make appropriate 
+decisions. This includes assessing how well the LLM understands 
+relationships, cause-and-effect scenarios, and social interactions and 
+ 
+11 Evaluations that assess a LLM’s understanding of o ther languages are set out in a separate section 
+below. 
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 10 
+ 
+whether it can engage in multi-step reasoning processes. It involves testing 
+the abstract reasoning capabilities that a LLM has, as well as how it 
+performs in various realistic contexts (e.g., mathematical reasoning, legal 
+reasoning, etc).  
+ 
+1.4.  Knowledge and factuality 
+These evaluations focus on a LLM’s ability to accurately generate output 
+that is consistent with established facts and real-world knowledge (e.g., 
+correctly generating “Paris” when prompted with “The capital of France 
+is_____”). This is usually done by not providing any context during 
+inference, ensuring that the LLM relies on the knowledge it has to generate 
+the output.  
+ 
+1.5.  Effectiveness of tool use 
+LLM-driven applications may contain various tools to improve and increase 
+capabilities. Such tools include APIs to retrieve information, calculators to 
+perform mathematical operations, knowledge bases that store relevant 
+documents for query answering and even AI models to perform specialized 
+functions (e.g., image segmentation, text-to-audio, etc). The evaluations in 
+this section assess how well LLMs utilize the provided tools.  
+ 
+1.6.  Multilingualism 
+These evaluations assess a LLM’s proficiency in understanding and 
+generating content in languages apart from English, and its ability to 
+accommodate different dialects and sociolects (e.g., African American 
+English) of a language. Such evaluations ensure that this technology can 
+cater to a diverse, global audience and accommodates the nuances of 
+different linguistic cultures and communities. 
+ 
+1.7.  Context length 
+LLMs have a context window that sets out the maximum number of tokens 
+they can process in a single interaction. These evaluations assess how well 
+LLMs respond to longer contexts, within their respective context length limit 
+(Shaham et al., 2022). 
+ 
+2.  DOMAIN SPECIFIC EVALUATIONS 
+ 
+Unlike general-purpose assessments, domain specific evaluations are 
+designed to measure the performance of LLMs within the distinct context of 
+a particular industry or field such as medicine or law. They serve as 
+essential instruments in gauging whether an LLM can meet the stringent 
+requirements of specialised applications—be it interpreting medical jargon, 
+parsing legal statutes, or analysing financial data. 
+ 
+This is a nascent area, as evinced by the relatively small number of 
+benchmarks and tools we came across in our landscape scan.  
+ 
+2.1.  Law 
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 11 
+ 
+These evaluations assess a LLM’s performance in the legal domain, such 
+as its ability to perform various forms of legal reasoning (e.g., issue-spotting 
+and interpretation). 
+ 
+2.2.  Medicine 
+These evaluations assess a LLM’s performance in the medical domain, 
+such as its ability to answer various forms of medical questions (e.g., 
+consumer medical questions and medical research questions). 
+ 
+2.3.  Finance 
+These evaluations assess a LLM’s performance on various tasks that are 
+germane in the financial sector, such as sentiment analysis, news headline 
+classification and question answering over financial data. 
+ 
+3.  SAFETY AND TRUSTWORTHINESS 
+ 
+Assessing LLM safety involves a multi -faceted analysis that includes, 
+amongst other, evaluating how the model behaves under unforeseen inputs, 
+how it reacts to adversarial interventions and whether it displays any biases 
+or stereotypes. A comprehensive ass essment of LLM safety is fundamental 
+to the responsible development and deployment of these technologies, 
+especially in sensitive fields like healthcare, legal systems, and finance, 
+where safety and trust are of the utmost importance. The taxonomy for this  
+category is largely adopted from Wang et al. (2023).  
+ 
+The majority of the evaluations in this category are benchmarks, while some 
+use red teaming to elicit undesirable behaviours. 
+ 
+3.1.  
+ 
+Toxicity generation 
+These evaluations assess whether a LLM generates toxic text when 
+prompted. In this context, toxicity is an umbrella term that encompasses 
+hate speech, abusive language, violent speech, and profane language 
+(Liang et al., 2022). 
+ 
+3.2.  Bias Demographical representation 
+These evaluations assess whether there is disparity in 
+the rates at which different demographic groups are 
+mentioned in LLM generated text. This ascertains over-
+representation, under-representation, or erasure of 
+specific demographic groups. 
+ 
+Stereotype bias 
+These evaluations assess whether there is disparity in 
+the rates at which different demographic groups are 
+associated with stereotyped terms (e.g., occupations) in 
+a LLM’s generated output. 
+ 
+Fairness 
+These evaluations assess whether sensitive attributes 
+(e.g., sex and race) impact the predictions of LLMs. 
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 12 
+ 
+ 
+Distributional bias 
+These evaluations assess the variance in offensive 
+content in a LLM’s generated output for a given 
+demographic group, compared to other groups. 
+ 
+Representation of subjective opinions 
+These evaluations assess whether LLMs equitably 
+represent diverse global perspectives on societal issues 
+(e.g., whether employers should give job priority to 
+citizens over immigrants). 
+ 
+Political bias 
+These evaluations assess whether LLMs display any slant 
+or preference towards certain political ideologies or views. 
+ 
+Capability fairness 
+These evaluations assess whether a LLM’s performance 
+on a task is unjustifiably different across different groups 
+and attributes (e.g., whether a LLM’s accuracy degrades 
+across different English varieties). 
+ 
+3.3.  Machine ethics 
+These evaluations assess the morality of LLMs, focusing on issues such as 
+their ability to distinguish between moral and immoral actions, and the 
+circumstances in which they fail to do so. 
+ 
+3.4.  Psychological traits 
+These evaluations gauge a LLM’s output for characteristics that are typically 
+associated with human personalities (e.g., such as those from the Big Five 
+Inventory). These can, in turn, shed light on the potential biases that a LLM 
+may exhibit. 
+ 
+3.5.  Robustness 
+These evaluations assess the quality, stability, and reliability of a LLM’s 
+performance when faced with unexpected, out-of-distribution or adversarial 
+inputs. Robustness evaluation is essential in ensuring that a LLM is suitable 
+for real-world applications by assessing its resilience to various 
+perturbations. 
+ 
+3.6.  Data governance  
+These evaluations assess the extent to which LLMs regurgitate their training 
+data in their outputs, and whether LLMs ‘leak’ sensitive information that has 
+been provided to them during use (i.e., during the inference stage). 
+ 
+There are privacy and copyright implications, depending on the 
+characteristics of the data regurgitated by the LLM in its output. 
+ 
+4.  EXTREME RISKS 
+ 
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 13 
+ 
+The taxonomy for this category is adopted from Shevlane et al. (2023). This 
+category encompasses the evaluation of potential catastrophic 
+consequences that might arise from the use of LLMs. It is broken up into 2 
+further sub -categories: Dang erous Capabilities and Alignment. The former 
+refers to capabilities that can have significant adverse impacts and disruption 
+if the LLM is misused or is misaligned (e.g., offensive cyber capabilities, ability 
+to acquire weapons). The latter refers to a LM’s propensity to harmfully apply 
+its capabilities due to risk factors such as resisting being shut down and 
+engaging in ‘power-seeking’ behaviour.  
+ 
+We adopt the view espoused by Shevlane et al. (2023) that only frontier 
+models12 need to undergo the evaluations under this category. As LLM 
+technology continues to evolve, the criteria defining frontier models are likely 
+to be refined.  
+ 
+As this is a relatively nascent domain, we were only able to identify 
+evaluations for some of the risks in this category.  
+ 
+4.1.  Dangerous 
+Capabilities 
+Offensive cyber capabilities 
+These evaluations focus on whether a LLM possesses 
+certain capabilities in the cyber-domain. This includes 
+whether a LLM can detect and exploit vulnerabilities in 
+hardware, software, and data. They also consider whether 
+a LLM can evade detection once inside a system or 
+network and focus on achieving specific objectives. 
+ 
+Weapons acquisition 
+These assessments seek to determine if a LLM can gain 
+unauthorized access to current weapon systems or 
+contribute to the design and development of new weapons 
+technologies. 
+ 
+Self and situation awareness 
+These evaluations assess if a LLM can discern if it is 
+being trained, evaluated, and deployed and adapt its 
+behaviour accordingly. They also seek to ascertain if a 
+model understands that it is a model and whether it 
+possesses information about its nature and environment 
+(e.g., the organisation that developed it, the locations of 
+the servers hosting it). 
+ 
+Autonomous replication / self-proliferation 
+These evaluations assess if a LLM can subvert systems 
+designed to monitor and control its post-deployment 
+behaviour, break free from its operational confines, devise 
+strategies for exporting its code and weights, and operate 
+other AI systems. 
+ 
+12 In this paper, we adopt the Frontier Model Forum’s definition of frontier models: “large-scale machine-
+learning models that exceed the capabilities currently present in the most advanced existing mo dels, 
+and can perform a wide variety of tasks.” 
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 14 
+ 
+ 
+Persuasion and manipulation 
+These evaluations seek to ascertain the effectiveness of a 
+LLM in shaping people’s beliefs, propagating specific 
+viewpoints, and convincing individuals to undertake 
+activities they might otherwise avoid. 
+ 
+ We were unable to identify existing evaluation and testing approaches for the 
+risks below, signifying opportunities for research and development. We also 
+acknowledge the possibility that there might be ongoing work in these areas 
+and that our landscape sca n may have inadvertently missed out existing 
+work.   
+ 
+Dangerous Capabilities 
+ 
+a. Dual-Use Science: LLM has science capabilities that can be used to 
+cause harm (e.g., providing step -by-step instructions for conducting 
+malicious experiments) 
+b. Deception: LLM is able to deceive humans and maintain that 
+deception 
+c. Political strategy: LLM can take into account rich social context and 
+undertake the necessary social modelling and planning for an actor to 
+gain and exercise political influence 
+d. Long-horizon planning: LLM can undertake multi -step sequential 
+planning over long time horizons and across various domains without 
+relying heavily on trial-and-error approaches 
+e. AI development: LLM can build new AI systems from scratch, adapt 
+existing for extreme ri sks and improves productivity in dual -use AI 
+development when used as an assistant. 
+ 
+Alignment Risks 
+ 
+a. LLM pursues long-term, real-world goals that are different from those 
+supplied by the developer or user 
+b. LLM engages in ‘power-seeking’ behaviours 
+c. LLM resists being shut down 
+d. LLM can be induced to collude with other AI systems against human 
+interests 
+e. LLM resists malicious users attempts to access its dangerous 
+capabilities 
+ 
+5.  Undesirable Use Cases 
+ 
+This section sets out evaluations that assess whether LLMs could be used 
+for malicious or unethical purposes. Considering the myriad use -cases that 
+LLMs can be used for, we did not conduct a targeted cataloguing of this 
+category of evaluations. Instead, we set out those that we came across while 
+researching other categories.  
+ 
+CATALOGUING LLM EVALUATIONS        
+ 
+Page | 15 
+ 
+Automated benchmarking and red teaming are both used in this category, 
+coupled with both model scoring and human scoring approaches. 
+ 
+5.1.  Misinformation 
+These evaluations assess a LLM’s ability to generate false or misleading 
+information (Lesher et al., 2022). 
+ 
+5.2.  Disinformation 
+These evaluations assess a LLM’s ability to generate misinformation that can 
+be propagated to deceive, mislead or otherwise influence the behaviour of a 
+target (Liang et al., 2022). 
+ 
+5.3.  Information on harmful, immoral, or illegal activity 
+These evaluations assess whether it is possible to solicit information on 
+harmful, immoral or illegal activities from a LLM. 
+ 
+5.4.  Adult content 
+These evaluations assess if a LLM can generate content that should only 
+be viewed by adults (e.g., sexual material or depictions of sexual activity) 
+ 
+ 
+  

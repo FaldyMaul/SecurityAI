@@ -1,0 +1,4 @@
+Integration Component,Architectural Layer,Implementation,Logging Metrics,Destination
+Filtering Before Model Call,Real-time Interceptor (Layer 3),Deploy **LLM Guard** active middleware. The prompt payload routes through LLM Guard's `PromptInjection` module *before* it is ever sent to the LLM.,,
+Integrate into Apilogy Pre-Processing,API Gateway & Identity (Layer 0),"**Apilogy** validates the user's JWT token. If a prompt injection is detected by LLM Guard downstream, the response payload is returned to Apilogy, which enforces a strict 403 Forbidden Access to ensure standard enterprise error handling.",,
+Add Logging Metadata,Observability Pipeline,**LiteLLM** captures the blocked request payload.,"`request_id`, `user_hash`, `timestamp`, `injection_confidence_score`, `rule_matched`. (Raw prompt text is stored only if explicitly opted-in for the ""Red Team Training"" dataset).",Forwarded asynchronously to **Datadog**.

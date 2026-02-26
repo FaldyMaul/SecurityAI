@@ -1,0 +1,11 @@
+Leakage Type,Description
+RAG Cross-User Leakage,User A accessing User B's retrieved documents.
+Model Memorization Leakage,LLM outputting PII from its training data.
+Role Bypass (Jailbreak),User overriding system instructions to access restricted APIs/Data.
+Prompt Extraction Attack,Attacker revealing system prompts and hidden instructions.
+Output Hallucination Revealing Confidential Info,AI convincingly fabricating valid-looking but wrong internal data.
+Training Data Reconstruction,Inverting model outputs to recover private dataset examples.
+Log Exposure,Sensitive prompts/responses stored in plain text logs (Datadog/App logs).
+Debug Mode Exposure,Verbose error messages revealing infrastructure paths or internal logic.
+Indirect Prompt Injection,"Malicious instructions hidden in retrieved documents (e.g., PDFs, Emails)."
+Plugin/Tool Data Leakage,AI Agent sending sensitive context to unauthorized external plugins.

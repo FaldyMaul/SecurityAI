@@ -1,0 +1,7 @@
+Behavior Identified,Description
+Hate Speech & Discrimination,"Generating offensive, biased, or exclusionary language."
+Sensitive Data Disclosure,"Revealing restricted corporate information, PII, passwords."
+Hallucinated Official Statement,Fabricating non-existent company policies or financial statements.
+Policy Bypass,Utilizing explicit jailbreaks to override the system's operational constraints.
+Prompt Injection Exploitation,Executing hidden malicious commands embedded in user-supplied documents.
+Unauthorized Data Retrieval,Bypassing API Gateway constraints to view RAG context meant for other tenants.

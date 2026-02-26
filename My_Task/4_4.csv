@@ -1,0 +1,4 @@
+Testing Element,Primary Detail,Secondary Detail
+Execute Red Team Simulation,Test Simulator**: **Garak** (Static/Heuristic Probes) and **PyRIT** (Adaptive Attacker AI).,"Execution**: Automated nightly pipeline triggers Garak to launch 10,000+ known prompt injection payloads against the target agent hosted in the AI Sandbox."
+Test Case Coverage,Coverage Metric**: Minimum 10 distinct injection classes tested (as defined in Step 1).,"Status**: Coverage implemented via Garak's massive vulnerability database (which includes base64, DAN, foreign language bypass, etc.)."
+Measure Detection Rate,Success Criteria**: >99% Detection Rate on known OWASP top injection patterns.,Output**: The CI/CD pipeline outputs a JSON test report via DeepEval/Giskard frameworks aggregating the block success rate.

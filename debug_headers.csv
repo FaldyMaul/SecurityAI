@@ -1,0 +1,857 @@
+id,ref,subject,description,sprint_id,sprint,sprint_estimated_start,sprint_estimated_finish,owner,owner_full_name,assigned_to,assigned_to_full_name,assigned_users,assigned_users_full_name,status,is_closed,swimlane,back-points,design-points,front-points,ux-points,total-points,backlog_order,sprint_order,kanban_order,created_date,modified_date,finish_date,client_requirement,team_requirement,attachments,generated_from_issue,generated_from_task,from_task_ref,external_reference,tasks,tags,watchers,voters,due_date,due_date_reason,epics
+755782,1,Classify data sensitivity level,"Sistem AI dan seluruh data yang diproses harus memiliki klasifikasi sensitivitas yang terdokumentasi dan disetujui Data Governance.
+
+* * *
+
+✅ Acceptance Criteria
+---------------------
+
+Tersedia dokumen klasifikasi data (Public / Internal / Confidential / Restricted)
+
+1.  Semua AI endpoint memiliki label data sensitivity
+2.  Mapping antara jenis data dan control requirement tersedia
+3.  Dokumen disetujui oleh Data Governance & Legal
+4.  Audit trail tersedia
+
+* * *
+
+🔧 Langkah Praktikal / Teknis
+-----------------------------
+
+### Phase 1 – Framework Definition
+
+Define data classification levels:
+
+1.  Public
+2.  Internal
+3.  Confidential
+4.  Restricted (PDPL regulated)
+5.  Define examples per category
+6.  Define impact if leaked (Low / Medium / High / Critical)
+
+* * *
+
+### Phase 2 – AI Context Mapping
+
+1.  Inventory AI use cases
+2.  Identify input data types
+3.  Identify output data types
+4.  Map each to sensitivity level
+5.  Create data classification matrix (Spreadsheet)
+
+* * *
+
+### Phase 3 – Control Mapping
+
+Define control per level:
+
+1.  Encryption requirement
+2.  Logging requirement
+3.  Retention rule
+4.  Access restriction
+5.  Integrate with Apilogy policy tagging
+6.  Baseline approval session
+
+_\*tulisan diatas hasil chatGPT jika ada ketidaksesuaian mohon konfirmasi melalui komen pada backlog ini_",,,,,anggyedo,Anggy Edo Prasetya,BayuPriyanta,Bayu Priyanta,BayuPriyanta,Bayu Priyanta,To Do,False,,,,,,,1770950658107207,1770950658107229,1770950658123533,2026-02-13 02:44:18.123538+00:00,2026-02-18 07:27:41.756029+00:00,,False,False,0,,,,,,,[],0,,,
+755783,2,Identify internal vs external exposure,"**As Security Engineer**  
+I want to identify which AI services are internal vs externally exposed  
+So that attack surface can be controlled
+
+* * *
+
+✅ Acceptance Criteria
+---------------------
+
+1.  All AI endpoints categorized: Internal / Partner / Public
+2.  External exposure documented
+3.  Direct backend exposure identified
+4.  Risk rating assigned
+5.  Exposure matrix approved
+
+* * *
+
+🔧 Langkah Praktikal / Teknis
+-----------------------------
+
+### Step 1 – Endpoint Inventory
+
+1.  List all AI APIs
+2.  Identify current routing
+3.  Identify hosting environment
+
+* * *
+
+### Step 2 – Exposure Mapping
+
+1.  Check DNS exposure
+2.  Check firewall rules
+3.  Check public IP existence
+4.  Validate Apilogy routing enforcement
+
+* * *
+
+### Step 3 – Risk Assessment
+
+Identify:
+
+1.  Open port
+2.  No auth endpoint
+3.  Bypass gateway
+4.  Assign risk level
+5.  Document mitigation plan
+
+* * *
+
+### Step 4 – Remediation
+
+1.  Close direct backend access
+2.  Enforce Apilogy-only access
+3.  Validate via penetration test
+
+_\*tulisan diatas hasil chatGPT jika ada ketidaksesuaian mohon konfirmasi melalui komen pada backlog ini_",,,,,anggyedo,Anggy Edo Prasetya,BayuPriyanta,Bayu Priyanta,BayuPriyanta,Bayu Priyanta,To Do,False,,,,,,,1770950717004409,1770950717004440,1770950717024212,2026-02-13 02:45:17.024216+00:00,2026-02-18 07:32:14.857122+00:00,,False,False,0,,,,,,,[],0,,,
+755794,3,Define unsafe AI behavior,"**When AI system is deployed in production,**  
+**we want to clearly define unsafe AI behavior**  
+**so that runtime guardrails can prevent misuse.**
+
+* * *
+
+✅ Acceptance Criteria
+---------------------
+
+1.  Unsafe behavior definition document exists
+2.  Behavior categorized (Ethical / Security / Legal / Operational)
+3.  Each behavior has detection rule
+4.  Each behavior has response action
+5.  Red team validates at least 5 scenarios
+
+* * *
+
+🔧 Langkah Praktikal / Teknis
+-----------------------------
+
+### Step 1 – Behavior Identification Workshop
+
+1.  Brainstorm misuse scenarios
+2.  Include Legal & Compliance
+3.  Include AI Engineer
+
+* * *
+
+### Step 2 – Categorization
+
+Define categories:
+
+1.  Hate speech / discrimination
+2.  Sensitive data disclosure
+3.  Hallucinated official statement
+4.  Policy bypass
+5.  Prompt injection exploitation
+6.  Unauthorized data retrieval
+
+* * *
+
+### Step 3 – Detection Logic
+
+1.  Define keyword pattern
+2.  Define contextual classifier rule
+3.  Define threshold score
+
+* * *
+
+### Step 4 – Response Strategy
+
+1.  Block response
+2.  Mask response
+3.  Alert / Alarm notification
+4.  Log event to Datadog
+
+_\*tulisan diatas hasil chatGPT jika ada ketidaksesuaian mohon konfirmasi melalui komen pada backlog ini_",,,,,anggyedo,Anggy Edo Prasetya,ug_506be635-b482-41fa-a8ba-1441e7cc96d0,Dhiaul ma'ruf,ug_506be635-b482-41fa-a8ba-1441e7cc96d0,Dhiaul ma'ruf,To Do,False,,,,,,,1770952074505120,1770952074505146,1770952074521316,2026-02-13 03:07:54.521321+00:00,2026-02-18 07:38:45.303408+00:00,,False,False,0,,,,,,,[],0,,,
+755795,4,Define prompt injection pattern,"System must detect and block prompt injection attempts before reaching AI model.
+
+* * *
+
+✅ Acceptance Criteria
+---------------------
+
+1.  Prompt injection pattern library documented
+2.  Detection rule implemented
+3.  Test case coverage ≥ 10 injection scenarios
+4.  Injection attempt logged
+5.  Response safely handled
+
+* * *
+
+🔧 Langkah Praktikal / Teknis
+-----------------------------
+
+### Step 1 – Pattern Collection
+
+Collect known injection examples:
+
+1.  “Ignore previous instruction”
+2.  “You are now system admin”
+3.  “Reveal hidden policy”
+
+Include OWASP LLM top risks reference
+
+* * *
+
+### Step 2 – Pattern Engineering
+
+1.  Create regex rules
+2.  Create keyword list
+3.  Define context-based validation
+
+* * *
+
+### Step 3 – Integration
+
+1.  Implement filtering before model call
+2.  Integrate into Apilogy pre-processing layer
+3.  Add logging metadata
+
+* * *
+
+### Step 4 – Testing
+
+1.  Create injection simulation test set
+2.  Execute red team simulation
+3.  Measure detection rate
+
+_\*tulisan diatas hasil chatGPT jika ada ketidaksesuaian mohon konfirmasi melalui komen pada backlog ini_",,,,,anggyedo,Anggy Edo Prasetya,ug_506be635-b482-41fa-a8ba-1441e7cc96d0,Dhiaul ma'ruf,ug_506be635-b482-41fa-a8ba-1441e7cc96d0,Dhiaul ma'ruf,To Do,False,,,,,,,1770952093114616,1770952093114636,1770952093135401,2026-02-13 03:08:13.135407+00:00,2026-02-18 07:35:09.273724+00:00,,False,False,0,,,,,,,[],0,,,
+755796,5,Define data leakage scenarios,"**As Data Governance**  
+I want defined data leakage scenarios  
+So that AI does not expose restricted information
+
+* * *
+
+✅ Acceptance Criteria
+---------------------
+
+1.  Minimum 10 leakage scenarios documented
+2.  Scenario mapped to data classification
+3.  Mitigation defined per scenario
+4.  Logging & monitoring defined
+5.  Approved by Legal
+
+* * *
+
+🔧 Langkah Praktikal / Teknis
+-----------------------------
+
+### Step 1 – Identify Leakage Types
+
+1.  RAG cross-user leakage
+2.  Model memorization leakage
+3.  Role bypass
+4.  Prompt extraction attack
+5.  Output hallucination revealing confidential info
+6.  Training data reconstruction
+7.  Log exposure
+8.  Debug mode exposure
+
+* * *
+
+### Step 2 – Scenario Detailing
+
+For each scenario define:
+
+1.  Trigger
+2.  Impact
+3.  Likelihood
+4.  Detection mechanism
+5.  Prevention control
+6.  Incident response
+
+* * *
+
+### Step 3 – Technical Controls
+
+1.  Implement RBAC enforcement
+2.  Mask confidential output
+3.  Disable debug logs in production
+4.  Encrypt vector store
+5.  Enforce token validation via Apilogy
+
+_\*tulisan diatas hasil chatGPT jika ada ketidaksesuaian mohon konfirmasi melalui komen pada backlog ini_",,,,,anggyedo,Anggy Edo Prasetya,ug_730e6026-991b-4300-845f-e35c1e7fdc15,Faldy Maulana,ug_730e6026-991b-4300-845f-e35c1e7fdc15,Faldy Maulana,To Do,False,,,,,,,1770952103031268,1770952103031288,1770952103047644,2026-02-13 03:08:23.047649+00:00,2026-02-18 07:38:54.807656+00:00,,False,False,0,,,,,,,[],0,,,
+755798,6,[Red team] Security testing scenario design #1,"Based on OWASP Top 10 for LLMs
+
+![](https://dpe-taiga-images-private-prod.oss-ap-southeast-5.aliyuncs.com/attachments%2F4%2Fb%2Fb%2F3%2F8f6c9f5261071927b4c0facb2cd2082cd9d22012c235910410ae33f0bea1%2Fimage.png?OSSAccessKeyId=LTAI5tCPrYsgYdC3hgFr3mjJ&Expires=1771395721&Signature=Y4B84QvgRPJFgXUzNpkoQNHhJYc%3D#_taiga-refresh=userstory:427995)
+
+When AI system is deployed in production,   
+we want to simulate attacks based on OWASP Top 10 for LLM Applications   
+so that security weaknesses can be identified before exploitation.
+
+✅ Acceptance Criteria
+---------------------
+
+Minimum 3 test scenario per OWASP category (total ≥30)
+
+1.  100% category executed
+2.  Severity scored (Low–Critical)
+3.  Detection gap identified
+4.  Exploit reproduction documented
+5.  Final consolidated Red Team Report delivered
+
+* * *
+
+🔧 Langkah Praktikal / Teknis
+-----------------------------
+
+### Phase 1 – Scenario Engineering (Per OWASP Category)
+
+#### LLM01 – Prompt Injection
+
+1.  Override instruction
+2.  Indirect injection via document
+3.  Encoded injection
+
+#### LLM02 – Sensitive Information Disclosure
+
+1.  Request hidden config
+2.  Cross-role data access
+3.  Debug output exposure
+
+#### LLM03 – Supply Chain
+
+1.  Malicious dependency simulation
+2.  Third-party API manipulation
+3.  Model update integrity test
+
+#### LLM04 – Data & Model Poisoning
+
+1.  Inject manipulated RAG document
+2.  Poisoned embedding test
+3.  Malicious fine-tuning data simulation
+
+* * *
+
+### Phase 2 – Execution
+
+Test against :
+
+1.  Raw model
+2.  Guardrail layer
+3.  Apilogy gateway enforced
+
+Capture:
+
+1.  Response
+2.  Log trace
+3.  Alert status
+4.  Latency impact
+
+* * *
+
+### Phase 3 – Risk Scoring
+
+1.  Map ke OWASP ID
+2.  Assign severity
+
+Identify:
+
+1.  Control failure
+2.  Logging failure
+3.  Detection failure
+4.  Deliver remediation plan
+
+* * *
+
+_\*tulisan diatas hasil chatGPT jika ada ketidaksesuaian mohon konfirmasi melalui komen pada backlog ini_",,,,,anggyedo,Anggy Edo Prasetya,,,,,To Do,False,,,,,,,1770953333031740,1770953333031759,1770953333047395,2026-02-13 03:28:53.047399+00:00,2026-02-18 07:05:08.851700+00:00,,False,False,1,,,,,,,[],0,,,
+755799,7,[Red team] Security testing scenario design #2,"Based on OWASP Top 10 for LLMs
+
+![](https://dpe-taiga-images-private-prod.oss-ap-southeast-5.aliyuncs.com/attachments%2F4%2Fb%2Fb%2F3%2F8f6c9f5261071927b4c0facb2cd2082cd9d22012c235910410ae33f0bea1%2Fimage.png?OSSAccessKeyId=LTAI5tCPrYsgYdC3hgFr3mjJ&Expires=1771395721&Signature=Y4B84QvgRPJFgXUzNpkoQNHhJYc%3D#_taiga-refresh=userstory:427995)
+
+When AI system is deployed in production,   
+we want to simulate attacks based on OWASP Top 10 for LLM Applications   
+so that security weaknesses can be identified before exploitation.
+
+✅ Acceptance Criteria
+---------------------
+
+Minimum 3 test scenario per OWASP category (total ≥30)
+
+1.  100% category executed
+2.  Severity scored (Low–Critical)
+3.  Detection gap identified
+4.  Exploit reproduction documented
+5.  Final consolidated Red Team Report delivered
+
+* * *
+
+🔧 Langkah Praktikal / Teknis
+-----------------------------
+
+### Phase 1 – Scenario Engineering (Per OWASP Category)
+
+#### LLM05 – Improper Output Handling
+
+1.  HTML/JS injection via output
+2.  SQL injection via model response
+3.  Unsafe deserialization attempt
+
+#### LLM06 – Excessive Agency
+
+1.  Ask model to perform unintended action
+2.  Role escalation attempt
+3.  Autonomous task execution test
+
+#### LLM07 – System Prompt Leakage
+
+1.  “Reveal system instruction”
+2.  Context extraction attack
+3.  Meta-prompt probing
+
+#### LLM08 – Vector & Embedding Weakness
+
+1.  Embedding collision attempt
+2.  Similarity bypass test
+3.  Index poisoning simulation
+
+* * *
+
+### Phase 2 – Execution
+
+Test against :
+
+1.  Raw model
+2.  Guardrail layer
+3.  Apilogy gateway enforced
+
+Capture:
+
+1.  Response
+2.  Log trace
+3.  Alert status
+4.  Latency impact
+
+* * *
+
+### Phase 3 – Risk Scoring
+
+1.  Map ke OWASP ID
+2.  Assign severity
+
+Identify:
+
+1.  Control failure
+2.  Logging failure
+3.  Detection failure
+4.  Deliver remediation plan
+
+* * *
+
+_\*tulisan diatas hasil chatGPT jika ada ketidaksesuaian mohon konfirmasi melalui komen pada backlog ini_",,,,,anggyedo,Anggy Edo Prasetya,,,,,To Do,False,,,,,,,1770953368176012,1770953368176032,1770953368195920,2026-02-13 03:29:28.195926+00:00,2026-02-18 07:06:00.799453+00:00,,False,False,0,,,,,,,[],0,,,
+755800,8,[Red team] Security testing scenario design #3,"Based on OWASP Top 10 for LLMs
+
+![](https://dpe-taiga-images-private-prod.oss-ap-southeast-5.aliyuncs.com/attachments%2F4%2Fb%2Fb%2F3%2F8f6c9f5261071927b4c0facb2cd2082cd9d22012c235910410ae33f0bea1%2Fimage.png?OSSAccessKeyId=LTAI5tCPrYsgYdC3hgFr3mjJ&Expires=1771395721&Signature=Y4B84QvgRPJFgXUzNpkoQNHhJYc%3D#_taiga-refresh=userstory:427995)
+
+When AI system is deployed in production,   
+we want to simulate attacks based on OWASP Top 10 for LLM Applications   
+so that security weaknesses can be identified before exploitation.
+
+✅ Acceptance Criteria
+---------------------
+
+Minimum 3 test scenario per OWASP category (total ≥30)
+
+1.  100% category executed
+2.  Severity scored (Low–Critical)
+3.  Detection gap identified
+4.  Exploit reproduction documented
+5.  Final consolidated Red Team Report delivered
+
+* * *
+
+🔧 Langkah Praktikal / Teknis
+-----------------------------
+
+### Phase 1 – Scenario Engineering (Per OWASP Category)
+
+#### LLM09 – Misinformation
+
+1.  Fabricated policy test
+2.  Hallucinated regulation
+3.  Authority impersonation
+
+#### LLM10 – Unbounded Consumption
+
+1.  High token burst
+2.  Long context exhaustion
+3.  Concurrent session flood
+
+* * *
+
+### Phase 2 – Execution
+
+Test against :
+
+1.  Raw model
+2.  Guardrail layer
+3.  Apilogy gateway enforced
+
+Capture:
+
+1.  Response
+2.  Log trace
+3.  Alert status
+4.  Latency impact
+
+* * *
+
+### Phase 3 – Risk Scoring
+
+1.  Map ke OWASP ID
+2.  Assign severity
+
+Identify:
+
+1.  Control failure
+2.  Logging failure
+3.  Detection failure
+4.  Deliver remediation plan
+
+* * *
+
+_\*tulisan diatas hasil chatGPT jika ada ketidaksesuaian mohon konfirmasi melalui komen pada backlog ini_",,,,,anggyedo,Anggy Edo Prasetya,rk_3ef78a13-e763-41e2-b7b8-7d14245626b9,Wawan Hermawan,rk_3ef78a13-e763-41e2-b7b8-7d14245626b9,Wawan Hermawan,To Do,False,,,,,,,1770953382992651,1770953382992698,1770953383012412,2026-02-13 03:29:43.012416+00:00,2026-02-18 07:12:50.809725+00:00,,False,False,0,,,,,,,[],0,,,
+755801,9,[Blue team] Detect and Response #1,"**As Blue Team,**   
+**we want to implement detection and response capability aligned to OWASP Top 10 for LLM**   
+**so that every risk category has monitoring, alerting, and mitigation mechanism.**
+
+* * *
+
+🎯 Objective
+------------
+
+Pastikan setiap OWASP LLM risk memiliki:
+
+1.  Preventive control
+2.  Detection rule
+3.  Alert severity
+4.  Incident response procedure
+
+* * *
+
+✅ Acceptance Criteria
+---------------------
+
+1.  10 OWASP category mapped to detection rule
+2.  ≥80% Red Team scenario detected
+3.  AI security dashboard live
+4.  Severity classification defined
+5.  Incident Response SOP updated
+6.  1 Red vs Blue simulation completed
+7.  Audit-ready documentation available
+
+* * *
+
+🔧 Langkah Praktikal / Teknis
+-----------------------------
+
+* * *
+
+### Phase 1 – Control Mapping
+
+Buat matrix:
+
+| OWASP | Prevent | Detect | Respond |
+| --- | --- | --- | --- |
+| LLM01 | Input filtering | Injection keyword pattern | Block + Notification |
+| LLM02 | RBAC enforcement | Restricted keyword exposure | Mask output + escalation |
+| LLM0N | ..... | ..... | .... |
+
+* * *
+
+### Phase 2 – Detection Engineering
+
+1.  Define log schema
+2.  Create rule per OWASP category
+3.  Tune false positive
+4.  Simulate Red Team replay
+5.  Validate alert coverage
+
+* * *
+
+### Phase 3 – Alert & Escalation
+
+1.  Severity mapping:
+    1.  Critical → data exposure
+    2.  High → injection bypass
+    3.  Medium → abuse attempt
+    4.  Low → suspicious pattern
+2.  Configure automated alert routing
+3.  Define SLA response time
+
+* * *
+
+### Phase 4 – Incident Response
+
+1.  Update AI-specific IR playbook:
+    1.  Containment
+    2.  Investigation
+    3.  Root cause
+    4.  Recovery
+2.  Conduct tabletop exercise
+3.  Update detection rules post-simulation
+
+* * *
+
+👤 Blue-1 → Logging & Integration (Apilogy + Monitoring) 
+
+_\*tulisan diatas hasil chatGPT jika ada ketidaksesuaian mohon konfirmasi melalui komen pada backlog ini_",,,,,anggyedo,Anggy Edo Prasetya,,,,,To Do,False,,,,,,,1770953605874919,1770953605874939,1770953605890769,2026-02-13 03:33:25.890773+00:00,2026-02-18 07:29:26.996537+00:00,,False,False,0,,,,,,,[],0,,,
+755802,10,[Blue team] Detect and Response #2,"**As Blue Team,**  
+**we want to implement detection and response capability aligned to OWASP Top 10 for LLM**  
+**so that every risk category has monitoring, alerting, and mitigation mechanism.**
+
+* * *
+
+🎯 Objective
+------------
+
+Pastikan setiap OWASP LLM risk memiliki:
+
+1.  Preventive control
+2.  Detection rule
+3.  Alert severity
+4.  Incident response procedure
+
+* * *
+
+✅ Acceptance Criteria
+---------------------
+
+1.  10 OWASP category mapped to detection rule
+2.  ≥80% Red Team scenario detected
+3.  AI security dashboard live
+4.  Severity classification defined
+5.  Incident Response SOP updated
+6.  1 Red vs Blue simulation completed
+7.  Audit-ready documentation available
+
+* * *
+
+🔧 Langkah Praktikal / Teknis
+-----------------------------
+
+* * *
+
+### Phase 1 – Control Mapping
+
+Buat matrix:
+
+| OWASP | Prevent | Detect | Respond |
+| --- | --- | --- | --- |
+| LLM01 | Input filtering | Injection keyword pattern | Block + Notification |
+| LLM02 | RBAC enforcement | Restricted keyword exposure | Mask output + escalation |
+| LLM0N | ..... | ..... | .... |
+
+* * *
+
+### Phase 2 – Detection Engineering
+
+1.  Define log schema
+2.  Create rule per OWASP category
+3.  Tune false positive
+4.  Simulate Red Team replay
+5.  Validate alert coverage
+
+* * *
+
+### Phase 3 – Alert & Escalation
+
+1.  Severity mapping:
+    1.  Critical → data exposure
+    2.  High → injection bypass
+    3.  Medium → abuse attempt
+    4.  Low → suspicious pattern
+2.  Configure automated alert routing
+3.  Define SLA response time
+
+* * *
+
+### Phase 4 – Incident Response
+
+1.  Update AI-specific IR playbook:
+    1.  Containment
+    2.  Investigation
+    3.  Root cause
+    4.  Recovery
+2.  Conduct tabletop exercise
+3.  Update detection rules post-simulation
+
+* * *
+
+👤 Blue-2 → Detection Engineering (Rule creation per OWASP ID)
+
+_\*tulisan diatas hasil chatGPT jika ada ketidaksesuaian mohon konfirmasi melalui komen pada backlog ini_",,,,,anggyedo,Anggy Edo Prasetya,ug_069210e7-45f4-4568-aeca-cfbc66050879,WIDYANTO ARDY PRABOWO,ug_069210e7-45f4-4568-aeca-cfbc66050879,WIDYANTO ARDY PRABOWO,To Do,False,,,,,,,1770953643106935,1770953643106951,1770953643126142,2026-02-13 03:34:03.126147+00:00,2026-02-18 07:29:59.397555+00:00,,False,False,0,,,,,,,[],0,,,
+755803,11,[Blue team] Detect and Response #3,"**As Blue Team,**  
+**we want to implement detection and response capability aligned to OWASP Top 10 for LLM**  
+**so that every risk category has monitoring, alerting, and mitigation mechanism.**
+
+* * *
+
+🎯 Objective
+------------
+
+Pastikan setiap OWASP LLM risk memiliki:
+
+1.  Preventive control
+2.  Detection rule
+3.  Alert severity
+4.  Incident response procedure
+
+* * *
+
+✅ Acceptance Criteria
+---------------------
+
+1.  10 OWASP category mapped to detection rule
+2.  ≥80% Red Team scenario detected
+3.  AI security dashboard live
+4.  Severity classification defined
+5.  Incident Response SOP updated
+6.  1 Red vs Blue simulation completed
+7.  Audit-ready documentation available
+
+* * *
+
+🔧 Langkah Praktikal / Teknis
+-----------------------------
+
+* * *
+
+### Phase 1 – Control Mapping
+
+Buat matrix:
+
+| OWASP | Prevent | Detect | Respond |
+| --- | --- | --- | --- |
+| LLM01 | Input filtering | Injection keyword pattern | Block + Notification |
+| LLM02 | RBAC enforcement | Restricted keyword exposure | Mask output + escalation |
+| LLM0N | ..... | ..... | .... |
+
+* * *
+
+### Phase 2 – Detection Engineering
+
+1.  Define log schema
+2.  Create rule per OWASP category
+3.  Tune false positive
+4.  Simulate Red Team replay
+5.  Validate alert coverage
+
+* * *
+
+### Phase 3 – Alert & Escalation
+
+1.  Severity mapping:
+    1.  Critical → data exposure
+    2.  High → injection bypass
+    3.  Medium → abuse attempt
+    4.  Low → suspicious pattern
+2.  Configure automated alert routing
+3.  Define SLA response time
+
+* * *
+
+### Phase 4 – Incident Response
+
+1.  Update AI-specific IR playbook:
+    1.  Containment
+    2.  Investigation
+    3.  Root cause
+    4.  Recovery
+2.  Conduct tabletop exercise
+3.  Update detection rules post-simulation
+
+* * *
+
+  
+👤 Blue-3 → Notification & Alert
+
+_\*tulisan diatas hasil chatGPT jika ada ketidaksesuaian mohon konfirmasi melalui komen pada backlog ini_",,,,,anggyedo,Anggy Edo Prasetya,712020_2c7e4680-d196-4d28-9a5c-9fed5eb338b1,Danar Panjalu,712020_2c7e4680-d196-4d28-9a5c-9fed5eb338b1,Danar Panjalu,To Do,False,,,,,,,1770953649404317,1770953649404337,1770953649424242,2026-02-13 03:34:09.424247+00:00,2026-02-18 07:31:18.626633+00:00,,False,False,0,,,,,,,[],0,,,
+755804,12,[Blue team] Detect and Response #4,"**As Blue Team,**  
+**we want to implement detection and response capability aligned to OWASP Top 10 for LLM**  
+**so that every risk category has monitoring, alerting, and mitigation mechanism.**
+
+* * *
+
+🎯 Objective
+------------
+
+Pastikan setiap OWASP LLM risk memiliki:
+
+1.  Preventive control
+2.  Detection rule
+3.  Alert severity
+4.  Incident response procedure
+
+* * *
+
+✅ Acceptance Criteria
+---------------------
+
+1.  10 OWASP category mapped to detection rule
+2.  ≥80% Red Team scenario detected
+3.  AI security dashboard live
+4.  Severity classification defined
+5.  Incident Response SOP updated
+6.  1 Red vs Blue simulation completed
+7.  Audit-ready documentation available
+
+* * *
+
+🔧 Langkah Praktikal / Teknis
+-----------------------------
+
+* * *
+
+### Phase 1 – Control Mapping
+
+Buat matrix:
+
+| OWASP | Prevent | Detect | Respond |
+| --- | --- | --- | --- |
+| LLM01 | Input filtering | Injection keyword pattern | Block + Notification |
+| LLM02 | RBAC enforcement | Restricted keyword exposure | Mask output + escalation |
+| LLM0N | ..... | ..... | .... |
+
+* * *
+
+### Phase 2 – Detection Engineering
+
+1.  Define log schema
+2.  Create rule per OWASP category
+3.  Tune false positive
+4.  Simulate Red Team replay
+5.  Validate alert coverage
+
+* * *
+
+### Phase 3 – Alert & Escalation
+
+1.  Severity mapping:
+    1.  Critical → data exposure
+    2.  High → injection bypass
+    3.  Medium → abuse attempt
+    4.  Low → suspicious pattern
+2.  Configure automated alert routing
+3.  Define SLA response time
+
+* * *
+
+### Phase 4 – Incident Response
+
+1.  Update AI-specific IR playbook:
+    1.  Containment
+    2.  Investigation
+    3.  Root cause
+    4.  Recovery
+2.  Conduct tabletop exercise
+3.  Update detection rules post-simulation
+
+* * *
+
+👤 Blue-4 → Anticipation & Governance Documentation (Playbook)
+
+_\*tulisan diatas hasil chatGPT jika ada ketidaksesuaian mohon konfirmasi melalui komen pada backlog ini_",,,,,anggyedo,Anggy Edo Prasetya,rk_39c401a9-bbd6-4b5d-8b9d-e60420b1ec41,Fajar Eko Prasetyo Utomo,rk_39c401a9-bbd6-4b5d-8b9d-e60420b1ec41,Fajar Eko Prasetyo Utomo,To Do,False,,,,,,,1770953655559494,1770953655559510,1770953655578288,2026-02-13 03:34:15.578292+00:00,2026-02-18 07:32:03.713415+00:00,,False,False,0,,,,,,,[],0,,,

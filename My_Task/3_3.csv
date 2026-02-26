@@ -1,0 +1,8 @@
+Domain,Element,Implementation
+Detection Logic,Keyword Patterns,Executed directly at the **LiteLLM** proxy layer using fast regex matching to enable immediate query drops before incurring inference costs.
+Detection Logic,Contextual Classifier Rules,Handled by **LLM Guard** acting as a real-time middleware interceptor immediately before and after the LLM call.
+Detection Logic,Threshold Scores,"Configured dynamically within LLM Guard and the UI Gateway. A hallucination score > 0.8 triggers a block, while > 0.6 triggers a warning."
+Response Strategy,Block Response,"Instantly halts inference execution; returns strict HTTP 403 or generic ""I cannot fulfill this request"" error to the user interface."
+Response Strategy,Mask Response,"Uses the **Presidio** engine within **LLM Guard** to replace sensitive entities with placeholders (e.g., `[REDACTED_NIK]`) before the stream reaches the user."
+Response Strategy,Alert / Alarm Notification,High-severity webhooks dispatched directly to the SecOps Slack/Teams channel and the Security Portal Dashboard.
+Response Strategy,Log Event to Datadog,"Asynchronous forwarding of the secure metadata payload (User Hash, Attempt Category, Latency) via the **LiteLLM** standard logging integration, guaranteeing no raw prompts are stored."

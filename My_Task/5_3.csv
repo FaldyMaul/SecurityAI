@@ -1,0 +1,13 @@
+Category,Name,Description/Implementation
+Mandatory Control,RBAC Enforcement,**Apilogy** must enforce scope-based token validation. Vector DB queries must inherit these scopes.
+Mandatory Control,Mask Confidential Output,**LLM Guard** automatically runs PII anonymization on input and deanonymization/masking on output.
+Mandatory Control,Disable Debug Logs,Global Env Var `DEBUG=false` enforced by CI/CD pipeline. Disabling verbose errors entirely from user reach. Errors gracefully handled by LiteLLM.
+Mandatory Control,Encrypt Vector Store,Enable encryption-at-rest (AES-256) for Qdrant/Milvus volumes.
+Mandatory Control,Enforce Token Validation via Apilogy,All AI requests must bear a valid JWT with `resource_access` claims checked via Apilogy.
+Do Log,"*   `request_id`, `timestamp`, `user_hash` (anonymized).",
+Do Log,"Token consumption, latency, routing data (via **LiteLLM**).",
+Do Log,"`security_flags` (e.g., ""Prompt Injection Detected using LLM Guard"").",
+Do Log,`tool_used` (name of plugin called in Flowise).,
+Do NOT Log,"*   Raw `prompt_text` (unless specific ""Abuse"" sampling is enabled & encrypted).",
+Do NOT Log,Raw `completion_text` (contains PII).,
+Do NOT Log,`authorization` headers (Bearer tokens).,
