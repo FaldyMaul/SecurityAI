@@ -1,0 +1,23 @@
+﻿NO,Tahap,Checklist,Rekomendasi Tools,Referensi
+1,Perencanaan & Desain,Threat modeling khusus AI,"MITRE ATLAS, PyRIT",https://atlas.mitre.org/ ; https://github.com/Azure/PyRIT
+1,Perencanaan & Desain,Privacy by design dan impact assessment,"NIST AI RMF, ISO/IEC 42001",https://www.nist.gov/itl/ai-risk-management-framework
+1,Perencanaan & Desain,Model interpretability dan auditability,"SHAP, LIME, IBM AI Explainability 360",https://aix360.mybluemix.net/
+2,Data Preparation,Validasi integritas dan sumber data,"Great Expectations, Deequ",https://greatexpectations.io/
+2,Data Preparation,Enkripsi dan access control data training,"AWS KMS, Azure Confidential Ledger",https://aws.amazon.com/kms/
+2,Data Preparation,Anonymization dan masking data,"ARX Data Anonymization, IBM Data Privacy Passports",https://arx.deidentifier.org/
+3,Model Development,Adversarial robustness testing,"IBM ART, CleverHans",https://github.com/Trusted-AI/adversarial-robustness-toolbox
+3,Model Development,Pencegahan model extraction,"Microsoft Counterfit, Guardrails AI",https://github.com/Azure/counterfit
+3,Model Development,Model watermarking,"DeepSigns, TensorFlow Watermarking",https://arxiv.org/abs/1804.00750
+4,Deployment & Infrastruktur,Secure deployment pipeline,"GitLab CI/CD + SAST, Jenkins + Trivy",https://owasp.org/www-project-devsecops-guideline/
+4,Deployment & Infrastruktur,Isolasi model dan runtime,"Docker, Kubernetes + PodSecurityPolicy",https://kubernetes.io/docs/concepts/security/pod-security-policy/
+4,Deployment & Infrastruktur,Monitoring penggunaan model secara real-time,"Prometheus, Seldon Core, Arize AI",https://www.seldon.io/solutions/model-monitoring/
+5,API & Interface Security,Rate limiting & authentication,"OAuth2, Kong API Gateway",https://konghq.com/
+5,API & Interface Security,Input validation dan sanitization,"OWASP Validator, FastAPI Pydantic",https://owasp.org/www-community/Input_Validation
+5,API & Interface Security,Audit log dan forensik,"ELK Stack, Datadog",https://www.elastic.co/what-is/elk-stack
+6,Compliance & Governance,"Kepatuhan pada regulasi (GDPR, PDP, ISO)","TrustArc, OneTrust",https://www.onetrust.com/
+6,Compliance & Governance,AI Ethics dan fairness testing,AI Fairness 360 Toolkit,https://aif360.mybluemix.net/
+6,Compliance & Governance,Dokumentasi dan kontrol versi model,"MLflow, DVC",https://mlflow.org/
+7,Post-Deployment Monitoring,Incident response untuk model AI,"PagerDuty, Microsoft Sentinel",https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-sentinel
+7,Post-Deployment Monitoring,Retraining dan patching berkala,"Kubeflow Pipelines, MLflow",https://www.kubeflow.org/docs/components/pipelines/
+7,Post-Deployment Monitoring,Security testing berkala (Red teaming AI),"Counterfit, ART, Garak",https://atlas.mitre.org/ ; https://github.com/leondz/garak
+7,Post-Deployment Monitoring,Vulnerability Assessment and Penetration Testing (VAPT),"Nessus, Burp Suite, Nmap, Microsoft Counterfit, Garak, ART","https://owasp.org/www-project-vulnerability-assessment-tools/, https://github.com/Azure/counterfit"

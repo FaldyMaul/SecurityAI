@@ -16,6 +16,7 @@ The table below breaks down the top open-source tools capable of real-time input
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **LLM Guard** *(Protect AI)* | Free OSS<br>**~2.5k Stars** | **Python** (Model agnostic) | **Privacy & Security.** PII Redaction, Secret scanning, Prompt Injection detection, output toxicity/bias filtering. | **Great** - Strong backing from Protect AI, focused solely on LLM App firewalls. | **Strengths**: True "Drop-in" firewall. Does everything Presidio does (PII) PLUS stops prompt injections and malicious links.<br>**Limitations**: Can add latency to real-time chats if all heavy scanners are enabled. |
 | **NeMo Guardrails** *(NVIDIA)* | Free OSS<br>**~5.6k Stars** | **Python, Colang**, C++ (`annoy`) | **Dialog Control & Security.** Jailbreak prevention, RAG grounding, topical steering, PII masking. | **Excellent** - Highly active, backed by NVIDIA. Integrates with all major frameworks (LangChain, LlamaIndex). | **Strengths**: Best for steering complete conversation flows and ensuring the AI stays on topic.<br>**Limitations**: High learning curve. Requires writing custom rules in "Colang" (NVIDIA's domain-specific language). |
+| **Guardrails AI** | Free OSS<br>**~3.8k Stars** | **Python** | **Structural Output Validation.** Ensures LLMs respond in exact JSON/XML formats without hallucinations or PII. | **Great** - Strong focus on structured guarantees. | **Strengths**: Perfect for forcing an LLM to output safe, validated JSON payloads using `.rail` files.<br>**Limitations**: Requires defining custom XML schemas for every use case; less of a "drop-in" firewall than LLM Guard. |
 | **Microsoft Presidio** | Free OSS<br>**~2.5k+ Stars** | **Python**, Go (REST API) | **Privacy only.** Best-in-class entity recognition (NER) and regex-based PII redaction/anonymization. | **Great** - Industry standard for traditional data de-identification. | **Strengths**: The absolute gold standard for finding KTP, Emails, and Phone numbers. Highly customizable.<br>**Limitations**: Only handles privacy. It will NOT catch a prompt injection or a jailbreak attempt. |
 
 ---
@@ -34,6 +35,10 @@ The table below breaks down the top open-source tools capable of real-time input
 ### C. The Architectural Heavyweight: NeMo Guardrails (NVIDIA)
 **NeMo** is less of a simple filter and more of a conversational traffic cop. It uses a unique language (`Colang`) to explicitly map out what the AI is allowed to talk about.
 *   **Verdict:** If the Sandbox aims to build specific, highly restricted AI Agents (e.g., an HR Bot that refuses to talk about finance), NeMo is the best choice. For a generalized testing sandbox, its implementation overhead might be too heavy.
+
+### D. The "Structural Guarantee": Guardrails AI
+**Guardrails AI** excels at forcing the LLM to output specific, validated data formats (like perfect JSON) without PII or hallucinations. It uses `.rail` (Reliable AI Markup Language) files to define strict XML schemas.
+*   **Verdict:** Excellent for AI applications that require strict data outputs (e.g., parsing a resume into JSON). However, for a *generalized* PaaS Sandbox that sits in front of hundreds of unpredictable user prompts, the "drop-in" nature of LLM Guard is vastly superior to writing custom XML schemas for every new model.
 
 ---
 

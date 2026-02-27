@@ -30,6 +30,14 @@ The AI Sandbox operates as a rigorous, automated pipeline. When a new AI model o
     3.  The PM logs into the **National Sandbox Portal (Custom UI)**. They do not see raw JSON logs; they see a simple dashboard with Dial Scores: *Contextual Relevancy: 95%, Hallucination Rate: 2%, OWASP Compliance: Pass*.
     4.  If the scores meet the minimum threshold, they click "Request Certification".
 
+### Persona 3: The Multimodal Developer (Computer Vision & Text-to-Image)
+*   **Goal**: Deploys vision models, LMMs (e.g., Qwen-VL), or Text-to-Image models and must ensure safety against visual jailbreaks and toxic image generation.
+*   **Workflow**:
+    1.  The Developer submits the multimodal endpoint (e.g., Stable Diffusion API) via the **National Sandbox Portal**.
+    2.  The pipeline triggers tests tailored for vision. It uses **PyRIT** to send poisoned images (Visual Prompt Injection) and uses Python-native **Computer Vision Safety Checkers** to evaluate generated output images for NSFW/Toxicity content.
+    3.  **LLM Guard** applies OCR to the vision pipeline to ensure the LMM doesn't leak PII when analyzing images containing text (e.g., scanned ID cards).
+    4.  They review the pass/fail vision metrics on the dashboard, using **Arize Phoenix** to look at specific traces of image inputs that bypassed the guardrails.
+
 ### Flow Phase 2: The Core Python Testing Pipeline
 Because all testing tools are Python-based, they are orchestrated via a single cohesive script (e.g., using `pytest` natively).
 
@@ -41,8 +49,8 @@ Because all testing tools are Python-based, they are orchestrated via a single c
 
 ### Flow Phase 3: Observability, Mitigation & Reporting
 1.  **Developer Observability (Optional)**: OpenTelemetry traces from DeepEval, LiteLLM, and LLM Guard can be streamed locally into **Arize Phoenix** strictly for AI Engineers to debug failed prompts at the code level.
-2.  **Sandbox Web Portal**: The test suite outputs a final JSON result. Product Managers log into the **Custom Sandbox Portal (Vue/React)** to view a clean, high-level dashboard of their Agent's Pass/Fail metrics (Accuracy, Bias, OWASP).
-3.  **Governance Reporting**: Once the model passes, a button on the Custom Portal triggers a CI/CD script that converts the JSON metrics into a standardized, static PDF report for Management audits. 
+2.  **Sandbox Web Portal**: The test suite outputs a final JSON result. Product Managers log into the **Customized OSS Portal (Streamlit / AI Verify Fork)** to view a clean, high-level dashboard of their Agent's Pass/Fail metrics (Accuracy, Bias, OWASP).
+3.  **Governance Reporting**: Once the model passes, a button on the Customized Portal triggers a CI/CD script that converts the JSON metrics into a standardized, static PDF report for Management audits. 
 
 ---
 
@@ -53,10 +61,10 @@ To support the flow above, the architecture is specialized into layers. This str
 | Layer | Component Role | Selected Tool | Rationale for Integration & OSS Reality |
 | :--- | :--- | :--- | :--- |
 | **Layer 7: Reporting** | Static Compliance Output | **Pipeline PDF Generator** | *Replaces AI Verify.* A simple Python/CI script that converts the test outputs into a Management-ready PDF. Eliminates the need for buggy, low-adoption UI portals. |
-| **Layer 6: Master UI Hub** | Governance Dashboard | **Custom Sandbox Portal (Vue/React)** | *Replaces forcing generic Observability tools.* There is no single OSS tool that perfectly combines DeepEval accuracy and Garak security into a non-technical management dashboard. Building a lightweight custom frontend to read the testing JSON is the only way to achieve exactly what the PM and Management personas need. |
+| **Layer 6: Master UI Hub** | Governance Dashboard | **Customized OSS Portal / AIVerify Moonshot (Streamlit / AI Verify Fork)** | *Replaces forcing generic Observability tools.* Instead of building a proprietary UI from scratch, the Sandbox will fork an existing open-source base (like AI Verify) or use a rapid Python framework (Streamlit). This UI is customized specifically to ingest the JSON payload from Garak/DeepEval. |
 | **Layer 5: Core Testing Engine** | Accuracy Evaluator | **DeepEval** | Acts as "Pytest for LLMs", creating a unified Python testing suite that flows perfectly into the other tools. |
 | **Layer 4: Security Scanners** | Vulnerability Probes | **Garak & Giskard** | Both are native Python libraries. Garak specifically maps its attacks to the **OWASP Top 10**. |
-| **Layer 3: Advanced Red Team**| Adaptive Hacking | **PyRIT** | Microsoft's Python tool for adaptive, multi-turn AI attacks. |
+| **Layer 3: Advanced Red Team & Classical ML**| Adaptive Hacking & Evasion| **PyRIT & IBM ART** | Microsoft's PyRIT orchestrates multi-turn, adaptive LLM attacks. **IBM ART** operates in parallel to test classical ML models (vision/tabular) for evasion and poisoning. |
 | **Layer 2: Privacy Firewall** | Real-time Filtering | **LLM Guard** | An all-in-one Python firewall that handles PII redaction *and* prompt injection blocking. |
 | **Layer 1: AI Gateway** | Proxy & Cost Control| **LiteLLM** | The mandatory gateway. Tracks Apilogy API costs and handles rate-limiting. |
 | **Layer 0: Infrastructure** | Target APIs & Builders | **Flowise + Apilogy**| Flowise builds the Agents; Apilogy provides the foundation models. |

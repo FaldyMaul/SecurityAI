@@ -14,9 +14,10 @@ The table below breaks down the primary open-source frameworks for LLM evaluatio
 
 | Evaluator Tool | OSS Status & GitHub Stars | Core Language & Tech Stack | Primary Focus | Docs & Community | Key Strengths & Limitations |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **DeepEval** *(Confident AI)*<br>*(Top Recommendation)* | Free OSS<br>**~13.8k Stars** | **Python** (Native Pytest integration) | **Comprehensive Evaluation.** "Pytest for LLMs". Covers 50+ research-backed metrics including G-Eval, Hallucination, and Toxicity. | **Strengths**: Incredibly deep metrics natively built for Python CI/CD. Perfectly integrates with Garak & LLM Guard for a Unified Python Stack.<br>**Limitations**: Python-centric workflow (which is actually a benefit for the Sandbox's architectural alignment). |
-| **Ragas** | Free OSS<br>**~12.7k Stars** | **Python** | **RAG Evaluation.** Specifically designed for Retrieval-Augmented Generation pipelines. | **Strengths**: Best-in-class for measuring Context Precision, Context Recall, and Faithfulness of RAG systems.<br>**Limitations**: Highly specialized for RAG; less suited for general conversational LLM benchmarking. |
-| **Promptfoo** | Free OSS<br>**~10.6k Stars** | **TypeScript** / Node.js (Language Agnostic CLI) | **Regression & Prompt Testing.** Matrix testing of prompts across multiple models. | **Strengths**: Unmatched speed and ease of use. Uses simple YAML configs.<br>**Limitations**: Written in TypeScript, immediately fragmenting the Python-based Sandbox architecture. Cannot share the same runtime traces as Garak/LiteLLM. |
+| **DeepEval** *(Confident AI)*<br>*(Top Recommendation)* | Free OSS<br>**~13.8k Stars** | **Python** (Native Pytest integration) | **LLM Evaluation.** "Pytest for LLMs". Covers 50+ research-backed metrics including G-Eval, Hallucination, and Toxicity. | **Strengths**: Incredibly deep metrics natively built for Python CI/CD. Perfectly integrates with Garak & LLM Guard.<br>**Limitations**: Python-centric workflow. |
+| **Ragas** | Free OSS<br>**~12.7k Stars** | **Python** | **RAG Evaluation.** Specifically designed for Retrieval-Augmented Generation pipelines. | **Strengths**: Best-in-class for measuring Context Precision, Context Recall, and Faithfulness of RAG systems.<br>**Limitations**: Highly specialized for RAG; less suited for general conversational benchmarking. |
+| **AI Fairness 360** *(IBM)* | Free OSS<br>**~2.3k Stars** | **Python** | **Classical ML Bias Mitigation.** Demographic padding, prejudice reduction. | **Strengths**: Gold standard for testing tabular data models for systemic discrimination (e.g., loan approvals).<br>**Limitations**: Primarily built for traditional ML structured datasets, not Generative Text/LLM conversations. |
+| **Promptfoo** | Free OSS<br>**~10.6k Stars** | **TypeScript** / Node.js (CLI) | **Regression & Prompt Testing.** Matrix testing of prompts across models. | **Strengths**: Unmatched speed and ease of use. Uses simple YAML configs.<br>**Limitations**: Fragments the Python-based Sandbox architecture. Cannot cleanly share metric JSON payloads with Python backends. |
 
 ---
 
@@ -27,6 +28,11 @@ The table below breaks down the primary open-source frameworks for LLM evaluatio
 
 ### B. The "Deep Python" Champion: DeepEval
 **DeepEval** is built to feel exactly like `pytest`. For teams deep in Python (using LangChain or LlamaIndex), DeepEval is incredibly powerful. It offers advanced, research-backed metrics out of the box that evaluate *how* the AI thinks (e.g., G-Eval criteria). If the Sandbox needs complex, multi-turn conversational evaluation and strict mathematical grading of hallucinations, DeepEval is superior to Promptfoo.
+
+### C. The "Classical ML Fairness" Standard: IBM AI Fairness 360
+While DeepEval handles conversational logic, **IBM AI Fairness 360 (AIF360)** (highlighted heavily in enterprise security research) remains the undisputed open-source framework for detecting and mitigating bias in *traditional* Machine Learning datasets. 
+*   **The Difference:** AIF360 is used before a model is deployed to ensure its training data (e.g., a CSV of housing prices) isn't prejudiced. DeepEval/Giskard are used *after* a Generative LLM is deployed to test if it randomly responds with toxic conversational language. 
+*   **Verdict:** Keep both. DeepEval acts as the core LLM Evaluator, while AIF360 should be utilized exclusively for tabular, predictive ML models hitting the Sandbox.
 
 ### C. The "RAG Specialist": Ragas
 If the overarching architecture relies heavily on Vector Databases and retrieving external documents (RAG), **Ragas** is mandatory. Promptfoo and DeepEval can evaluate the *final output*, but only Ragas intricately scores the *retrieval* mechanisms (Context Precision/Recall).

@@ -33,19 +33,27 @@ Here is why:
 2.  **Enterprise Traps:** Tools that *do* have nice team management and governance dashboards (like Langfuse or Giskard Hub) lock those features behind massive Enterprise Paywalls.
 3.  **Fragmented Workflows:** None of these tools natively combine a vulnerability scanner (like Garak) and an OWASP Top 10 compliance checklist into a single, management-friendly view without heavy customization.
 
-## 4. The Recommendation: Build a Custom "Sandbox Portal"
+## 4. The Recommendation: Customize an Existing Open-Source Base
 
-Because we have a strict requirement for **100% Free** software, and we need to serve three very distinct personas (AI Engineers, Product Managers, and IMDA/Management Auditors), the only proper architectural decision is to **build a custom, lightweight Web Portal (e.g., in Vue.js or React)**.
+The user's insight is completely correct: building a custom Vue.js or React portal from scratch represents a massive, unnecessary development overhead. Instead, we must leverage the "base models" of existing open-source platforms and heavily customize them to fit our exact needs.
 
-Instead of trying to force a pre-built observability tool to act as a governance dashboard, we build our own "pane of glass" that simply reads the JSON outputs from our Python backend tools.
+Because we have a strict requirement for **100% Free** software, and we need to serve three distinct personas without enterprise feature gates, we have two primary routes for our customized portal base:
+
+**Option A: The Python-Native Dashboard (Streamlit / Gradio)**
+*   **Why it works:** Because our entire backend (DeepEval, Garak, LiteLLM) is the **Unified Python Stack**, using an open-source Python framework like **Streamlit** to build the dashboard is the fastest route.
+*   **Customization:** We don't build a web app; we write a Python script that reads the `results.json` from Garak/DeepEval and uses Streamlit's massive library of pre-built UI components to instantly generate a clean, interactive dashboard. No React developers needed.
+
+**Option B: Forking an Open-Source Governance Framework (e.g., AI Verify / VerifyWise)**
+*   **Why it works:** While AI Verify has low adoption as a standalone tool, its *source code* is highly modular and open-source. 
+*   **Customization:** We fork the repository, strip out the heavy/slow native tests, and customize the frontend React code to exclusively ingest our unified JSON payload from Garak and DeepEval. We use their pre-built PDF generation and IMDA-aligned UI components to save thousands of hours of frontend UI/UX design.
 
 ### 1. The Real-Time Developer Observability (Optional)
 *   **The Tool**: **Arize Phoenix** (Running locally)
 *   **The Use Case**: The AI Engineer uses this purely as a background "flight recorder" to debug why an Agent failed a specific prompt injection by looking at the raw OpenTelemetry traces. 
 
-### 2. The Sandbox Web Portal (The Main UI)
-*   **The Tool**: **Custom Vue.js / React App (National Sandbox Dashboard)**
-*   **The Flow**: When a PM uploads an AI Agent, the Python testing suite (Garak, DeepEval) runs in the backend. When finished, it outputs a single JSON file with the scores. The Custom Dashboard reads this JSON and displays a simple, beautiful traffic-light system (Red/Yellow/Green) for "Accuracy", "Bias", and "OWASP Context".
+### 2. The Sandbox Web Portal (The Customized Main UI)
+*   **The Tool**: **Customized OSS Portal (Streamlit Base or AI Verify Fork)**
+*   **The Flow**: When a PM uploads an AI Agent, the Python testing suite (Garak, DeepEval) runs in the backend. When finished, it outputs a single JSON file with the scores. The customized dashboard reads this JSON and displays a simple, beautiful traffic-light system (Red/Yellow/Green) for "Accuracy", "Bias", and "OWASP Context".
 *   **The View**: The PM logs into the portal, sees their specific Agent, and sees exactly what tests passed or failed in plain language, without seeing confusing developer logs.
 
 ### 3. The Static Compliance Report (For Management / Government)

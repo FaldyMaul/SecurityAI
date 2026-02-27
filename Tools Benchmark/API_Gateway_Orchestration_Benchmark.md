@@ -18,11 +18,13 @@ Based on architectural decisions and enterprise integration requirements, these 
 
 ---
 
-## 3. Deep Dive: Why LiteLLM is the Ultimate Gateway
+## 3. Deep Dive: Why LiteLLM over Traditional Gateways (e.g., Kong)
 
-While there are alternatives (like Portkey or Langfuse's internal gateway), **LiteLLM Proxy Server** is the undisputed champion for open-source AI Gateways.
+While the Security Team's research correctly identified **Kong API Gateway** as a massive industry standard for traditional REST/Layer 7 routing, the AI Sandbox specifically requires an "AI-Native" gateway.
 
-1.  **Universal Translator:** The backend Python Suite (Garak, Giskard, DeepEval) expects OpenAI-formatted API endpoints. LiteLLM instantly translates requests to Anthropic, Google Vertex, or specialized local models, meaning the testing pipeline code never has to change.
+Here is why **LiteLLM Proxy Server** is the undisputed champion over Kong for Generative AI testing:
+
+1.  **Universal LLM Translator (Not just a Router):** Traditional gateways like Kong just route packets. The backend Python Suite (Garak, Giskard, DeepEval) strictly expects OpenAI-formatted API endpoints. LiteLLM natively *translates* the JSON schema of requests to Anthropic, Google Vertex, or Apilogy's custom models, meaning the testing pipeline code never has to change. Kong cannot do this without heavy custom Lua enterprise plugins.
 2.  **Cost Control:** Red-teaming with tools like Garak and PyRIT consumes massive amounts of tokens. LiteLLM intercepts every call, tracks the token count, and logs the exact cost in IDR/USD, preventing budget overruns during automated CI/CD testing.
 3.  **Resilience (Fallbacks):** If a primary model fails during a 10,000-prompt Garak scan due to API rate limits, LiteLLM automatically falls back to a secondary model, ensuring the security test completes without failing the pipeline.
 
