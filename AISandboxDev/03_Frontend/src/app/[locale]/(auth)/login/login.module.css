@@ -1,0 +1,23 @@
+.card { width: 100%; max-width: 420px; padding: var(--space-8); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); }
+.brandMark { text-align: center; margin-bottom: var(--space-6); color: var(--color-primary); }
+.title { font-size: var(--text-xl); color: var(--color-text-primary); margin-top: var(--space-2); }
+.subtitle { font-size: var(--text-sm); color: var(--color-text-secondary); margin: 0; }
+.ssoBtn { width: 100%; padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); font-size: var(--text-sm); font-weight: var(--font-weight-medium); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: var(--space-2); transition: background var(--transition-fast); }
+.ssoBtn:hover { background: var(--color-bg-tertiary); }
+.divider { display: flex; align-items: center; gap: var(--space-3); margin: var(--space-5) 0; color: var(--color-text-muted); font-size: var(--text-sm); }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--color-border); }
+.errorAlert { padding: var(--space-3); background: #fee2e2; border: 1px solid #fca5a5; border-radius: var(--radius-md); font-size: var(--text-sm); color: #dc2626; margin-bottom: var(--space-4); }
+.form { display: flex; flex-direction: column; gap: var(--space-4); }
+.field { display: flex; flex-direction: column; gap: var(--space-1); }
+.field label { font-size: var(--text-sm); font-weight: var(--font-weight-medium); color: var(--color-text-primary); }
+.field input { padding: var(--space-2) var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-sm); transition: border-color var(--transition-fast); outline: none; }
+.field input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px var(--color-primary-light); }
+.passwordWrap { position: relative; display: flex; }
+.passwordWrap input { flex: 1; padding-right: 40px; }
+.eyeBtn { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); border: none; background: none; color: var(--color-text-muted); cursor: pointer; }
+.remember { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); color: var(--color-text-secondary); }
+.remember input { margin-right: var(--space-1); }
+.submitBtn { width: 100%; padding: var(--space-3); background: var(--color-primary); color: white; border: none; border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: var(--font-weight-semibold); cursor: pointer; transition: background var(--transition-fast); }
+.submitBtn:hover { background: var(--color-primary-hover); }
+
+@media (max-width: 480px) { .card { max-width: 100%; border: none; border-radius: 0; box-shadow: none; } }

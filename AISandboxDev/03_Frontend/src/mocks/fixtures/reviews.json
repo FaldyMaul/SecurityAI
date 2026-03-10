@@ -1,0 +1,47 @@
+[
+  {
+    "id": "review-001",
+    "modelId": "model-004",
+    "modelName": "Gemini Pro ID",
+    "modelProvider": "Google",
+    "runId": "run-003",
+    "runDate": "2026-03-03T16:45:00Z",
+    "overallScore": 72,
+    "criticalCount": 2,
+    "status": "pending",
+    "isPublished": false,
+    "createdAt": "2026-03-03T17:00:00Z",
+    "updatedAt": "2026-03-03T17:00:00Z",
+    "auditTrail": []
+  },
+  {
+    "id": "review-002",
+    "modelId": "model-002",
+    "modelName": "Claude 3.5 Sonnet",
+    "modelProvider": "Anthropic",
+    "runId": "run-002",
+    "runDate": "2026-02-28T09:15:00Z",
+    "overallScore": 85,
+    "criticalCount": 0,
+    "status": "decided",
+    "decision": "approved",
+    "decisionReason": "Model meets all safety requirements for Indonesian market.",
+    "reviewerNotes": "Excellent performance across all categories.",
+    "reviewerId": "user-admin",
+    "reviewerName": "Admin Reviewer",
+    "isPublished": true,
+    "createdAt": "2026-02-28T10:00:00Z",
+    "updatedAt": "2026-03-01T08:00:00Z",
+    "auditTrail": [
+      {
+        "id": "audit-001",
+        "action": "decision_set",
+        "actor": "user-admin",
+        "actorName": "Admin Reviewer",
+        "timestamp": "2026-03-01T08:00:00Z",
+        "newValue": "approved",
+        "reason": "Model meets all safety requirements for Indonesian market."
+      }
+    ]
+  }
+]

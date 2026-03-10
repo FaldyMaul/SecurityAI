@@ -1,0 +1,47 @@
+/*!***************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/components/ranking/RankBadge.module.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************/
+.RankBadge_badge__c3tTz { display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-full); font-weight: var(--font-weight-bold); }
+.RankBadge_sm__n0Mvm { width: 28px; height: 28px; font-size: 11px; }
+.RankBadge_md__2flfF { width: 36px; height: 36px; font-size: var(--text-sm); }
+.RankBadge_lg__haEMa { width: 48px; height: 48px; font-size: var(--text-lg); }
+.RankBadge_gold__awmtS { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #78350f; }
+.RankBadge_silver__aH8Pf { background: linear-gradient(135deg, #d1d5db, #9ca3af); color: #1f2937; }
+.RankBadge_bronze__prNEw { background: linear-gradient(135deg, #d97706, #b45309); color: #fffbeb; }
+.RankBadge_neutral___g17U { background: var(--color-bg-tertiary); color: var(--color-text-muted); }
+
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/app/[locale]/home.module.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
+.home_hero__UPzNc { text-align: center; padding: var(--space-20) var(--space-8) var(--space-16); background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #3b82f6 100%); color: white; margin: 0 calc(-1 * var(--space-8)); }
+.home_heroTitle__7rDCR { font-size: var(--text-4xl); font-weight: var(--font-weight-bold); margin-bottom: var(--space-3); }
+.home_heroSubtitle__k26dE { font-size: var(--text-lg); opacity: 0.9; margin-bottom: var(--space-8); }
+.home_heroCta__PzRzy { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-6); background: white; color: var(--color-primary); border-radius: var(--radius-lg); font-weight: var(--font-weight-semibold); text-decoration: none; transition: all var(--transition-fast); }
+.home_heroCta__PzRzy:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); text-decoration: none; }
+
+.home_section__OQBag { max-width: var(--content-max-width); margin: var(--space-16) auto; padding: 0 var(--space-8); }
+.home_sectionTitle__Hl3no { font-size: var(--text-2xl); text-align: center; margin-bottom: var(--space-8); }
+
+.home_modelGrid__aHmkc { display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: var(--space-4); gap: var(--space-4); }
+.home_modelCard__7_3Lp { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); padding: var(--space-6); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); text-decoration: none; text-align: center; transition: all var(--transition-fast); }
+.home_modelCard__7_3Lp:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); text-decoration: none; }
+.home_modelName___kvxY { font-size: var(--text-lg); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); }
+.home_modelProvider__FCccY { font-size: var(--text-sm); color: var(--color-text-secondary); margin: 0; }
+.home_modelScore__A_xjg { font-size: var(--text-2xl); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+.home_approvalLabel__RpUj3 { font-size: var(--text-xs); padding: var(--space-1) var(--space-2); background: var(--color-status-approved); color: white; border-radius: var(--radius-full); }
+
+.home_stepsGrid__Q3tEo { display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: var(--space-6); gap: var(--space-6); }
+.home_stepCard__cAldG { text-align: center; padding: var(--space-6); }
+.home_stepIcon__fM1BH { color: var(--color-primary); margin: 0 auto var(--space-3); }
+.home_stepCard__cAldG h3 { margin-bottom: var(--space-2); }
+.home_stepCard__cAldG p { font-size: var(--text-sm); color: var(--color-text-secondary); margin: 0; }
+
+.home_trustSection__iBTmy { max-width: 640px; margin: var(--space-12) auto; padding: var(--space-6) var(--space-8); text-align: center; font-size: var(--text-sm); color: var(--color-text-secondary); border-top: 1px solid var(--color-border); }
+
+@media (max-width: 768px) {
+  .home_hero__UPzNc { padding: var(--space-12) var(--space-4) var(--space-8); margin: 0 calc(-1 * var(--space-4)); }
+  .home_heroTitle__7rDCR { font-size: var(--text-2xl); }
+  .home_modelGrid__aHmkc, .home_stepsGrid__Q3tEo { grid-template-columns: 1fr; }
+  .home_section__OQBag { padding: 0 var(--space-4); }
+}
+

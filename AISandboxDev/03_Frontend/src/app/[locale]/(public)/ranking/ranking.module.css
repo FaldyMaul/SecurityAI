@@ -1,0 +1,13 @@
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+.card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); overflow: hidden; transition: all var(--transition-fast); }
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.cardHeader { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) var(--space-4); }
+.cardBody { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); padding: 0 var(--space-4) var(--space-4); text-decoration: none; text-align: center; }
+.modelName { font-size: var(--text-lg); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); }
+.provider { font-size: var(--text-sm); color: var(--color-text-secondary); margin: 0; }
+.score { font-size: var(--text-3xl); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+.approval { font-size: var(--text-xs); padding: var(--space-1) var(--space-2); background: var(--color-status-approved); color: white; border-radius: var(--radius-full); }
+.tags { display: flex; gap: var(--space-1); flex-wrap: wrap; justify-content: center; margin-top: var(--space-2); }
+.tag { font-size: 11px; padding: 2px var(--space-2); background: var(--color-bg-tertiary); border-radius: var(--radius-full); color: var(--color-text-secondary); }
+
+@media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }

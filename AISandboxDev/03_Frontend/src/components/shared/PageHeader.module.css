@@ -1,0 +1,4 @@
+.header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: var(--space-6); gap: var(--space-4); flex-wrap: wrap; }
+.title { font-size: var(--text-2xl); font-weight: var(--font-weight-bold); margin-bottom: var(--space-1); }
+.subtitle { font-size: var(--text-sm); color: var(--color-text-secondary); margin: 0; }
+.actions { display: flex; gap: var(--space-3); flex-shrink: 0; }
