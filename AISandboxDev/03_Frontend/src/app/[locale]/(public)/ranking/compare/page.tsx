@@ -21,7 +21,7 @@ export default function ComparePage() {
       <div style={{ maxWidth: 'var(--content-max-width)', margin: '0 auto', padding: 'var(--space-8)', textAlign: 'center' }}>
         <p>Minimal 2 model diperlukan untuk perbandingan.</p>
         <Link href="/ranking" style={{ color: 'var(--color-primary)', fontWeight: 600 }}>
-          Kembali ke Peringkat
+          Kembali ke ModelHub
         </Link>
       </div>
     );
@@ -29,7 +29,7 @@ export default function ComparePage() {
 
   return (
     <div style={{ maxWidth: 'var(--content-max-width)', margin: '0 auto', padding: 'var(--space-8)' }}>
-      <PageHeader title="Perbandingan Model" subtitle="Maksimal 3 model dapat dibandingkan dalam satu tampilan." />
+      <PageHeader title="Perbandingan ModelHub" subtitle="Maksimal 3 model dapat dibandingkan dalam satu tampilan." />
 
       <div style={{ display: 'grid', gridTemplateColumns: `repeat(${models.length}, 1fr)`, gap: 'var(--space-4)', marginBottom: 'var(--space-8)' }}>
         {models.map((m) => (

@@ -41,7 +41,12 @@ export function DataTable<T extends { id: string }>({
             <tr
               key={item.id}
               className={onRowClick ? styles.clickable : undefined}
-              onClick={() => onRowClick?.(item)}
+              onClick={(event) => {
+                if ((event.target as HTMLElement).closest('button, a, input, select, textarea')) {
+                  return;
+                }
+                onRowClick?.(item);
+              }}
             >
               {columns.map((col) => (
                 <td key={col.key}>{col.render(item)}</td>

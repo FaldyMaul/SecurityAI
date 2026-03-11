@@ -1,7 +1,7 @@
 'use client';
 
-import { Button as LegionButton } from '@legion-ui-kit/react-core';
 import type { ReactNode } from 'react';
+import styles from './Button.module.css';
 
 export interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link';
@@ -53,19 +53,23 @@ export function Button({
   className = '',
 }: ButtonProps) {
   return (
-    <LegionButton
-      variant={variant}
-      size={size}
+    <button
       onClick={onClick}
       disabled={disabled || loading}
-      loading={loading}
-      leftIcon={leftIcon}
-      rightIcon={rightIcon}
-      fullWidth={fullWidth}
       type={type}
-      className={className}
+      className={[
+        styles.button,
+        styles[size],
+        styles[variant],
+        fullWidth ? styles.fullWidth : '',
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ')}
     >
-      {children}
-    </LegionButton>
+      {leftIcon}
+      {loading ? 'Loading...' : children}
+      {rightIcon}
+    </button>
   );
 }

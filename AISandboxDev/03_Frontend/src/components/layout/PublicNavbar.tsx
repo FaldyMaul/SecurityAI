@@ -22,7 +22,7 @@ export function PublicNavbar() {
 
         <nav className={`${styles.nav} ${menuOpen ? styles.open : ''}`}>
           <Link href="/ranking" className={styles.link} onClick={() => setMenuOpen(false)}>
-            Peringkat AI
+            ModelHub
           </Link>
           <Link href="/login" className={styles.loginBtn} onClick={() => setMenuOpen(false)}>
             Masuk

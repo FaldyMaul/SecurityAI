@@ -73,6 +73,20 @@ class ApiClient {
   async delete<T>(endpoint: string): Promise<T> {
     return this.request<T>(endpoint, { method: 'DELETE' });
   }
+
+  async promoteToModelHub(
+    modelId: string,
+    payload: { runId?: string; overallScore: number; grade?: 'A' | 'B' | 'C' | 'D' | 'E' }
+  ): Promise<{ success: boolean; message?: string; data?: { modelId: string; status: string } }> {
+    return this.post(`/api/models/${modelId}/promote`, payload);
+  }
+
+  async updateModelStatus(
+    modelId: string,
+    status: string
+  ): Promise<{ success: boolean; message?: string }> {
+    return this.patch(`/api/models/${modelId}`, { status });
+  }
 }
 
 export const api = new ApiClient(BASE_URL);

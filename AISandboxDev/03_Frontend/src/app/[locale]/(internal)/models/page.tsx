@@ -1,6 +1,6 @@
-'use client';
+﻿'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
@@ -11,9 +11,8 @@ import { EmptyStateBlock } from '@/components/shared/EmptyStateBlock';
 import { TableSkeleton } from '@/components/shared/Skeleton';
 import { formatDate } from '@/lib/formatters';
 import type { Model } from '@/types/api';
-import type { Metadata } from 'next';
+import { Button } from '@/components/shared/Button';
 
-/* Mock data */
 import mockModels from '@/mocks/fixtures/models.json';
 
 export default function ModelsPage() {
@@ -22,16 +21,60 @@ export default function ModelsPage() {
   const isLoading = false;
   const models = mockModels as unknown as Model[];
 
-  const filtered = models.filter((m) =>
-    m.name.toLowerCase().includes(search.toLowerCase())
+  const filtered = useMemo(
+    () => models.filter((m) => m.name.toLowerCase().includes(search.toLowerCase())),
+    [models, search]
   );
 
   const columns = [
-    { key: 'name', header: 'Nama Model', render: (m: Model) => <span style={{ fontWeight: 600 }}>{m.name}</span>, width: '30%' },
+    { key: 'name', header: 'Nama Model', render: (m: Model) => <span style={{ fontWeight: 600 }}>{m.name}</span>, width: '26%' },
     { key: 'provider', header: 'Provider', render: (m: Model) => m.provider },
     { key: 'status', header: 'Status', render: (m: Model) => <StatusBadge status={m.status} /> },
-    { key: 'score', header: 'Skor', render: (m: Model) => m.latestScore !== undefined ? m.latestScore : '—' },
+    { key: 'score', header: 'Skor', render: (m: Model) => (m.latestScore !== undefined ? m.latestScore : '-') },
     { key: 'date', header: 'Update Terakhir', render: (m: Model) => formatDate(m.updatedAt) },
+    {
+      key: 'action',
+      header: 'Aksi',
+      render: (m: Model) => {
+        const isPublishedToModelHub = m.status === 'published_to_modelhub' || m.status === 'published';
+        const canOpenTestingDetail =
+          !!m.latestRunId &&
+          (m.status === 'assessment_completed' ||
+            m.status === 'pending_review' ||
+            m.status === 'review_ready' ||
+            m.status === 'approved' ||
+            m.status === 'approved_with_controls' ||
+            m.status === 'promotion_ready' ||
+            m.status === 'restricted' ||
+            isPublishedToModelHub);
+
+        if (isPublishedToModelHub) {
+          return (
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => router.push(`/ranking?view=promoted&model=${m.id}`)}
+            >
+              Lihat di ModelHub
+            </Button>
+          );
+        }
+
+        if (!canOpenTestingDetail || !m.latestRunId) {
+          return <span style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem' }}>-</span>;
+        }
+
+        return (
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => router.push(`/models/${m.id}/runs/${m.latestRunId}`)}
+          >
+            Detail Testing
+          </Button>
+        );
+      },
+    },
   ];
 
   return (
@@ -39,13 +82,12 @@ export default function ModelsPage() {
       <PageHeader
         title="Model Saya"
         actions={
-          <Link href="/models/new" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 1rem', background: 'var(--color-primary)', color: 'white', borderRadius: 'var(--radius-md)', textDecoration: 'none', fontWeight: 600, fontSize: '0.875rem' }}>
-            <Plus size={16} /> Tambah Model
+          <Link href="/models/new" style={{ textDecoration: 'none' }}>
+            <Button leftIcon={<Plus size={16} />}>Tambah Model</Button>
           </Link>
         }
       />
 
-      {/* Filter bar */}
       <div style={{ display: 'flex', gap: 'var(--space-3)', marginBottom: 'var(--space-4)' }}>
         <input
           type="text"
@@ -56,9 +98,8 @@ export default function ModelsPage() {
         />
       </div>
 
-      {/* Table */}
       {isLoading ? (
-        <TableSkeleton rows={5} cols={5} />
+        <TableSkeleton rows={5} cols={6} />
       ) : filtered.length === 0 ? (
         <EmptyStateBlock
           title="Belum ada model yang terdaftar"
@@ -66,11 +107,7 @@ export default function ModelsPage() {
           action={<Link href="/models/new" style={{ color: 'var(--color-primary)', fontWeight: 600 }}>+ Tambah Model</Link>}
         />
       ) : (
-        <DataTable
-          columns={columns}
-          data={filtered}
-          onRowClick={(m) => router.push(`/models/${m.id}`)}
-        />
+        <DataTable columns={columns} data={filtered} onRowClick={(m) => router.push(`/models/${m.id}`)} />
       )}
     </>
   );

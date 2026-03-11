@@ -8,9 +8,12 @@ export type ModelStatus =
   | 'run_in_progress'
   | 'run_failed'
   | 'assessment_completed'
+  | 'review_ready'
   | 'pending_review'
   | 'approved'
   | 'approved_with_controls'
+  | 'promotion_ready'
+  | 'published_to_modelhub'
   | 'restricted'
   | 'reassessment_required'
   | 'published';

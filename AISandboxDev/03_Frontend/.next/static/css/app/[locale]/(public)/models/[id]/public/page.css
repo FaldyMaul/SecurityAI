@@ -42,6 +42,50 @@
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/components/score/ScoreCardGrid.module.css ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************/
+.ScoreCardGrid_container__mEJao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ScoreCardGrid_classRating__1pP5F {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 35%, white);
+  background: color-mix(in srgb, var(--color-primary-light) 72%, white);
+  color: var(--color-text-primary);
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.45rem 0.7rem;
+}
+
+.ScoreCardGrid_classLabel__iBDHN {
+  font-size: 0.78rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+}
+
+.ScoreCardGrid_classValue__Arwja {
+  min-width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #1545bc;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.ScoreCardGrid_classScore___9UkA {
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
 .ScoreCardGrid_grid__gZidi { display: grid; grid-template-columns: repeat(5, 1fr); grid-gap: var(--space-4); gap: var(--space-4); }
 @media (max-width: 1024px) { .ScoreCardGrid_grid__gZidi { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 768px) { .ScoreCardGrid_grid__gZidi { grid-template-columns: repeat(2, 1fr); } }

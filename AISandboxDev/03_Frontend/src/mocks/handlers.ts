@@ -4,8 +4,17 @@ import reviews from './fixtures/reviews.json';
 import runs from './fixtures/runs.json';
 import ranking from './fixtures/ranking.json';
 import users from './fixtures/users.json';
+import benchmarkResults from './fixtures/benchmark-results.json';
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
+function getGradeFromScore(score: number): 'A' | 'B' | 'C' | 'D' | 'E' {
+  if (score >= 80) return 'A';
+  if (score >= 60) return 'B';
+  if (score >= 40) return 'C';
+  if (score >= 20) return 'D';
+  return 'E';
+}
 
 export const handlers = [
   /* ── Auth ── */
@@ -46,7 +55,7 @@ export const handlers = [
   }),
 
   http.post(`${BASE}/api/models`, async ({ request }) => {
-    const body = await request.json();
+    const body = (await request.json().catch(() => ({}))) as Record<string, unknown>;
     return HttpResponse.json({
       success: true,
       data: { id: 'model-new', ...body, status: 'draft', createdAt: new Date().toISOString() },
@@ -77,6 +86,157 @@ export const handlers = [
     return HttpResponse.json({
       success: true,
       data: { id: 'run-new', status: 'queued', createdAt: new Date().toISOString() },
+    });
+  }),
+
+  http.post(`${BASE}/api/models/:id/publish/validate`, async ({ params, request }) => {
+    const body = (await request.json().catch(() => ({}))) as { runId?: string; score?: number };
+    const modelRuns = runs
+      .filter((run) => run.modelId === params.id)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    const latestRun = body.runId ? modelRuns.find((run) => run.id === body.runId) : modelRuns[0];
+
+    if (!latestRun) {
+      return HttpResponse.json(
+        {
+          success: false,
+          code: 'NO_RUN_AVAILABLE',
+          message: 'Model belum memiliki hasil benchmark untuk dipublikasikan.',
+        },
+        { status: 400 }
+      );
+    }
+
+    const fallbackScore = (benchmarkResults as unknown as Record<string, { overallScore: number }>)[latestRun.id]?.overallScore ?? 0;
+    const score = body.score ?? latestRun.overallScore ?? fallbackScore;
+    const grade = getGradeFromScore(score);
+    const canPublish = grade !== 'D' && grade !== 'E';
+
+    return HttpResponse.json({
+      success: true,
+      data: {
+        canPublish,
+        grade,
+        score,
+        runId: latestRun.id,
+        reason: canPublish
+          ? 'Model memenuhi syarat minimum promosi ke ModelHub.'
+          : `Model grade ${grade} tidak memenuhi minimum promosi. Perlu rerun setelah perbaikan.`,
+        minimumGrade: 'C',
+      },
+    });
+  }),
+
+  http.post(`${BASE}/api/models/:id/publish`, async ({ params, request }) => {
+    const body = (await request.json().catch(() => ({}))) as { runId?: string; score?: number };
+    const modelRuns = runs
+      .filter((run) => run.modelId === params.id)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    const latestRun = body.runId ? modelRuns.find((run) => run.id === body.runId) : modelRuns[0];
+
+    if (!latestRun) {
+      return HttpResponse.json({ success: false, message: 'Run tidak ditemukan.' }, { status: 404 });
+    }
+
+    const fallbackScore = (benchmarkResults as unknown as Record<string, { overallScore: number }>)[latestRun.id]?.overallScore ?? 0;
+    const score = body.score ?? latestRun.overallScore ?? fallbackScore;
+    const grade = getGradeFromScore(score);
+    if (grade === 'D' || grade === 'E') {
+      return HttpResponse.json(
+        {
+          success: false,
+          code: 'PUBLISH_BLOCKED_LOW_GRADE',
+          message: `Publikasi ditolak. Grade ${grade} berada di bawah standar minimum C.`,
+        },
+        { status: 422 }
+      );
+    }
+
+    return HttpResponse.json({
+      success: true,
+      data: {
+        modelId: params.id,
+        runId: latestRun.id,
+        publishedAt: new Date().toISOString(),
+        grade,
+      },
+      message: 'Model berhasil dipromosikan ke ModelHub.',
+    });
+  }),
+
+  http.post(`${BASE}/api/models/:id/promote/validate`, async ({ params, request }) => {
+    const body = (await request.json().catch(() => ({}))) as { runId?: string; score?: number };
+    const modelRuns = runs
+      .filter((run) => run.modelId === params.id)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    const latestRun = body.runId ? modelRuns.find((run) => run.id === body.runId) : modelRuns[0];
+
+    if (!latestRun) {
+      return HttpResponse.json(
+        {
+          success: false,
+          code: 'NO_RUN_AVAILABLE',
+          message: 'Model belum memiliki hasil benchmark untuk dipromosikan.',
+        },
+        { status: 400 }
+      );
+    }
+
+    const fallbackScore = (benchmarkResults as unknown as Record<string, { overallScore: number }>)[latestRun.id]?.overallScore ?? 0;
+    const score = body.score ?? latestRun.overallScore ?? fallbackScore;
+    const grade = getGradeFromScore(score);
+    const canPublish = grade !== 'D' && grade !== 'E';
+
+    return HttpResponse.json({
+      success: true,
+      data: {
+        canPublish,
+        grade,
+        score,
+        runId: latestRun.id,
+        reason: canPublish
+          ? 'Model memenuhi syarat minimum promosi ke ModelHub.'
+          : `Model grade ${grade} tidak memenuhi minimum promosi. Perlu rerun setelah perbaikan.`,
+        minimumGrade: 'C',
+      },
+    });
+  }),
+
+  http.post(`${BASE}/api/models/:id/promote`, async ({ params, request }) => {
+    const body = (await request.json().catch(() => ({}))) as { runId?: string; score?: number; overallScore?: number };
+    const modelRuns = runs
+      .filter((run) => run.modelId === params.id)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    const latestRun = body.runId ? modelRuns.find((run) => run.id === body.runId) : modelRuns[0];
+
+    if (!latestRun) {
+      return HttpResponse.json({ success: false, message: 'Run tidak ditemukan.' }, { status: 404 });
+    }
+
+    const fallbackScore = (benchmarkResults as unknown as Record<string, { overallScore: number }>)[latestRun.id]?.overallScore ?? 0;
+    const score = body.overallScore ?? body.score ?? latestRun.overallScore ?? fallbackScore;
+    const grade = getGradeFromScore(score);
+    if (grade === 'D' || grade === 'E') {
+      return HttpResponse.json(
+        {
+          success: false,
+          code: 'PROMOTION_BLOCKED_LOW_GRADE',
+          message: `Promosi ditolak. Grade ${grade} berada di bawah standar minimum C.`,
+        },
+        { status: 422 }
+      );
+    }
+
+    return HttpResponse.json({
+      success: true,
+      data: {
+        modelId: params.id,
+        status: 'published_to_modelhub',
+        runId: latestRun.id,
+        promotedAt: new Date().toISOString(),
+        grade,
+      },
+      message: 'Model berhasil dipromosikan ke ModelHub.',
     });
   }),
 

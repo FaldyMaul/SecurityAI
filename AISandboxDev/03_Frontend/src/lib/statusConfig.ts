@@ -75,11 +75,29 @@ export const statusConfig: Record<ModelStatus, StatusConfig> = {
     icon: ClipboardCheck,
     labelKey: 'status.assessment_completed',
   },
+  review_ready: {
+    color: 'var(--color-status-pending-review)',
+    bgColor: '#fef3c7',
+    icon: Eye,
+    labelKey: 'status.review_ready',
+  },
   pending_review: {
     color: 'var(--color-status-pending-review)',
     bgColor: '#fef3c7',
     icon: Eye,
     labelKey: 'status.pending_review',
+  },
+  promotion_ready: {
+    color: 'var(--color-status-run-queued)',
+    bgColor: 'var(--color-primary-light)',
+    icon: Globe,
+    labelKey: 'status.promotion_ready',
+  },
+  published_to_modelhub: {
+    color: 'var(--color-status-published)',
+    bgColor: '#d1fae5',
+    icon: Globe,
+    labelKey: 'status.published_to_modelhub',
   },
   approved: {
     color: 'var(--color-status-approved)',

@@ -1,10 +1,11 @@
 {
-  "/[locale]/(public)/page": "app/[locale]/(public)/page.js",
   "/[locale]/(internal)/models/page": "app/[locale]/(internal)/models/page.js",
   "/[locale]/(public)/models/[id]/public/page": "app/[locale]/(public)/models/[id]/public/page.js",
-  "/[locale]/(internal)/dashboard/page": "app/[locale]/(internal)/dashboard/page.js",
-  "/[locale]/(internal)/reviews/page": "app/[locale]/(internal)/reviews/page.js",
-  "/[locale]/(internal)/reviews/[id]/page": "app/[locale]/(internal)/reviews/[id]/page.js",
   "/[locale]/(internal)/models/new/page": "app/[locale]/(internal)/models/new/page.js",
-  "/[locale]/(internal)/settings/page": "app/[locale]/(internal)/settings/page.js"
+  "/[locale]/(internal)/dashboard/page": "app/[locale]/(internal)/dashboard/page.js",
+  "/[locale]/(public)/page": "app/[locale]/(public)/page.js",
+  "/[locale]/(public)/ranking/page": "app/[locale]/(public)/ranking/page.js",
+  "/[locale]/(internal)/settings/page": "app/[locale]/(internal)/settings/page.js",
+  "/[locale]/(internal)/models/[id]/page": "app/[locale]/(internal)/models/[id]/page.js",
+  "/[locale]/(internal)/models/[id]/runs/[runId]/page": "app/[locale]/(internal)/models/[id]/runs/[runId]/page.js"
 }

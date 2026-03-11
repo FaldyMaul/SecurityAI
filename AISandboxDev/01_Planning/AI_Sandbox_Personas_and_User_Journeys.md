@@ -1,6 +1,11 @@
 # AI Sandbox Personas and User Journeys
 
-This document defines the personas and user journeys for the `AI Sandbox` application that will later expose model scoring results into `AgentLab`.
+> Update note on March 11, 2026:
+> This file should now be read mainly as the sandbox persona model.
+> Builder and public discovery personas now belong mainly to `ModelHub`.
+> Read together with `Product_Alignment_Update_2026-03-11.md`.
+
+This document defines the personas and user journeys for the internal `AI Sandbox` application that later exposes approved results into `ModelHub` and `AgentLab`.
 
 This file is not intended to describe every possible persona in the long-term platform. It is focused on the personas that matter for the application flow we need now.
 
@@ -8,8 +13,8 @@ The current product goal is:
 
 - assess models through a unified sandbox workflow
 - review the results internally
-- publish the approved model rating and ranking
-- let `AgentLab` users and other internal builders consume those results when selecting models for use cases
+- prepare approved model results for promotion into `ModelHub`
+- let downstream consumers such as `AgentLab` reuse those approved results later
 
 An important product context is that Telkom already has `Apilogy`, an internal API marketplace listing many AI endpoints. For this app, the sandbox becomes the assessment and trust layer, while `Apilogy` remains a capability and use case platform. Endpoints may come from Apilogy or from outside providers such as `Azure`, but they should be standardized through `LiteLLM`. The current focus remains `LLM` endpoints first.
 
@@ -23,8 +28,8 @@ This persona model is specifically for the application flow around:
 - benchmark execution
 - internal review
 - model approval or restriction
-- public or internal publication of ranking and rating
-- later consumption inside `AgentLab`
+- review, restriction, and promotion eligibility
+- later consumption inside `ModelHub` and `AgentLab`
 
 For now, some roles that may exist in a larger governance platform are intentionally simplified or merged.
 
@@ -37,21 +42,19 @@ Personas should be based on **responsibility in the workflow**, not only by orga
 For this app, the key question is:
 
 - who submits the model
-- who uses the model score
+- who prepares the model score for downstream consumption
 - who reviews and approves the result
 - who operates the system
-- who sees the final published ranking
+- who decides whether a model can be promoted out of the sandbox
 
 ---
 
 ## 3. Recommended Persona Set
 
-## Active personas for current scope
+## Active sandbox personas for current scope
 
 - `Model Owner`
-- `Use Case Builder / Product Owner`
 - `Admin / Reviewer`
-- `Public Viewer`
 
 ## Optional personas for later phases
 
@@ -173,7 +176,7 @@ This includes:
 
 ### Important note
 
-This persona is one of the main consumers of the published results and later the main user inside `AgentLab`.
+This persona is still important in the overall product, but it belongs mainly to `ModelHub` rather than to the sandbox workspace.
 
 ---
 
@@ -199,7 +202,7 @@ For the current scope, these do not need to be separate user roles.
 - operate the system
 - review benchmark results
 - decide whether a model is approved, restricted, or rejected
-- manage model publication to the ranking page
+- manage promotion eligibility into `ModelHub`
 - maintain traceability and operational control
 
 ### Main questions
@@ -207,7 +210,7 @@ For the current scope, these do not need to be separate user roles.
 - Did the benchmark run complete correctly?
 - Is the model safe enough to approve?
 - Which findings require restriction or mitigation?
-- Should this model be visible on the published ranking page?
+- Should this model be allowed into `ModelHub`?
 - What evidence supports the final decision?
 
 ### Main actions in the app

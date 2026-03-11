@@ -56,6 +56,50 @@
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/components/score/ScoreCardGrid.module.css ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************/
+.ScoreCardGrid_container__mEJao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ScoreCardGrid_classRating__1pP5F {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 35%, white);
+  background: color-mix(in srgb, var(--color-primary-light) 72%, white);
+  color: var(--color-text-primary);
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.45rem 0.7rem;
+}
+
+.ScoreCardGrid_classLabel__iBDHN {
+  font-size: 0.78rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+}
+
+.ScoreCardGrid_classValue__Arwja {
+  min-width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #1545bc;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.ScoreCardGrid_classScore___9UkA {
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
 .ScoreCardGrid_grid__gZidi { display: grid; grid-template-columns: repeat(5, 1fr); grid-gap: var(--space-4); gap: var(--space-4); }
 @media (max-width: 1024px) { .ScoreCardGrid_grid__gZidi { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 768px) { .ScoreCardGrid_grid__gZidi { grid-template-columns: repeat(2, 1fr); } }
@@ -81,9 +125,9 @@
   align-items: center;
   gap: 0;
   padding: 1rem 1.5rem;
-  background: var(--color-surface, #1a1a2e);
+  background: var(--color-surface);
   border-radius: 12px;
-  border: 1px solid var(--color-border, #2a2a4a);
+  border: 1px solid var(--color-border);
   overflow-x: auto;
 }
 
@@ -103,34 +147,34 @@
   justify-content: center;
   font-size: 0.8rem;
   font-weight: 700;
-  border: 2px solid var(--color-border, #2a2a4a);
-  color: var(--color-text-muted, #94a3b8);
+  border: 2px solid var(--color-border);
+  color: var(--color-text-muted);
   background: transparent;
   transition: all 0.3s ease;
   flex-shrink: 0;
 }
 
 .BenchmarkWizard_stepCircle__mBRcA.BenchmarkWizard_active__UNpe_ {
-  border-color: var(--color-primary, #6366f1);
-  background: var(--color-primary, #6366f1);
+  border-color: var(--color-primary);
+  background: var(--color-primary);
   color: #fff;
-  box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-primary) 45%, transparent);
 }
 
 .BenchmarkWizard_stepCircle__mBRcA.BenchmarkWizard_completed__AcChh {
-  border-color: #10b981;
-  background: #10b981;
+  border-color: var(--color-score-excellent);
+  background: var(--color-score-excellent);
   color: #fff;
 }
 
 .BenchmarkWizard_stepLabel__pZWRG {
   font-size: 0.8rem;
-  color: var(--color-text-muted, #94a3b8);
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
 .BenchmarkWizard_stepLabel__pZWRG.BenchmarkWizard_active__UNpe_ {
-  color: var(--color-text, #e2e8f0);
+  color: var(--color-text-primary);
   font-weight: 600;
 }
 
@@ -138,33 +182,72 @@
   flex: 1 1;
   height: 2px;
   min-width: 24px;
-  background: var(--color-border, #2a2a4a);
+  background: var(--color-border);
   margin: 0 0.5rem;
 }
 
 .BenchmarkWizard_stepConnector__b5bFf.BenchmarkWizard_completed__AcChh {
-  background: #10b981;
+  background: var(--color-score-excellent);
 }
 
 .BenchmarkWizard_stepContent__oTaMQ {
   padding: 2rem;
   border-radius: 12px;
-  background: var(--color-surface, #1a1a2e);
-  border: 1px solid var(--color-border, #2a2a4a);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   min-height: 300px;
 }
 
 .BenchmarkWizard_stepTitle__n3YTd {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-text, #e2e8f0);
+  color: var(--color-text-primary);
   margin: 0 0 0.5rem;
 }
 
 .BenchmarkWizard_stepSubtitle__BD_Ib {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 1.25rem;
+}
+
+.BenchmarkWizard_selectionHeader__esIid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.BenchmarkWizard_selectAllRow__pR_hh {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 0.85rem;
-  color: var(--color-text-muted, #94a3b8);
-  margin: 0 0 1.5rem;
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.BenchmarkWizard_estimateCard__04zBh {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+}
+
+.BenchmarkWizard_warningBox__nfSHf {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--color-score-poor) 40%, white);
+  background: color-mix(in srgb, var(--color-score-poor) 12%, white);
+  color: color-mix(in srgb, var(--color-score-poor) 80%, black);
+  font-size: 0.8rem;
 }
 
 .BenchmarkWizard_packageGrid__a_Oc9 {
@@ -175,9 +258,9 @@
 }
 
 .BenchmarkWizard_packageCard__eba_0 {
-  padding: 1.25rem;
+  padding: 1rem;
   border-radius: 12px;
-  border: 2px solid var(--color-border, #2a2a4a);
+  border: 2px solid var(--color-border);
   cursor: pointer;
   transition: all 0.2s ease;
   background: transparent;
@@ -187,27 +270,48 @@
 }
 
 .BenchmarkWizard_packageCard__eba_0:hover {
-  border-color: var(--color-primary, #6366f1);
+  border-color: var(--color-primary);
 }
 
 .BenchmarkWizard_packageCard__eba_0.BenchmarkWizard_selected__DEXqK {
-  border-color: var(--color-primary, #6366f1);
-  background: rgba(99, 102, 241, 0.08);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+
+.BenchmarkWizard_packageHeader__YVdMc {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.BenchmarkWizard_infoIcon__of2U3 {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.BenchmarkWizard_infoIcon__of2U3:hover {
+  color: var(--color-primary);
 }
 
 .BenchmarkWizard_packageName__CL_Xm {
   font-weight: 600;
-  font-size: 1rem;
-  color: var(--color-text, #e2e8f0);
-  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
 }
 
 .BenchmarkWizard_packageDesc__QD8aC {
   font-size: 0.8rem;
-  color: var(--color-text-muted, #94a3b8);
+  color: var(--color-text-secondary);
   line-height: 1.4;
-  margin-bottom: 0.75rem;
+  margin: 0.6rem 0 0.75rem;
 }
 
 .BenchmarkWizard_packageMeta__jmpTi {
@@ -221,15 +325,15 @@
   border-radius: 4px;
   font-size: 0.7rem;
   font-weight: 500;
-  background: rgba(99, 102, 241, 0.1);
-  color: var(--color-primary, #6366f1);
+  background: color-mix(in srgb, var(--color-primary) 10%, white);
+  color: var(--color-primary);
 }
 
 .BenchmarkWizard_configForm__SVsJ7 {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  max-width: 500px;
+  max-width: 560px;
 }
 
 .BenchmarkWizard_formGroup___qw_K {
@@ -241,29 +345,29 @@
 .BenchmarkWizard_formLabel__J2a1G {
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-text, #e2e8f0);
+  color: var(--color-text-primary);
 }
 
 .BenchmarkWizard_formHint__OvlHc {
-  font-size: 0.7rem;
-  color: var(--color-text-muted, #94a3b8);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
 }
 
 .BenchmarkWizard_formSelect__vOPBi,
 .BenchmarkWizard_formInput__bOf8I {
   padding: 0.6rem 0.75rem;
   border-radius: 8px;
-  border: 1px solid var(--color-border, #2a2a4a);
-  background: var(--color-surface-alt, #16213e);
-  color: var(--color-text, #e2e8f0);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
   font-size: 0.875rem;
 }
 
 .BenchmarkWizard_formSelect__vOPBi:focus,
 .BenchmarkWizard_formInput__bOf8I:focus {
   outline: none;
-  border-color: var(--color-primary, #6366f1);
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 20%, transparent);
 }
 
 .BenchmarkWizard_runningState__FmRP8 {
@@ -271,15 +375,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.2rem;
   padding: 2.5rem 1rem;
 }
 
 .BenchmarkWizard_spinnerRing__Q811O {
   width: 80px;
   height: 80px;
-  border: 4px solid var(--color-border, #2a2a4a);
-  border-top-color: var(--color-primary, #6366f1);
+  border: 4px solid var(--color-border);
+  border-top-color: var(--color-primary);
   border-radius: 50%;
   animation: BenchmarkWizard_spin__8pUHv 1.2s linear infinite;
 }
@@ -293,37 +397,37 @@
 .BenchmarkWizard_runningLabel__sTc_V {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--color-text, #e2e8f0);
+  color: var(--color-text-primary);
   text-align: center;
 }
 
 .BenchmarkWizard_progressBarOuter__IhsAj {
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   height: 8px;
   border-radius: 4px;
-  background: var(--color-border, #2a2a4a);
+  background: var(--color-border);
   overflow: hidden;
 }
 
 .BenchmarkWizard_progressBarInner__Gp6tN {
   height: 100%;
   border-radius: 4px;
-  background: linear-gradient(90deg, var(--color-primary, #6366f1), #8b5cf6);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   transition: width 0.5s ease;
 }
 
 .BenchmarkWizard_runningStep__qMtwk {
   font-size: 0.8rem;
-  color: var(--color-text-muted, #94a3b8);
+  color: var(--color-text-muted);
 }
 
 .BenchmarkWizard_moduleTracker__e1FFA {
   width: 100%;
-  max-width: 540px;
-  border: 1px solid var(--color-border, #2a2a4a);
+  max-width: 560px;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
-  background: rgba(15, 23, 42, 0.4);
+  background: var(--color-bg-secondary);
   padding: 0.75rem;
 }
 
@@ -333,7 +437,7 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 0.5rem 0.35rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
 }
 
 .BenchmarkWizard_moduleRow__vCALf:last-child {
@@ -342,7 +446,7 @@
 
 .BenchmarkWizard_moduleName__uggiE {
   font-size: 0.85rem;
-  color: var(--color-text, #e2e8f0);
+  color: var(--color-text-primary);
   font-weight: 500;
 }
 
@@ -354,15 +458,15 @@
 }
 
 .BenchmarkWizard_modulePending__Urxj1 {
-  color: #94a3b8;
+  color: var(--color-text-muted);
 }
 
 .BenchmarkWizard_moduleRunning__D6vsj {
-  color: #f59e0b;
+  color: var(--color-score-poor);
 }
 
 .BenchmarkWizard_moduleCompleted__Ba_hv {
-  color: #10b981;
+  color: var(--color-score-excellent);
 }
 
 .BenchmarkWizard_resultsSummary__Dwc3X {
@@ -409,10 +513,10 @@
 }
 
 .BenchmarkWizard_summaryCard__Bv9es {
-  border: 1px solid var(--color-border, #2a2a4a);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 0.65rem 0.8rem;
-  background: var(--color-surface-alt, #16213e);
+  background: var(--color-bg-secondary);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -421,11 +525,11 @@
 }
 
 .BenchmarkWizard_summaryCard__Bv9es span {
-  color: var(--color-text-muted, #94a3b8);
+  color: var(--color-text-secondary);
 }
 
 .BenchmarkWizard_summaryCard__Bv9es strong {
-  color: var(--color-text, #e2e8f0);
+  color: var(--color-text-primary);
 }
 
 .BenchmarkWizard_actions__BMvfn {
@@ -437,7 +541,7 @@
 
 .BenchmarkWizard_btnPrimary__1pXp_ {
   padding: 0.6rem 1.5rem;
-  background: var(--color-primary, #6366f1);
+  background: var(--color-primary);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -459,8 +563,8 @@
 .BenchmarkWizard_btnSecondary__EvJQh {
   padding: 0.6rem 1.5rem;
   background: transparent;
-  color: var(--color-text, #e2e8f0);
-  border: 1px solid var(--color-border, #2a2a4a);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   font-weight: 500;
   font-size: 0.875rem;
@@ -469,8 +573,119 @@
 }
 
 .BenchmarkWizard_btnSecondary__EvJQh:hover {
-  border-color: var(--color-primary, #6366f1);
+  border-color: var(--color-primary);
 }
+
+@media (max-width: 768px) {
+  .BenchmarkWizard_selectionHeader__esIid {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/*!***********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/components/shared/Button.module.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************/
+.Button_button__ugIaD {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-sans);
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), opacity var(--transition-fast);
+}
+
+.Button_sm__X_esf {
+  min-height: 32px;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.78rem;
+}
+
+.Button_md__xQtnz {
+  min-height: 38px;
+  padding: 0.58rem 0.95rem;
+  font-size: 0.84rem;
+}
+
+.Button_lg__odN4V {
+  min-height: 44px;
+  padding: 0.68rem 1.2rem;
+  font-size: 0.9rem;
+}
+
+.Button_primary__9S436 {
+  background: #1545bc;
+  color: #ffffff;
+}
+
+.Button_primary__9S436:hover:not(:disabled) {
+  background: #0f3494;
+}
+
+.Button_secondary__egClK {
+  background: #7740b5;
+  color: #ffffff;
+}
+
+.Button_secondary__egClK:hover:not(:disabled) {
+  background: #62339a;
+}
+
+.Button_outline__d4H_F {
+  background: transparent;
+  border-color: #1545bc;
+  color: #1545bc;
+}
+
+.Button_outline__d4H_F:hover:not(:disabled) {
+  background: color-mix(in srgb, #1545bc 8%, white);
+}
+
+.Button_ghost__cbDv_ {
+  background: transparent;
+  color: var(--color-text-primary);
+}
+
+.Button_ghost__cbDv_:hover:not(:disabled) {
+  background: var(--color-bg-secondary);
+}
+
+.Button_danger__1H9gZ {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.Button_danger__1H9gZ:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.Button_link___ZsEh {
+  background: transparent;
+  border-color: transparent;
+  color: #1545bc;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.Button_link___ZsEh:hover:not(:disabled) {
+  color: #0f3494;
+  text-decoration: underline;
+}
+
+.Button_fullWidth__2ZqkV {
+  width: 100%;
+}
+
+.Button_button__ugIaD:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 /*!********************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/components/shared/EmptyStateBlock.module.css ***!
   \********************************************************************************************************************************************************************************************************************************************************************************************/

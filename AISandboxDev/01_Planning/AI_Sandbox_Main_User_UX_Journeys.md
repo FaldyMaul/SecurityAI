@@ -1,13 +1,16 @@
 # AI Sandbox Main User UX Journeys
 
+> Update note on March 11, 2026:
+> This file should now be read as the internal `AI Sandbox` journey document.
+> Developer-facing discovery and leaderboard journeys belong mainly to `ModelHub`.
+> Read together with `Product_Alignment_Update_2026-03-11.md`.
+
 This document describes the detailed UX journeys for the main user types of the `AI Sandbox` application.
 
-It is focused on the current core personas:
+It is focused on the current core sandbox personas:
 
 - `Model Owner`
-- `Use Case Builder / Product Owner`
 - `Admin / Reviewer`
-- `Public Viewer`
 
 The goal is to make the end-to-end user flow clear before designing screens, navigation, and permissions in detail.
 
@@ -15,16 +18,16 @@ The goal is to make the end-to-end user flow clear before designing screens, nav
 
 ## 1. UX Design Goal
 
-The application should support one clear product loop:
+The sandbox should support one clear internal product loop:
 
 1. A model is submitted.
 2. The model is assessed.
 3. The result is reviewed.
 4. The approved result is published.
-5. Builders use the published result to choose a model.
-6. The same result can later be surfaced inside `AgentLab`.
+5. the reviewed result is marked as promotion-eligible
+6. the approved result can later be surfaced in `ModelHub` and then in `AgentLab`
 
-This means the UX should not feel like a raw benchmark console. It should feel like a guided trust and model selection workflow.
+This means the UX should not feel like a raw benchmark console. It should feel like a guided assessment and publish-eligibility workflow.
 
 An important context for this UX is that many model endpoints may already exist in `Apilogy`, Telkom's internal API marketplace, while some may come from external providers such as `Azure`. That means the UX should support both:
 
@@ -36,14 +39,16 @@ An important context for this UX is that many model endpoints may already exist 
 
 ## 2. Main User Types
 
-The main user types for the current scope are:
+The main user types for the current sandbox scope are:
 
 - `Model Owner`
-- `Use Case Builder / Product Owner`
 - `Admin / Reviewer`
-- `Public Viewer`
 
 Each user type has a different intention, so each should have a different default experience.
+
+Important note:
+
+- `Use Case Builder / Product Owner` and `Public Viewer` belong mainly to `ModelHub`, not to the internal sandbox
 
 ---
 
@@ -54,7 +59,7 @@ The journeys should follow these principles:
 - show users only what they need for their role
 - keep technical detail behind drill-down views
 - make the next action obvious
-- separate internal review from public publication
+- separate internal review from `ModelHub` promotion
 - convert benchmark outputs into decision-friendly language
 
 ---

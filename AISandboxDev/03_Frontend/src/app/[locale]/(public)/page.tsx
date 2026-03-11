@@ -17,7 +17,7 @@ export default function HomePage() {
         <h1 className={styles.heroTitle}>Temukan Model AI Terpercaya</h1>
         <p className={styles.heroSubtitle}>Platform evaluasi keamanan dan kepercayaan model AI untuk Indonesia</p>
         <Link href="/ranking" className={styles.heroCta}>
-          Lihat Peringkat <ArrowRight size={18} />
+          Buka ModelHub <ArrowRight size={18} />
         </Link>
       </section>
 
@@ -53,8 +53,8 @@ export default function HomePage() {
           </div>
           <div className={styles.stepCard}>
             <Globe size={32} className={styles.stepIcon} />
-            <h3>3. Publikasikan Hasil</h3>
-            <p>Model yang lolos ditampilkan di peringkat publik</p>
+            <h3>3. Promosi ke ModelHub</h3>
+            <p>Model yang lolos gate ditampilkan di permukaan discovery ModelHub</p>
           </div>
         </div>
       </section>

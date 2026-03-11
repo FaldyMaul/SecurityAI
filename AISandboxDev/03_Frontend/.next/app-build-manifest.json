@@ -1,20 +1,20 @@
 {
   "pages": {
-    "/not-found": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/not-found.js"
-    ],
-    "/_not-found/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
-    ],
     "/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
+    ],
+    "/not-found": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/not-found.js"
+    ],
+    "/[locale]/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[locale]/layout.js"
     ],
     "/[locale]/(public)/layout": [
       "static/chunks/webpack.js",
@@ -22,45 +22,11 @@
       "static/css/app/[locale]/(public)/layout.css",
       "static/chunks/app/[locale]/(public)/layout.js"
     ],
-    "/[locale]/(public)/ranking/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/[locale]/(public)/ranking/page.css",
-      "static/chunks/app/[locale]/(public)/ranking/page.js"
-    ],
-    "/[locale]/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/layout.js"
-    ],
-    "/[locale]/(auth)/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/[locale]/(auth)/layout.css",
-      "static/chunks/app/[locale]/(auth)/layout.js"
-    ],
-    "/[locale]/(auth)/login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/[locale]/(auth)/login/page.css",
-      "static/chunks/app/[locale]/(auth)/login/page.js"
-    ],
-    "/[locale]/(public)/models/[id]/public/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/[locale]/(public)/models/[id]/public/page.css",
-      "static/chunks/app/[locale]/(public)/models/[id]/public/page.js"
-    ],
     "/[locale]/(public)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/[locale]/(public)/page.css",
       "static/chunks/app/[locale]/(public)/page.js"
-    ],
-    "/[locale]/(public)/access-denied/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/(public)/access-denied/page.js"
     ],
     "/[locale]/(internal)/layout": [
       "static/chunks/webpack.js",
@@ -74,17 +40,17 @@
       "static/css/app/[locale]/(internal)/models/page.css",
       "static/chunks/app/[locale]/(internal)/models/page.js"
     ],
+    "/[locale]/(internal)/models/[id]/runs/[runId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/[locale]/(internal)/models/[id]/runs/[runId]/page.css",
+      "static/chunks/app/[locale]/(internal)/models/[id]/runs/[runId]/page.js"
+    ],
     "/[locale]/(internal)/dashboard/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/[locale]/(internal)/dashboard/page.css",
       "static/chunks/app/[locale]/(internal)/dashboard/page.js"
-    ],
-    "/[locale]/(internal)/models/new/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/[locale]/(internal)/models/new/page.css",
-      "static/chunks/app/[locale]/(internal)/models/new/page.js"
     ],
     "/[locale]/(internal)/models/[id]/page": [
       "static/chunks/webpack.js",
@@ -92,17 +58,17 @@
       "static/css/app/[locale]/(internal)/models/[id]/page.css",
       "static/chunks/app/[locale]/(internal)/models/[id]/page.js"
     ],
-    "/[locale]/(internal)/models/[id]/runs/[runId]/page": [
+    "/[locale]/(internal)/models/new/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/[locale]/(internal)/models/[id]/runs/[runId]/page.css",
-      "static/chunks/app/[locale]/(internal)/models/[id]/runs/[runId]/page.js"
+      "static/css/app/[locale]/(internal)/models/new/page.css",
+      "static/chunks/app/[locale]/(internal)/models/new/page.js"
     ],
-    "/[locale]/(internal)/reviews/page": [
+    "/[locale]/(public)/ranking/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/[locale]/(internal)/reviews/page.css",
-      "static/chunks/app/[locale]/(internal)/reviews/page.js"
+      "static/css/app/[locale]/(public)/ranking/page.css",
+      "static/chunks/app/[locale]/(public)/ranking/page.js"
     ],
     "/[locale]/(internal)/settings/page": [
       "static/chunks/webpack.js",
@@ -110,11 +76,11 @@
       "static/css/app/[locale]/(internal)/settings/page.css",
       "static/chunks/app/[locale]/(internal)/settings/page.js"
     ],
-    "/[locale]/(internal)/reviews/[id]/page": [
+    "/[locale]/(public)/models/[id]/public/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/[locale]/(internal)/reviews/[id]/page.css",
-      "static/chunks/app/[locale]/(internal)/reviews/[id]/page.js"
+      "static/css/app/[locale]/(public)/models/[id]/public/page.css",
+      "static/chunks/app/[locale]/(public)/models/[id]/public/page.js"
     ]
   }
 }

@@ -2,8 +2,8 @@
   "nav": {
     "dashboard": "Dashboard",
     "models": "Model Saya",
-    "reviews": "Antrean Review",
-    "ranking": "Peringkat AI",
+    "reviews": "Riwayat",
+    "ranking": "ModelHub",
     "settings": "Pengaturan",
     "home": "Beranda",
     "logout": "Keluar"
@@ -17,7 +17,7 @@
     "confirm_decision": "Konfirmasi Keputusan",
     "rerun": "Jalankan Ulang",
     "compare": "Bandingkan Model",
-    "publish": "Publikasikan",
+    "publish": "Promosikan ke ModelHub",
     "unpublish": "Sembunyikan",
     "go_back": "Kembali",
     "retry": "Coba Lagi",
@@ -28,16 +28,19 @@
   },
   "status": {
     "draft": "Draf",
-    "validation_pending": "Validasi Tertunda",
+    "validation_pending": "Validasi Endpoint",
     "validation_failed": "Validasi Gagal",
     "endpoint_valid": "Endpoint Valid",
-    "run_queued": "Antrian Benchmark",
-    "run_in_progress": "Benchmark Berjalan",
+    "run_queued": "Dalam Antrean",
+    "run_in_progress": "Sedang Berjalan",
     "run_failed": "Benchmark Gagal",
-    "assessment_completed": "Penilaian Selesai",
-    "pending_review": "Menunggu Review",
+    "assessment_completed": "Selesai",
+    "review_ready": "Siap Review",
+    "pending_review": "Sedang di-Review",
     "approved": "Disetujui",
     "approved_with_controls": "Disetujui dengan Kontrol",
+    "promotion_ready": "Siap Promosi",
+    "published_to_modelhub": "Dipublikasikan ke ModelHub",
     "restricted": "Dibatasi",
     "reassessment_required": "Perlu Penilaian Ulang",
     "published": "Dipublikasikan"
@@ -90,8 +93,8 @@
   "dialog": {
     "confirm_submit_review": "Apakah Anda yakin ingin mengajukan model ini untuk review?",
     "confirm_decision": "Apakah Anda yakin dengan keputusan ini? Tindakan ini akan direkam dalam audit trail.",
-    "confirm_publish": "Publikasikan model ini ke peringkat publik?",
-    "confirm_unpublish": "Sembunyikan model ini dari peringkat publik?",
+    "confirm_publish": "Promosikan model ini ke ModelHub?",
+    "confirm_unpublish": "Sembunyikan model ini dari ModelHub?",
     "confirm_rerun": "Jalankan ulang benchmark untuk model ini?",
     "confirm_restrict": "Batasi akses model ini? Alasan wajib diisi."
   },
@@ -100,7 +103,7 @@
     "no_models_cta": "Tambah model pertama Anda",
     "no_reviews": "Tidak ada review yang menunggu",
     "no_runs": "Belum ada benchmark yang dijalankan",
-    "no_ranking": "Belum ada model yang dipublikasikan",
+    "no_ranking": "Belum ada model yang dipromosikan ke ModelHub",
     "no_filter_results": "Tidak ada hasil yang cocok dengan filter",
     "model_unavailable": "Profil model ini tidak lagi tersedia"
   },
@@ -128,7 +131,7 @@
     "models_title": "Model Saya",
     "add_model_title": "Tambah Model",
     "reviews_title": "Antrean Review",
-    "ranking_title": "Peringkat AI",
+    "ranking_title": "ModelHub",
     "settings_title": "Pengaturan",
     "home_tagline": "Temukan Model AI Terpercaya",
     "home_subtitle": "Platform evaluasi keamanan dan kepercayaan model AI untuk Indonesia"

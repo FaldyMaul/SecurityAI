@@ -17,11 +17,11 @@ export function PublicationToggle({ isPublished, onChange }: { isPublished: bool
       <div>
         <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-text-primary)' }}>Publikasi</div>
         <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)' }}>
-          {isPublished ? 'Model tampil di halaman ranking publik' : 'Model disembunyikan dari ranking publik'}
+          {isPublished ? 'Model tampil di ModelHub' : 'Model disembunyikan dari ModelHub'}
         </div>
       </div>
       <Button variant={isPublished ? 'secondary' : 'primary'} size="sm" onClick={() => onChange(!isPublished)}>
-        {isPublished ? 'Published' : 'Publish'}
+        {isPublished ? 'Tayang di ModelHub' : 'Promosikan ke ModelHub'}
       </Button>
     </div>
   );

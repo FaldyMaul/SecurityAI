@@ -84,7 +84,7 @@
 }
 
 .Sidebar_logoIcon__ySU3n {
-  font-size: var(--text-xl);
+  color: var(--color-primary);
   flex-shrink: 0;
 }
 
@@ -109,6 +109,53 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+}
+
+.Sidebar_globalProgress__hmYo4 {
+  margin: 0 var(--space-2) var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-secondary);
+}
+
+.Sidebar_progressHeader___nXhP {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.Sidebar_progressSpinner__G5cVP {
+  animation: Sidebar_spin-sidebar__ox992 1s linear infinite;
+}
+
+.Sidebar_progressMeta__xKb_j {
+  margin-top: var(--space-1);
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+.Sidebar_progressTrack__j9lHe {
+  margin-top: var(--space-2);
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.Sidebar_progressFill__xqB9Z {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  transition: width var(--transition-normal);
+}
+
+@keyframes Sidebar_spin-sidebar__ox992 {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .Sidebar_logoutBtn__PbGYb,

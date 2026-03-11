@@ -1,27 +1,43 @@
-'use client';
+﻿'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { RankBadge } from '@/components/ranking/RankBadge';
+import { useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { CompareBar } from '@/components/ranking/CompareBar';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { EmptyStateBlock } from '@/components/shared/EmptyStateBlock';
 import { Trophy } from 'lucide-react';
-import styles from './ranking.module.css';
+import { ModelComparisonGrid } from '@/components/ranking/ModelComparisonGrid';
 
 import mockRanking from '@/mocks/fixtures/ranking.json';
+import mockModels from '@/mocks/fixtures/models.json';
 
 export default function RankingPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [selected, setSelected] = useState<string[]>([]);
   const [filter, setFilter] = useState<string>('all');
   const [limitHitSignal, setLimitHitSignal] = useState(0);
 
+  const view = searchParams.get('view');
   const categories = ['all', 'Trust & Safety', 'Security', 'Privacy', 'Compliance', 'Ready for ID'];
 
-  const filteredRanking =
-    filter === 'all'
-      ? mockRanking
-      : mockRanking.filter((m) => m.suitabilityTags.includes(filter));
+  const ownModelIds = useMemo(
+    () => (mockModels as Array<{ id: string; ownerId: string }>).filter((model) => model.ownerId === 'user-001').map((model) => model.id),
+    []
+  );
+
+  const filteredRanking = useMemo(() => {
+    const byTag =
+      filter === 'all'
+        ? mockRanking
+        : mockRanking.filter((m) => m.suitabilityTags.includes(filter));
+
+    if (view === 'my-models' || view === 'promoted') {
+      return byTag.filter((item) => ownModelIds.includes(item.modelId));
+    }
+
+    return byTag;
+  }, [filter, ownModelIds, view]);
 
   const toggleSelect = (id: string) => {
     setSelected((prev) => {
@@ -36,7 +52,14 @@ export default function RankingPage() {
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
-      <PageHeader title="Peringkat AI" subtitle="Model AI yang telah dipublikasikan, diurutkan berdasarkan skor" />
+      <PageHeader
+        title="ModelHub"
+        subtitle={
+          view === 'my-models' || view === 'promoted'
+            ? 'Model yang sudah dipromosikan dari AI Sandbox. Bandingkan secara ringkas dengan model lain.'
+            : 'Permukaan discovery ModelHub untuk model yang sudah lolos gate promosi.'
+        }
+      />
 
       <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
         {categories.map((cat) => (
@@ -67,40 +90,18 @@ export default function RankingPage() {
           description={`Belum ada model yang dipublikasikan untuk kategori "${filter === 'all' ? 'Semua' : filter}".`}
         />
       ) : (
-        <div className={styles.grid}>
-          {filteredRanking.map((model) => (
-            <div key={model.id} className={styles.card}>
-              <div className={styles.cardHeader}>
-                <RankBadge rank={model.rank} />
-                <input
-                  type="checkbox"
-                  checked={selected.includes(model.modelId)}
-                  onChange={() => toggleSelect(model.modelId)}
-                  title="Pilih untuk perbandingan"
-                />
-              </div>
-              <Link href={`/models/${model.modelId}/public`} className={styles.cardBody}>
-                <h3 className={styles.modelName}>{model.modelName}</h3>
-                <p className={styles.provider}>{model.provider}</p>
-                <div className={styles.score}>{model.overallScore}</div>
-                <span className={styles.approval}>{model.approvalLabel}</span>
-                <div className={styles.tags}>
-                  {model.suitabilityTags.map((t) => (
-                    <span key={t} className={styles.tag}>{t}</span>
-                  ))}
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
+        <ModelComparisonGrid
+          models={filteredRanking}
+          selectedIds={selected}
+          ownModelIds={ownModelIds}
+          onToggle={toggleSelect}
+        />
       )}
 
       <CompareBar
         selectedIds={selected}
         limitHitSignal={limitHitSignal}
-        onCompare={() => {
-          window.location.href = `/ranking/compare?ids=${selected.join(',')}`;
-        }}
+        onCompare={() => router.push(`/ranking/compare?ids=${selected.join(',')}`)}
         onRemove={(id) => setSelected((p) => p.filter((s) => s !== id))}
       />
     </div>

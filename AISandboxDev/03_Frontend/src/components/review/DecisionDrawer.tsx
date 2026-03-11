@@ -1,6 +1,6 @@
-'use client';
+﻿'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button } from '@/components/shared/Button';
 import styles from './DecisionDrawer.module.css';
 
@@ -32,9 +32,20 @@ const DECISIONS = [
   },
 ] as const;
 
+const RISK_TREATMENTS = [
+  { value: 'accept', label: 'Accept risk' },
+  { value: 'mitigate', label: 'Mitigate risk' },
+  { value: 'transfer', label: 'Transfer risk' },
+  { value: 'avoid', label: 'Avoid risk' },
+] as const;
+
 export function DecisionDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [decision, setDecision] = useState<string>('approved');
+  const [riskTreatment, setRiskTreatment] = useState<string>('mitigate');
+  const [targetDate, setTargetDate] = useState('');
   const [reason, setReason] = useState('');
+
+  const showTreatment = useMemo(() => decision !== 'approved', [decision]);
 
   if (!open) return null;
 
@@ -43,7 +54,7 @@ export function DecisionDrawer({ open, onClose }: { open: boolean; onClose: () =
       <button className={styles.backdrop} onClick={onClose} aria-label="Tutup drawer keputusan" />
       <aside className={styles.drawer} role="dialog" aria-modal="true" aria-label="Keputusan Review">
         <h3 className={styles.title}>Keputusan Review</h3>
-        <p className={styles.subtitle}>Pilih keputusan reviewer lalu berikan catatan singkat sebagai audit trail.</p>
+        <p className={styles.subtitle}>Pilih keputusan reviewer dan treatment risiko sebagai jejak audit keputusan.</p>
 
         <div className={styles.options}>
           {DECISIONS.map((item) => (
@@ -62,6 +73,37 @@ export function DecisionDrawer({ open, onClose }: { open: boolean; onClose: () =
             </label>
           ))}
         </div>
+
+        {showTreatment && (
+          <>
+            <label className={styles.fieldLabel} htmlFor="risk-treatment">
+              Risk treatment
+            </label>
+            <select
+              id="risk-treatment"
+              className={styles.select}
+              value={riskTreatment}
+              onChange={(event) => setRiskTreatment(event.target.value)}
+            >
+              {RISK_TREATMENTS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+
+            <label className={styles.fieldLabel} htmlFor="target-date">
+              Target completion date
+            </label>
+            <input
+              id="target-date"
+              type="date"
+              className={styles.select}
+              value={targetDate}
+              onChange={(event) => setTargetDate(event.target.value)}
+            />
+          </>
+        )}
 
         <label className={styles.fieldLabel} htmlFor="decision-reason">
           Alasan keputusan
