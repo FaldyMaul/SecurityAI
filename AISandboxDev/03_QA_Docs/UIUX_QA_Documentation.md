@@ -158,11 +158,11 @@ This document tracks the visual and interactive health of the AI Sandbox platfor
 | UX-18 | **Mitigation Guide** | Recommendations (Guardrails, System Prompts) are clearly listed as actionable items. | [ ] |
 | UX-19 | **Filter (Fail Only)** | Recipe breakdown has a toggle/filter to show only failed prompts/responses. | [ ] |
 
-### 7.3 Versioning & Lifecycle
+### 7.3 Versioning & Lifecycle (AI Sandbox -> ModelHub)
 | ID | Test Category | Checkpoint | Status |
 |----|---------------|------------|--------|
-| UX-20 | **Publish vs Rerun** | "Submit for Review" is replaced by "Publish" (direct to leaderboard) and "Rerun". | [ ] |
-| UX-21 | **Publish Guard** | "Publish" button is disabled if model has any D or E scores (fails compliance). | [ ] |
+| UX-20 | **Promote vs Rerun** | "Submit for Review" is replaced by "Promote to ModelHub" and "Rerun". | [ ] |
+| UX-21 | **Promotion Guard** | "Promote" button is disabled if model has any D or E scores (fails compliance). | [ ] |
 | UX-22 | **Benchmark History** | "Benchmark History" tab shows previous versions with clickable deep-links to past reports. | [ ] |
 | UX-23 | **Rerun Context** | Clicking "Rerun" takes the user back to the "Start Benchmark" step with the same model pre-selected. | [ ] |
 

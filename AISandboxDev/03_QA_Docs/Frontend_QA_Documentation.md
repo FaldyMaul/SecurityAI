@@ -38,14 +38,25 @@ This document tracks the technical integrity and routing performance of the AI S
 | **Score Rings (Good)** | `#1545BC` (60–79) | — | — |
 | **Score Rings (Moderate)** | — | `#7740B5` (40–59) | — |
 
-### 3.3 Gradient Patterns
-| Component | Gradient |
-|-----------|----------|
-| **Hero Section** | `linear-gradient(135deg, #221C6A 0%, #1545BC 50%, #A4E7DE 100%)` |
-| **Summary Tile Accent** | `linear-gradient(90deg, #221C6A 0%, #1545BC 100%)` |
-| **Model Card Accent** | `linear-gradient(90deg, #1545BC 0%, #7740B5 100%)` |
-| **Approval Label** | `linear-gradient(135deg, #1545BC 0%, #7740B5 100%)` |
-| **Trust Section** | `linear-gradient(135deg, #E8EEFC 0%, #F3E8FC 100%)` |
+### 3.3 Gradient Patterns (Accessibility Optimized)
+
+| Component | Gradient | Status |
+|-----------|----------|--------|
+| **Hero Section** | `linear-gradient(135deg, #221C6A 0%, #1545BC 50%, #0f3494 100%)` | ✅ FIXED - Dark colors only |
+| **Summary Tile Accent** | `linear-gradient(90deg, #221C6A 0%, #1545BC 100%)` | ✅ Correct |
+| **Model Card Accent** | `linear-gradient(90deg, #1545BC 0%, #7740B5 100%)` | ✅ Correct |
+| **Approval Label** | `linear-gradient(135deg, #1545BC 0%, #7740B5 100%)` | ✅ Correct |
+| **Trust Section** | `linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)` | ✅ FIXED - Neutral colors |
+
+### 3.4 ⚠️ FORBIDDEN Gradients
+
+**DO NOT USE these gradients (Accessibility Violations):**
+
+| Forbidden Gradient | Issue |
+|--------------------|-------|
+| `linear-gradient(..., #A4E7DE 100%)` | Light teal makes white text invisible (1.5:1 ratio) |
+| `linear-gradient(135deg, #E8EEFC, #F3E8FC)` | Light colors with muted text - unreadable |
+| Any gradient ending with pastel/light colors | White text becomes unreadable |
 
 ## 4. Regression Checklist
 - [x] **Middleware**: No longer causes infinite loops or incorrect redirects to `/id`.
@@ -58,7 +69,7 @@ This document tracks the technical integrity and routing performance of the AI S
 
 ## 5. Technical Debt / Next Steps
 - [ ] **Background Polling**: Persistence of benchmarking state across page refreshes and navigations.
-- [ ] **Publishing Logic**: Verification of score-based guards (A/B/C only).
+- [ ] **Promotion Logic**: Verification of score-based guards (A/B/C only) for ModelHub.
 - [ ] **LiteLLM Schema**: Validation of different provider configurations via LiteLLM.
 4. **Mobile Navigation**: Implement responsive hamburger menu for mobile devices (<768px).
 5. **Animation Performance**: Add `will-change` CSS property to animated elements.
@@ -112,7 +123,7 @@ This document tracks the technical integrity and routing performance of the AI S
 ### 7.2 Business Logic & Security
 | ID | Test Category | Technical Checkpoint | Status |
 |----|---------------|----------------------|--------|
-| FE-18 | **Publish Guard** | Server-side validation rejects "Publish" requests if `overall_score` is D or E. | [ ] |
+| FE-18 | **Promotion Guard** | Server-side validation rejects "Promote to ModelHub" requests if `overall_score` is D or E. | [ ] |
 | FE-19 | **LLM Summary API** | Verify integration with the summary endpoint for risk mitigation text. | [ ] |
 | FE-20 | **History API** | Ensure history endpoint returns paginated previous versions with child scores. | [ ] |
 
