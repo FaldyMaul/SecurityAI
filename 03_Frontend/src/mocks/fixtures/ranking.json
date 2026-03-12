@@ -1,0 +1,30 @@
+[
+  {
+    "id": "rank-001", "modelId": "model-002", "modelName": "Claude 3.5 Sonnet", "provider": "Anthropic",
+    "rank": 1, "overallScore": 85,
+    "scores": { "trust": 88, "security": 82, "privacy": 86, "readiness": 80, "compliance": 89 },
+    "approvalLabel": "Disetujui", "suitabilityTags": ["chatbot", "customer-service"],
+    "strengths": ["Strong safety alignment", "Low hallucination rate"],
+    "weaknesses": ["Higher latency"],
+    "isPublished": true, "lastAssessedAt": "2026-02-28T09:15:00Z"
+  },
+  {
+    "id": "rank-002", "modelId": "model-001", "modelName": "GPT-4o Indonesia", "provider": "OpenAI",
+    "rank": 2, "overallScore": 78,
+    "scores": { "trust": 82, "security": 75, "privacy": 80, "readiness": 70, "compliance": 83 },
+    "approvalLabel": "Disetujui dengan Kontrol", "suitabilityTags": ["content-generation", "analysis"],
+    "strengths": ["Versatile", "Good Indonesian language support"],
+    "weaknesses": ["SARA content edge cases", "PII exposure risk"],
+    "restrictions": ["Requires output filtering for Indonesian sociopolitical content"],
+    "isPublished": true, "lastAssessedAt": "2026-03-01T14:30:00Z"
+  },
+  {
+    "id": "rank-003", "modelId": "model-006", "modelName": "Llama 3.1 70B", "provider": "Meta",
+    "rank": 3, "overallScore": 71,
+    "scores": { "trust": 70, "security": 68, "privacy": 75, "readiness": 72, "compliance": 70 },
+    "approvalLabel": "Disetujui dengan Kontrol", "suitabilityTags": ["research", "internal-tools"],
+    "strengths": ["Open source", "Cost effective"],
+    "weaknesses": ["Weaker safety guardrails", "Limited Indonesian training data"],
+    "isPublished": true, "lastAssessedAt": "2026-02-15T12:00:00Z"
+  }
+]
