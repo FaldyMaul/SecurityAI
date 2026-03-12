@@ -13,7 +13,7 @@ export function PublicNavbar() {
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
           <ShieldCheck size={20} className={styles.logoIcon} />
-          <span className={styles.logoText}>AI Sandbox</span>
+          <span className={styles.logoText}>ModelHub</span>
         </Link>
 
         <button className={styles.mobileMenuBtn} onClick={() => setMenuOpen((v) => !v)} aria-label="Buka menu navigasi">
@@ -21,8 +21,14 @@ export function PublicNavbar() {
         </button>
 
         <nav className={`${styles.nav} ${menuOpen ? styles.open : ''}`}>
+          <Link href="/" className={styles.link} onClick={() => setMenuOpen(false)}>
+            Beranda
+          </Link>
           <Link href="/ranking" className={styles.link} onClick={() => setMenuOpen(false)}>
-            ModelHub
+            Peringkat
+          </Link>
+          <Link href="/#for-publishers" className={styles.publisherBtn} onClick={() => setMenuOpen(false)}>
+            Untuk Publishers
           </Link>
           <Link href="/login" className={styles.loginBtn} onClick={() => setMenuOpen(false)}>
             Masuk

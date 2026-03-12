@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { RankBadge } from '@/components/ranking/RankBadge';
 import { ArrowRight, ShieldCheck, Upload, Globe } from 'lucide-react';
+import { ForPublishersSection } from '@/components/public/ForPublishersSection';
 import styles from './home.module.css';
 
 import mockRanking from '@/mocks/fixtures/ranking.json';
@@ -58,6 +59,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <ForPublishersSection />
 
       {/* Trust Statement */}
       <section className={styles.trustSection}>

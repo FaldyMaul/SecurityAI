@@ -1,26 +1,33 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Eye, EyeOff, LogIn, Shield } from 'lucide-react';
 import styles from './login.module.css';
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const isQaBypass = process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_QA_BYPASS_LOGIN !== 'false';
+  const redirectParam = searchParams.get('redirect');
+  const redirectTarget =
+    redirectParam && redirectParam.startsWith('/') && !redirectParam.startsWith('//')
+      ? redirectParam
+      : '/models';
 
   useEffect(() => {
     if (isQaBypass) {
-      router.replace('/models');
+      router.replace(redirectTarget);
     }
-  }, [isQaBypass, router]);
+  }, [isQaBypass, redirectTarget, router]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Mock: simulate login
     setError(null);
+    router.push(redirectTarget);
   };
 
   return (

@@ -22,6 +22,13 @@ const PROTECTED_ROUTES: Record<string, string[]> = {
 
 const PUBLIC_ROUTES = ['/', '/login', '/ranking', '/access-denied'];
 
+function getSafeRedirectPath(raw: string | null): string {
+  if (!raw) return '/models';
+  if (!raw.startsWith('/')) return '/models';
+  if (raw.startsWith('//')) return '/models';
+  return raw;
+}
+
 function isPublicRoute(pathname: string) {
   return PUBLIC_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`));
 }
@@ -43,13 +50,15 @@ export default function middleware(request: NextRequest) {
   }
 
   const roleFromQuery = request.nextUrl.searchParams.get('role');
+  const redirectFromQuery = request.nextUrl.searchParams.get('redirect');
   const roleFromCookie = request.cookies.get('ai_sandbox_role')?.value;
   const role = roleFromQuery || roleFromCookie || (QA_BYPASS_LOGIN ? QA_DEFAULT_ROLE : 'model_owner');
 
   const intlResponse = intlMiddleware(request);
 
   if (QA_BYPASS_LOGIN && pathname === '/login') {
-    const redirectUrl = new URL('/models', request.url);
+    const redirectPath = getSafeRedirectPath(redirectFromQuery);
+    const redirectUrl = new URL(redirectPath, request.url);
     const response = NextResponse.redirect(redirectUrl);
     response.cookies.set('ai_sandbox_role', role, { path: '/' });
     return response;
