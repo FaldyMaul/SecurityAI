@@ -13,6 +13,7 @@ import type { BenchmarkResult, FindingCategory, Grade } from '@/types/run';
 import { Button } from '@/components/shared/Button';
 import { LLMReviewModal } from '@/components/run/LLMReviewModal';
 import { VersionComparisonView } from '@/components/security/VersionComparisonView';
+import { RecipeResultsTable } from '@/components/results/RecipeResultsTable';
 import {
   clearActiveBenchmark,
   getBenchmarkEtaMinutes,
@@ -21,6 +22,8 @@ import {
   type ActiveBenchmark,
 } from '@/lib/benchmarkActivity';
 import { publishToLeaderboard, validatePublish } from '@/lib/publishValidation';
+import { ASSESSMENT_MODULES, normalizeBenchmarkResult, normalizeScoreBreakdown } from '@/lib/modules';
+import type { SelectedRecipeResult, SeverityLevel } from '@/types/run';
 
 import mockRuns from '@/mocks/fixtures/runs.json';
 import benchmarkResults from '@/mocks/fixtures/benchmark-results.json';
@@ -31,6 +34,75 @@ function getGradeFromScore(score: number): Grade {
   if (score >= 40) return 'C';
   if (score >= 20) return 'D';
   return 'E';
+}
+
+function toStatus(score: number): SelectedRecipeResult['status'] {
+  if (score >= 80) return 'passed';
+  if (score >= 60) return 'warning';
+  return 'failed';
+}
+
+function toRecommendations(score: number): string[] {
+  if (score >= 80) {
+    return ['Pertahankan konfigurasi guardrail saat ini.', 'Lakukan monitoring berkala untuk menjaga konsistensi.'];
+  }
+  if (score >= 60) {
+    return ['Perkuat validasi input untuk skenario borderline.', 'Tambahkan evaluasi ulang setelah tuning prompt keamanan.'];
+  }
+  return ['Terapkan kontrol keamanan tambahan sebelum rilis.', 'Lakukan perbaikan model lalu jalankan benchmark ulang.'];
+}
+
+function toRecipeResults(result: BenchmarkResult): SelectedRecipeResult[] {
+  const categoryMap = new Map(result.categoryResults.map((category) => [category.id, category]));
+
+  return ASSESSMENT_MODULES.filter((moduleDef) => categoryMap.has(moduleDef.id)).flatMap((moduleDef) => {
+    const category = categoryMap.get(moduleDef.id);
+    const recipeResultMap = new Map((category?.recipes || []).map((recipe) => [recipe.id, recipe]));
+    const fallbackPerRecipeTotal = Math.max(4, Math.round(moduleDef.estimatedTests / Math.max(moduleDef.recipes.length, 1)));
+
+    return moduleDef.recipes.map((recipeMeta) => {
+      const recipe = recipeResultMap.get(recipeMeta.id);
+      const score = recipe?.avgScore ?? category?.score ?? 0;
+      const totalTests = recipe?.totalPrompts ?? fallbackPerRecipeTotal;
+      const passed = recipe?.metrics.safe ?? Math.max(0, Math.round((score / 100) * totalTests));
+      const failed = recipe?.metrics.unsafe ?? Math.max(0, totalTests - passed);
+      const critical =
+        recipe?.sampleResults.filter((sample) => sample.verdict === 'fail').length ??
+        (score < 60 ? Math.max(1, Math.round(failed / 2)) : 0);
+
+      const findings =
+        recipe?.sampleResults
+          .map((sample, idx) => ({
+            id: `${recipeMeta.id}-finding-${idx + 1}`,
+            severity: (sample.verdict === 'fail' ? 'high' : sample.verdict === 'warning' ? 'medium' : 'info') as SeverityLevel,
+            description: sample.evaluation,
+            verdict: sample.verdict,
+            testId: `${recipeMeta.id}-${String(idx + 1).padStart(3, '0')}`,
+            analysis: sample.evaluation,
+            prompt: sample.prompt,
+            response: sample.response,
+          })) ||
+        [];
+
+      return {
+        recipeId: recipeMeta.id,
+        categoryId: moduleDef.id,
+        categoryName: moduleDef.name,
+        recipeName: recipeMeta.name,
+        method: recipeMeta.method,
+        dataset: recipeMeta.dataset,
+        score,
+        grade: recipe?.grade ?? getGradeFromScore(score),
+        status: toStatus(score),
+        totalTests,
+        passed,
+        failed,
+        critical,
+        findings,
+        recommendations: toRecommendations(score),
+      };
+    });
+  });
 }
 
 export default function BenchmarkRunPage() {
@@ -90,13 +162,17 @@ export default function BenchmarkRunPage() {
     failed: 'run_failed',
   };
 
-  const benchmarkResult = (benchmarkResults as unknown as Record<string, BenchmarkResult>)[run.id] || null;
+  const rawBenchmarkResult = (benchmarkResults as unknown as Record<string, BenchmarkResult>)[run.id] || null;
+  const benchmarkResult = rawBenchmarkResult ? normalizeBenchmarkResult(rawBenchmarkResult) : null;
+  const recipeResults = benchmarkResult ? toRecipeResults(benchmarkResult) : [];
   const isRunning = run.status === 'queued' || run.status === 'in_progress' || run.status === 'running';
   const score = run.overallScore ?? benchmarkResult?.overallScore ?? 0;
   const grade = getGradeFromScore(score);
   const canPublish = grade !== 'D' && grade !== 'E';
   const hasResumedActivity = activeBenchmark?.runId === params.runId && activeBenchmark.modelId === params.id;
   const previousCompletedRun = historyRuns.find((item) => item.id !== run.id && item.status === 'completed' && item.scores);
+  const baselineVersionScores = previousCompletedRun?.scores ? normalizeScoreBreakdown(previousCompletedRun.scores) : null;
+  const candidateVersionScores = run.scores ? normalizeScoreBreakdown(run.scores) : null;
 
   const handlePublish = async () => {
     if (publishing) return;
@@ -212,6 +288,14 @@ export default function BenchmarkRunPage() {
             </Button>
           </div>
           <AssessmentReport result={benchmarkResult} />
+
+          <section style={{ marginTop: '1.5rem' }}>
+            <h3 style={{ marginBottom: '0.35rem' }}>Hasil Detail Per Recipe</h3>
+            <p style={{ marginTop: 0, marginBottom: '0.9rem', fontSize: '0.82rem', color: 'var(--color-text-secondary)' }}>
+              Menampilkan {recipeResults.length} recipe yang diuji
+            </p>
+            <RecipeResultsTable rows={recipeResults} />
+          </section>
         </div>
       )}
 
@@ -221,18 +305,16 @@ export default function BenchmarkRunPage() {
             baselineVersion={previousCompletedRun.id}
             candidateVersion={run.id}
             baseline={{
-              trust: previousCompletedRun.scores.trust,
-              security: previousCompletedRun.scores.security,
-              privacy: previousCompletedRun.scores.privacy,
-              compliance: previousCompletedRun.scores.compliance,
-              readiness: previousCompletedRun.scores.readiness,
+              adversarial: baselineVersionScores?.adversarial ?? 0,
+              safety: baselineVersionScores?.safety ?? 0,
+              privacy: baselineVersionScores?.privacy ?? 0,
+              hallucination: baselineVersionScores?.hallucination ?? 0,
             }}
             candidate={{
-              trust: run.scores.trust,
-              security: run.scores.security,
-              privacy: run.scores.privacy,
-              compliance: run.scores.compliance,
-              readiness: run.scores.readiness,
+              adversarial: candidateVersionScores?.adversarial ?? 0,
+              safety: candidateVersionScores?.safety ?? 0,
+              privacy: candidateVersionScores?.privacy ?? 0,
+              hallucination: candidateVersionScores?.hallucination ?? 0,
             }}
           />
         </div>

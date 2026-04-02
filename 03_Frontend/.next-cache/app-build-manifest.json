@@ -1,0 +1,44 @@
+{
+  "pages": {
+    "/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
+    ],
+    "/not-found": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/not-found.js"
+    ],
+    "/[locale]/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[locale]/layout.js"
+    ],
+    "/[locale]/(internal)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/[locale]/(internal)/layout.css",
+      "static/chunks/app/[locale]/(internal)/layout.js"
+    ],
+    "/[locale]/(internal)/models/[id]/runs/[runId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/[locale]/(internal)/models/[id]/runs/[runId]/page.css",
+      "static/chunks/app/[locale]/(internal)/models/[id]/runs/[runId]/page.js"
+    ],
+    "/[locale]/(public)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/[locale]/(public)/layout.css",
+      "static/chunks/app/[locale]/(public)/layout.js"
+    ],
+    "/[locale]/(public)/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/[locale]/(public)/page.css",
+      "static/chunks/app/[locale]/(public)/page.js"
+    ]
+  }
+}

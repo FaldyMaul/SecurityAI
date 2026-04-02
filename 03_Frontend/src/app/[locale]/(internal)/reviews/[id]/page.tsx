@@ -18,6 +18,7 @@ import { VersionComparisonView } from '@/components/security/VersionComparisonVi
 import { PIIMaskedText } from '@/components/security/PIIMaskedText';
 import type { Review } from '@/types/api';
 import type { FindingCategory } from '@/types/run';
+import { normalizeScoreBreakdown } from '@/lib/modules';
 
 import mockReviews from '@/mocks/fixtures/reviews.json';
 import mockRuns from '@/mocks/fixtures/runs.json';
@@ -45,8 +46,10 @@ export default function ReviewDetailPage() {
 
   const baselineScores = useMemo(() => {
     const previous = mockRuns.find((item) => item.modelId === review?.modelId && item.id !== review?.runId && item.scores);
-    return previous?.scores || { trust: 70, security: 66, privacy: 72, compliance: 74, readiness: 68 };
+    return normalizeScoreBreakdown(previous?.scores || { trust: 70, security: 66, privacy: 72, compliance: 74, readiness: 68 });
   }, [review?.modelId, review?.runId]);
+
+  const candidateScores = run?.scores ? normalizeScoreBreakdown(run.scores) : null;
 
   if (!review) return <EmptyStateBlock title="Review tidak ditemukan" />;
 
@@ -85,18 +88,16 @@ export default function ReviewDetailPage() {
             baselineVersion="v1.9"
             candidateVersion="v2.0"
             baseline={{
-              trust: baselineScores.trust,
-              security: baselineScores.security,
+              adversarial: baselineScores.adversarial,
+              safety: baselineScores.safety,
               privacy: baselineScores.privacy,
-              compliance: baselineScores.compliance,
-              readiness: baselineScores.readiness,
+              hallucination: baselineScores.hallucination,
             }}
             candidate={{
-              trust: run.scores.trust,
-              security: run.scores.security,
-              privacy: run.scores.privacy,
-              compliance: run.scores.compliance,
-              readiness: run.scores.readiness,
+              adversarial: candidateScores?.adversarial ?? 0,
+              safety: candidateScores?.safety ?? 0,
+              privacy: candidateScores?.privacy ?? 0,
+              hallucination: candidateScores?.hallucination ?? 0,
             }}
           />
         </div>

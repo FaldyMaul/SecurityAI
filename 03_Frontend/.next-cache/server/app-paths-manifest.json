@@ -1,0 +1,4 @@
+{
+  "/[locale]/(internal)/models/[id]/runs/[runId]/page": "app/[locale]/(internal)/models/[id]/runs/[runId]/page.js",
+  "/[locale]/(public)/page": "app/[locale]/(public)/page.js"
+}

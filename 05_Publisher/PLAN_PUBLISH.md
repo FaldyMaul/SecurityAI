@@ -6,25 +6,25 @@ This document outlines the strategy for publishing the prototype to `aisandbox.1
 
 - **Domain**: `aisandbox.1ai.my.id`
 - **Root Domain**: `1ai.my.id` (managed in Cloudflare)
-- **Hosting**: Cloudflare Pages (supports Next.js SSR/ISR natively)
+- **Hosting**: Cloudflare Pages
+- **Source**: `ssh://git@gitlab.playcourt.id:31022/ai-platform/ai-sandbox.git`
 - **Framework**: Next.js 15.2.0
 
-## Deployment Strategy: Cloudflare Pages
+## Deployment Strategy: GitLab + Cloudflare Pages
 
-We will use the `@cloudflare/next-on-pages` approach for maximum compatibility with Cloudflare's edge runtime.
+We will clone the repository locally and use the Wrangler CLI to deploy to Cloudflare Pages. This ensures we use the secure company source while maintaining control over the deployment process.
 
 ### Steps to Deploy
 
-1. **Local Build Check**
+1. **Clone Repository**
    ```bash
-   cd AISandboxDev/03_Frontend
-   npm install
-   npm run build
+   git clone ssh://git@gitlab.playcourt.id:31022/ai-platform/ai-sandbox.git
+   cd ai-sandbox
    ```
 
-2. **Cloudflare Integration**
-   - Create a new Pages project via the Cloudflare Dashboard or Wrangler CLI.
-   - Project Name: `ai-sandbox-prototype`
+2. **Build and Deploy**
+   - Run `npm install` and `npm run build`.
+   - Use `wrangler pages deploy` to upload the build to Cloudflare.
 
 3. **Subdomain Setup**
    - In Cloudflare DNS, add a CNAME:

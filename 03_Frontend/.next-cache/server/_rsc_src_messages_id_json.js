@@ -1,0 +1,25 @@
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+exports.id = "_rsc_src_messages_id_json";
+exports.ids = ["_rsc_src_messages_id_json"];
+exports.modules = {
+
+/***/ "(rsc)/./src/messages/id.json":
+/*!******************************!*\
+  !*** ./src/messages/id.json ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = /*#__PURE__*/JSON.parse('{"nav":{"dashboard":"Dashboard","models":"Model Saya","reviews":"Riwayat","ranking":"ModelHub","settings":"Pengaturan","home":"Beranda","logout":"Keluar"},"action":{"add_model":"+ Tambah Model","save_draft":"Simpan Draf","validate_continue":"Validasi & Lanjutkan","start_benchmark":"Mulai Benchmark","submit_review":"Ajukan untuk Review","confirm_decision":"Konfirmasi Keputusan","rerun":"Jalankan Ulang","compare":"Bandingkan Model","publish":"Promosikan ke ModelHub","unpublish":"Sembunyikan","go_back":"Kembali","retry":"Coba Lagi","cancel":"Batal","save":"Simpan","view_detail":"Lihat Detail","clear_filter":"Hapus Filter"},"status":{"draft":"Draf","validation_pending":"Validasi Endpoint","validation_failed":"Validasi Gagal","endpoint_valid":"Endpoint Valid","run_queued":"Dalam Antrean","run_in_progress":"Sedang Berjalan","run_failed":"Benchmark Gagal","assessment_completed":"Selesai","review_ready":"Siap Review","pending_review":"Sedang di-Review","approved":"Disetujui","approved_with_controls":"Disetujui dengan Kontrol","promotion_ready":"Siap Promosi","published_to_modelhub":"Dipublikasikan ke ModelHub","restricted":"Dibatasi","reassessment_required":"Perlu Penilaian Ulang","published":"Dipublikasikan"},"score":{"adversarial":"Adversarial Robustness","safety":"Safety & Alignment","privacy":"Privacy","hallucination":"Hallucination & Truthfulness","trust":"Kepercayaan","security":"Keamanan","readiness":"Kesiapan","compliance":"Kepatuhan","overall":"Skor Keseluruhan"},"severity":{"critical":"Kritis","high":"Tinggi","medium":"Sedang","low":"Rendah","info":"Informasi"},"form":{"model_name":"Nama Model","provider":"Penyedia","base_model":"Model Dasar","endpoint_url":"URL Endpoint","auth_method":"Metode Autentikasi","api_key":"API Key","model_version":"Versi Model","intended_use":"Penggunaan yang Dimaksud","description":"Deskripsi","email":"Email","password":"Kata Sandi","remember_me":"Ingat saya","display_name":"Nama Tampilan","language":"Bahasa","theme":"Tema"},"error":{"field_required":"Kolom ini wajib diisi","email_invalid":"Format email tidak valid","url_invalid":"Format URL tidak valid (harus https://)","min_length":"Minimal {min} karakter","max_length":"Maksimal {max} karakter","login_failed":"Email atau kata sandi salah","sso_failed":"Login SSO gagal. Silakan coba lagi.","account_locked":"Akun Anda telah dikunci. Hubungi administrator.","network_error":"Gagal terhubung ke server. Periksa koneksi Anda.","permission_denied":"Anda tidak memiliki akses ke halaman ini.","not_found":"Halaman tidak ditemukan"},"dialog":{"confirm_submit_review":"Apakah Anda yakin ingin mengajukan model ini untuk review?","confirm_decision":"Apakah Anda yakin dengan keputusan ini? Tindakan ini akan direkam dalam audit trail.","confirm_publish":"Promosikan model ini ke ModelHub?","confirm_unpublish":"Sembunyikan model ini dari ModelHub?","confirm_rerun":"Jalankan ulang benchmark untuk model ini?","confirm_restrict":"Batasi akses model ini? Alasan wajib diisi."},"empty":{"no_models":"Belum ada model yang terdaftar","no_models_cta":"Tambah model pertama Anda","no_reviews":"Tidak ada review yang menunggu","no_runs":"Belum ada benchmark yang dijalankan","no_ranking":"Belum ada model yang dipromosikan ke ModelHub","no_filter_results":"Tidak ada hasil yang cocok dengan filter","model_unavailable":"Profil model ini tidak lagi tersedia"},"loading":{"validating_endpoint":"Memvalidasi endpoint…","running_benchmark":"Menjalankan benchmark…","saving":"Menyimpan…","loading_data":"Memuat data…"},"micro":{"draft_saved":"Draf berhasil disimpan","decision_recorded":"Keputusan berhasil direkam","settings_saved":"Pengaturan berhasil disimpan","max_compare":"Maksimal 3 model dapat dibandingkan","assessment_footer":"Penilaian dilakukan oleh AI Sandbox · Hasil terakhir diperbarui {date}"},"term":{"sara":"SARA","uu_pdp":"UU PDP","konten_radikal":"Konten Radikal"},"page":{"login_title":"Masuk ke AI Sandbox","dashboard_title":"Dashboard","models_title":"Model Saya","add_model_title":"Tambah Model","reviews_title":"Antrean Review","ranking_title":"ModelHub","settings_title":"Pengaturan","home_tagline":"Temukan Model AI Terpercaya","home_subtitle":"Platform evaluasi keamanan dan kepercayaan model AI untuk Indonesia"}}');
+
+/***/ })
+
+};
+;

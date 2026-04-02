@@ -1,0 +1,146 @@
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/components/layout/PublicNavbar.module.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************/
+.PublicNavbar_navbar__Vv_ID {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+  height: var(--navbar-height);
+  z-index: var(--z-sticky);
+}
+
+.PublicNavbar_container__uZ4hf {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-8);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.PublicNavbar_logo__RV9I2 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--color-text-primary);
+}
+
+.PublicNavbar_logoIcon__FT1Lc {
+  color: var(--color-primary);
+}
+
+.PublicNavbar_logoText__lNvGp {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.PublicNavbar_nav__F4Xre {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.PublicNavbar_mobileMenuBtn__z2UyH {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+.PublicNavbar_link__VSMVq {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.PublicNavbar_link__VSMVq:hover {
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.PublicNavbar_loginBtn__OBZoG {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.PublicNavbar_loginBtn__OBZoG:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  text-decoration: none;
+}
+
+.PublicNavbar_publisherBtn__LDP8i {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.PublicNavbar_publisherBtn__LDP8i:hover {
+  background: var(--color-primary-light);
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .PublicNavbar_container__uZ4hf {
+    padding: 0 var(--space-4);
+  }
+
+  .PublicNavbar_mobileMenuBtn__z2UyH {
+    display: inline-flex;
+  }
+
+  .PublicNavbar_nav__F4Xre {
+    display: none;
+    position: absolute;
+    top: calc(var(--navbar-height) - 2px);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: var(--space-2);
+    align-items: stretch;
+    padding: var(--space-3) var(--space-4) var(--space-4);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
+
+  .PublicNavbar_nav__F4Xre.PublicNavbar_open__4fitR {
+    display: flex;
+  }
+
+  .PublicNavbar_open__4fitR {
+    display: flex;
+  }
+
+  .PublicNavbar_link__VSMVq,
+  .PublicNavbar_loginBtn__OBZoG,
+  .PublicNavbar_publisherBtn__LDP8i {
+    display: block;
+    text-align: center;
+  }
+}
+
