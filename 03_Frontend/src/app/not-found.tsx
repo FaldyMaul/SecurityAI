@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const runtime = 'edge';
+
 export default function NotFound() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '70vh', textAlign: 'center', padding: '2rem' }}>
