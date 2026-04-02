@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { QueryProvider } from '../providers';
 
 const locales = ['id', 'en'];
+export const runtime = 'edge';
 
 export default async function LocaleLayout({
   children,
