@@ -19,11 +19,7 @@ export function SummaryTile({ icon: Icon, label, value, href, highlight }: Summa
   return (
     <Link href={href} className={`${styles.tile} ${highlight && value > 0 ? styles.highlight : ''}`}>
       <Card
-        variant="elevated"
-        size="md"
-        padding="md"
-        shadow={highlight ? 'md' : 'sm'}
-        hoverable
+        elevation={highlight ? 'elevation-2' : 'elevation-1'}
         className={styles.card}
       >
         <div className={styles.content}>

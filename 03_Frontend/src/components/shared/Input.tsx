@@ -1,6 +1,6 @@
 'use client';
 
-import { Input as LegionInput } from '@legion-ui-kit/react-core';
+import { TextField as LegionInput } from '@legion-ui-kit/react-core';
 import type { ReactNode, ChangeEvent } from 'react';
 
 export interface InputProps {
@@ -22,36 +22,6 @@ export interface InputProps {
   className?: string;
 }
 
-/**
- * Input - AI Sandbox Input component using Legion UI Input
- * 
- * Variants:
- * - default: Standard input style
- * - error: Error state with red border
- * - success: Success state with green border
- * 
- * @example
- * ```tsx
- * <Input 
- *   label="Email" 
- *   type="email"
- *   placeholder="Enter your email"
- *   helperText="We'll never share your email"
- * />
- * 
- * <Input 
- *   label="Password"
- *   type="password"
- *   variant="error"
- *   errorText="Password must be at least 8 characters"
- * />
- * 
- * <Input 
- *   leftAddon={<EmailIcon />}
- *   placeholder="Enter email"
- * />
- * ```
- */
 export function Input({
   variant = 'default',
   size = 'md',
@@ -72,7 +42,8 @@ export function Input({
 }: InputProps) {
   return (
     <LegionInput
-      variant={variant}
+      status={variant}
+      variant="outline"
       size={size}
       type={type}
       label={label}
@@ -80,10 +51,10 @@ export function Input({
       value={value}
       onChange={onChange}
       disabled={disabled}
-      errorText={errorText}
-      helperText={helperText}
-      leftAddon={leftAddon}
-      rightAddon={rightAddon}
+      caption={variant === 'error' ? errorText : undefined}
+      hint={helperText}
+      iconLeft={leftAddon}
+      iconRight={rightAddon}
       required={required}
       name={name}
       id={id}
