@@ -1,11 +1,8 @@
-import { getLocale } from 'next-intl/server';
 import '@/styles/globals.css';
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const locale = await getLocale();
-  
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang={locale}>
+    <html lang="en">
       <body className="antialiased">{children}</body>
     </html>
   );

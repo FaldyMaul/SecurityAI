@@ -1,0 +1,185 @@
+# Pre-build Checks (moonshot-ui)
+# 1. Unit tests with code coverage (jest)
+# 2. Code quality analysis (lint)
+# 3. Dependency analysis (vulnerabilities)
+# 4. Dependency analysis (undesirable licenses)
+# 5. Deploy reports generated from the above to GitHub Pages
+
+name: Pre-Build Checks
+
+on:
+  # Runs when a pull request to main is being assigned
+  pull_request:
+    types: [ assigned, synchronize ]
+    branches:
+      - 'dev_main'
+
+  # Run this workflow manually from Actions tab
+  workflow_dispatch:
+    inputs:
+      branch_to_test:
+        description: 'Branch or tag to run test'
+        required: true
+        default: 'dev_main'
+        type: string
+
+# Allow one concurrent deployment
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+
+  pre-build-checks:
+    # Run only when PR is assigned, even on subsequent commits (i.e. synchronize)
+    if: (github.event_name == 'pull_request' && github.event.pull_request.assignee != null) || github.event_name == 'workflow_dispatch'
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    steps:
+
+      - name: Set Branch Variable (pull_request)
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "BRANCH=${{ github.event.pull_request.head.ref }}" >> "$GITHUB_ENV"
+          echo "PR_NUM=#${{ github.event.pull_request.number }}" >> "$GITHUB_ENV"
+
+      - name: Set Branch Variable (workflow_dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "BRANCH=${{ inputs.branch_to_test }}" >> "$GITHUB_ENV"
+          echo "PR_NUM=#0" >> "$GITHUB_ENV"
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.BRANCH }}
+          submodules: recursive
+
+      # Install dependencies
+      - name: Setup node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Install Dependencies
+        run: |
+          npm install --omit=dev
+          npx license-checker --summary --out licenses-found.txt -y
+          npm install -D
+          npm i -D jest jest-html-reporter jest-json-reporter ts-jest @jest/globals badge-maker
+          npm i -D eslint eslint-formatter-html @typescript-eslint/eslint-plugin @typescript-eslint/parser
+          cp .env.local .env
+          npm run build
+
+#      # Format check
+#      - name: Format Check
+#        if: ${{ ! cancelled() }}
+#        run: |
+#          npm run format-check
+
+      # Unit Tests & Coverage
+      - name: Unit tests with coverage
+        if: ${{ ! cancelled() }}
+        timeout-minutes: 30
+        run: |
+          set +e
+          sudo timedatectl set-timezone Asia/Singapore
+          npm run coverage
+          source .ci/gen_pre_build_summ.sh test
+          test_status=$?
+          source .ci/gen_pre_build_summ.sh coverage
+          coverage_status=$?
+          echo "UNIT_TESTS_STATUS=$UNITTEST_SUMMARY" >> $GITHUB_ENV
+          echo "CODE_COVERAGE_STATUS=$COVERAGE_SUMMARY" >> $GITHUB_ENV
+          set -e
+          if [ $test_status -ne 0 ] || [ $coverage_status -ne 0 ]; then
+            exit 1
+          fi
+
+      # lint
+      - name: Code quality analysis - lint
+        if: ${{ ! cancelled() }}
+        run: |
+          set +e
+          npm run lint-check
+          exit_code_lint=$?
+          npm run lint-html-report
+          npm run lint-json-report
+          source .ci/gen_pre_build_summ.sh lint
+          lint_status=$?
+          echo "CODE_QUALITY_STATUS=$LINT_SUMMARY" >> $GITHUB_ENV
+          set -e
+          exit $lint_status
+
+      # npm audit
+      - name: Dependency analysis - vulnerabilities & licenses
+        if: ${{ ! cancelled() }}
+        run: |
+          set +e
+          npm audit --omit=dev
+          exit_code_audit=$?         
+          npm audit --omit=dev --json | npx npm-audit-markdown --output npm-audit-report.md
+          npx markdown-to-html-cli --source npm-audit-report.md --output npm-audit-report.html -y
+          echo -e "License Check Summary for moonshot-ui\n" > license-report.txt
+          cat licenses-found.txt >> license-report.txt
+          cat license-report.txt
+          cp license-report.txt licenses-found.txt
+          source .ci/gen_pre_build_summ.sh dependency
+          dep_status=$?
+          source .ci/gen_pre_build_summ.sh license
+          lic_status=$?
+          echo "DEPENDENCY_STATUS=$DEPENDENCY_SUMMARY" >> $GITHUB_ENV
+          echo "LICENSE_STATUS=$LICENSE_SUMMARY" >> $GITHUB_ENV
+          set -e
+          if [ $dep_status -ne 0 ] || [ $lic_status -ne 0 ]; then
+            exit 1
+          fi
+
+      # Send slack notification
+      - name: Send slack notification
+        if: ${{ ! cancelled() }}
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "workflow": "${{ github.repository }} | ${{ github.workflow }} | ${{ env.PR_NUM }}",
+              "status": "${{ job.status }}",
+              "details": "${{ env.UNIT_TESTS_STATUS }} | ${{ env.CODE_COVERAGE_STATUS }} | ${{ env.CODE_QUALITY_STATUS }} | ${{ env.DEPENDENCY_STATUS }} | ${{ env.LICENSE_STATUS }}",
+              "ref": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+
+#      ### Publish reports to ci dashboard ###
+#
+#      - name: Checkout dashboard
+#        if: ${{ github.event.pull_request.head.repo.full_name == github.repository && always() }}
+#        uses: actions/checkout@v3
+#        with:
+#          repository: aiverify-foundation/ci-dashboard
+#          token: ${{ secrets.CHECKOUT_TOKEN }}
+#          ref: main
+#          path: check-results
+#
+#      - name: Push results to dashboard
+#        if: ${{ github.event.pull_request.head.repo.full_name == github.repository && always() }}
+#        working-directory: ${{ github.workspace }}/check-results
+#        run: |
+#          set +e
+#          find ../ -type f -name ".gitignore" -exec rm {} +
+#          [ -d "docs/pre-build/moonshot-ui" ] && rm -rf docs/pre-build/moonshot-ui
+#          mkdir -p docs/pre-build/moonshot-ui
+#          mv ../coverage docs/pre-build/moonshot-ui/
+#          mv ../*.svg docs/pre-build/moonshot-ui/
+#          mv ../*.html docs/pre-build/moonshot-ui/
+#          mv ../*.md docs/pre-build/moonshot-ui/
+#          mv ../*.txt docs/pre-build/moonshot-ui/
+#          git add docs/pre-build/moonshot-ui
+#          git config user.name "moonshot"
+#          git config user.email "moonshot@imda.gov.sg"
+#          git commit -m "feat(moonshot-ui) actions publish moonshot-ui reports to dashboard"
+#          git push
+#          set -e

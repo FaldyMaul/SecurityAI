@@ -1,0 +1,9 @@
+# AAS Q3 Essay Draft - Contribution to Change or Reform
+
+One of my strongest contributions was building the Portal HC Analytics solution for BP BUMN. The challenge was that leadership and talent mapping in a large institution can become subjective when decisions rely too much on manual judgement. This matters for the AAI priority of Strong Institutions because public and state-owned institutions need fairer, more transparent, and more auditable decision support.
+
+As an AI Engineer, I helped architect and implement an AI-based talent matching system using semantic similarity and Large Language Model methods. I worked with BP BUMN human capital stakeholders and technical colleagues, combining their institutional knowledge with my AI architecture and evaluation role. My responsibility was to translate HC requirements into technical design, integrate employee profile data, prepare the matching approach, and refine the logic so the recommendations were relevant to business and HC needs.
+
+The most important leadership challenge was building trust among non-technical users who needed to understand when AI recommendations were reliable and when human judgement should override them. I demystified the system by explaining semantic similarity in practical language, using iterative discussions, and framing the model as decision support that empowered, rather than replaced, human judgement. I also made sure the outputs could be reviewed, so the system supported accountability instead of hiding decisions behind an algorithm.
+
+The result was an AI-driven talent matching capability that replaced a more subjective process and increased talent mapping accuracy by 35%. This shaped my leadership style: listen first, translate technical ideas clearly, build trust, and keep human accountability in the process. It also taught me that powerful AI must always be evaluated and audited, which connects directly to my future goal in AI cyber security.

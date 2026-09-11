@@ -76,6 +76,10 @@
   --color-score-moderate: #7740B5;      /* Purple for moderate scores */
   --color-score-poor: #f59e0b;          /* Amber for poor scores */
   --color-score-critical: #dc2626;      /* Red for critical scores */
+  --color-score-adversarial: #dc2626;   /* Red */
+  --color-score-safety: #f59e0b;        /* Amber */
+  --color-score-privacy: #2563eb;       /* Blue */
+  --color-score-hallucination: #7c3aed; /* Purple */
 
   /* ── Spacing Scale (Legion UI Standard) ── */
   --space-0: 0;

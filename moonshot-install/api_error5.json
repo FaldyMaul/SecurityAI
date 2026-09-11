@@ -1,0 +1,1 @@
+{"detail":"Failed to retrieve cookbooks: [ServiceException] UnexpectedError in get_all_cookbooks - An unexpected error occurred: [E050] Can't find model 'en_core_web_lg'. It doesn't seem to be a Python package or a valid path to a data directory."}

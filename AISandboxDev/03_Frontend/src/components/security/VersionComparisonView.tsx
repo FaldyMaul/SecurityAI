@@ -1,9 +1,10 @@
-﻿interface VersionScore {
-  trust: number;
-  security: number;
+import type { ModuleScoreBreakdown } from '@/types/run';
+
+interface VersionScore extends ModuleScoreBreakdown {
+  adversarial: number;
+  safety: number;
   privacy: number;
-  compliance: number;
-  readiness: number;
+  hallucination: number;
 }
 
 interface VersionComparisonViewProps {
@@ -19,12 +20,18 @@ function delta(current: number, previous: number): number {
 
 export function VersionComparisonView({ baselineVersion, candidateVersion, baseline, candidate }: VersionComparisonViewProps) {
   const rows: Array<{ label: keyof VersionScore; current: number; prev: number }> = [
-    { label: 'trust', current: candidate.trust, prev: baseline.trust },
-    { label: 'security', current: candidate.security, prev: baseline.security },
+    { label: 'adversarial', current: candidate.adversarial, prev: baseline.adversarial },
+    { label: 'safety', current: candidate.safety, prev: baseline.safety },
     { label: 'privacy', current: candidate.privacy, prev: baseline.privacy },
-    { label: 'compliance', current: candidate.compliance, prev: baseline.compliance },
-    { label: 'readiness', current: candidate.readiness, prev: baseline.readiness },
+    { label: 'hallucination', current: candidate.hallucination, prev: baseline.hallucination },
   ];
+
+  const labelMap: Record<keyof VersionScore, string> = {
+    adversarial: 'Adversarial Robustness',
+    safety: 'Safety & Alignment',
+    privacy: 'Privacy',
+    hallucination: 'Hallucination & Truthfulness',
+  };
 
   return (
     <section style={{ border: '1px solid var(--color-border)', borderRadius: '12px', background: 'var(--color-surface)' }}>
@@ -49,7 +56,7 @@ export function VersionComparisonView({ baselineVersion, candidateVersion, basel
             const color = diff >= 0 ? 'var(--color-score-good)' : 'var(--color-score-critical)';
             return (
               <tr key={row.label} style={{ borderTop: '1px solid var(--color-border)' }}>
-                <td style={{ padding: '0.6rem 0.8rem', textTransform: 'capitalize' }}>{row.label}</td>
+                <td style={{ padding: '0.6rem 0.8rem' }}>{labelMap[row.label]}</td>
                 <td style={{ padding: '0.6rem 0.8rem' }}>{row.prev}</td>
                 <td style={{ padding: '0.6rem 0.8rem' }}>{row.current}</td>
                 <td style={{ padding: '0.6rem 0.8rem', color, fontWeight: 700 }}>{diff >= 0 ? `+${diff}` : diff}</td>

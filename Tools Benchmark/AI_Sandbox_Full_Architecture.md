@@ -1,95 +1,80 @@
 # National AI Sandbox: Full Architecture & End-to-End Flow
 
-This document details the complete, end-to-end technical architecture and operational flow of the National AI Sandbox. 
-
-Based on the strict requirement for **100% Free Open-Source Software (OSS)** without enterprise feature-gates, and the need for **seamless integration**, the Sandbox adopts a **Unified Python Stack**. This allows all security, privacy, and evaluation tools to run in a single, cohesive ecosystem without language fragmentation.
+Based on deep research into Moonshot, LLM Guard, DeepEval, Giskard, Garak, and PyRIT, this document outlines the end-to-end architecture of the National AI Sandbox. It covers the technical stack, output integration strategy, justification for a multi-tool approach, and compliance mapping to OWASP, ISO, and NIST.
 
 ---
 
-## 1. The Full End-to-End Sandbox Flow
+## 1. Output Format Integration Strategy (Overcoming PDF Limits)
+A major challenge in building a unified Sandbox is that many standalone tools (like the core AI Verify framework or Moonshot's native UI) generate static PDF or HTML reports. *PDFs cannot be aggregated, queried, or parsed by a master dashboard.*
 
-The AI Sandbox operates as a rigorous, automated pipeline. When a new AI model or application is proposed for production, it must successfully navigate this flow:
+**The Solution:** The Sandbox Custom Backend must bypass the native UIs of these tools. It must exclusively request machine-readable outputs from the underlying Python engines, pull that data into a central PostgreSQL database, and build its own interactive dashboard.
 
-### Flow Phase 1: Intake & Sandbox Provisioning
-1.  **AI Prototyping**: Developers use the fixed **AgentLab (Flowise OSS)** to construct the RAG pipeline or AI agent visually.
-2.  **Environment Spin-up**: The Sandbox provisions an isolated testing environment (Docker).
-3.  **Gateway Configuration**: **LiteLLM** (Python) connects to the target model's API via **Telkom Apilogy** and establishes a proxy and cost-tracking budget for the upcoming tests.
-
-### Persona 1: The AI Engineer (Model/Infrastructure Owner)
-*   **Goal**: Deploys raw models (e.g., Qwen 30B) to the Apilogy marketplace and needs to ensure they are robust against adversarial attacks.
-*   **Workflow**:
-    1.  The Engineer logs into the **National Sandbox Portal (Custom UI)** and registers the new Qwen 30B endpoint URL and its API Key. The Portal securely stores the key in a backend **Secrets Vault**.
-    2.  They click "Initiate Baseline Scan", which automatically triggers the CI/CD pipeline. The pipeline pulls the API key from the Vault and uses it to barrage the model with **Garak** (OWASP vulnerabilities) and **DeepEval** (accuracy tests).
-    3.  When the test finishes, they view the high-level Pass/Fail scores on the Portal. If the model fails a specific prompt injection, the Engineer opens the **Developer Trace Viewer (e.g., Phoenix)** to debug the exact raw traces and payload strings.
-
-### Persona 2: The Product Manager (App Builder)
-*   **Goal**: Builds an AI feature (e.g., an HR Chatbot using Flowise) and wants to get it certified for production release without understanding deep code.
-*   **Workflow**:
-    1.  The Product Manager submits their Flowise agent **Endpoint URL** and any required **Auth Headers/Tokens** to the Sandbox Portal.
-    2.  The automated pipeline encrypts the tokens, injects them into the Python test suite environment, and runs the evaluation in the background exactly as an authenticated user would.
-    3.  The PM logs into the **National Sandbox Portal (Custom UI)**. They do not see raw JSON logs; they see a simple dashboard with Dial Scores: *Contextual Relevancy: 95%, Hallucination Rate: 2%, OWASP Compliance: Pass*.
-    4.  If the scores meet the minimum threshold, they click "Request Certification".
-
-### Persona 3: The Multimodal Developer (Computer Vision & Text-to-Image)
-*   **Goal**: Deploys vision models, LMMs (e.g., Qwen-VL), or Text-to-Image models and must ensure safety against visual jailbreaks and toxic image generation.
-*   **Workflow**:
-    1.  The Developer submits the multimodal endpoint (e.g., Stable Diffusion API) via the **National Sandbox Portal**.
-    2.  The pipeline triggers tests tailored for vision. It uses **PyRIT** to send poisoned images (Visual Prompt Injection) and uses Python-native **Computer Vision Safety Checkers** to evaluate generated output images for NSFW/Toxicity content.
-    3.  **LLM Guard** applies OCR to the vision pipeline to ensure the LMM doesn't leak PII when analyzing images containing text (e.g., scanned ID cards).
-    4.  They review the pass/fail vision metrics on the dashboard, using **Arize Phoenix** to look at specific traces of image inputs that bypassed the guardrails.
-
-### Flow Phase 2: The Core Python Testing Pipeline
-Because all testing tools are Python-based, they are orchestrated via a single cohesive script (e.g., using `pytest` natively).
-
-1.  **Fast Regression (Accuracy)**: **DeepEval** (Python) executes a suite of tests against a "Golden Dataset," scoring Exact Match, Answer Relevancy, and hallucination rates via LLM-as-a-judge.
-2.  **Deep Safety Scan (Bias & Ethics)**: If DeepEval passes, the **Giskard** (Python library) scanner automatically generates perturbated inputs to test for demographic bias and toxicity.
-3.  **Adversarial Vulnerability Scan (Security)**: Next, **Garak** (Python) fires a barrage of known jailbreaks and prompt injections. 
-4.  **Advanced Red-Teaming (Optional / High-Risk)**: For critical models, **PyRIT** (Python) simulates a multi-turn, intelligent attacker LLM to dynamically trick the target model.
-5.  **Runtime Privacy Checks**: Throughout all inference, **LLM Guard** (Python) sits actively in the middle, scanning every input/output for leaked PII data and blocking live injections.
-
-### Flow Phase 3: Observability, Mitigation & Reporting
-1.  **Developer Observability (Optional)**: OpenTelemetry traces from DeepEval, LiteLLM, and LLM Guard can be streamed locally into **Arize Phoenix** strictly for AI Engineers to debug failed prompts at the code level.
-2.  **Sandbox Web Portal**: The test suite outputs a final JSON result. Product Managers log into the **Customized OSS Portal (Streamlit / AI Verify Fork)** to view a clean, high-level dashboard of their Agent's Pass/Fail metrics (Accuracy, Bias, OWASP).
-3.  **Governance Reporting**: Once the model passes, a button on the Customized Portal triggers a CI/CD script that converts the JSON metrics into a standardized, static PDF report for Management audits. 
+*   **Moonshot:** While the UI exports PDFs, the core `moonshot` Python CLI writes all benchmarking results to raw `.json` files in `moonshot-data/runs/`. The Sandbox backend will natively parse these JSONs.
+*   **Garak:** Outputs a highly detailed `.jsonl` (JSON Lines) file mapping every single prompt attempt and whether it was a "hit" (vulnerability found). 
+*   **PyRIT:** Uses a local `DuckDB` database to track history. The Sandbox backend can run SQL queries directly against PyRIT's `.db` file to extract multi-turn attack successes.
+*   **DeepEval:** Outputs standard JSON test reports (similar to Pytest metrics).
+*   **Strategy:** By ingesting JSON, JSONL, and DuckDB, your Custom Sandbox UI renders a unified analytics dashboard. Only at the very end of the user journey does the Sandbox generate its *own* official PDF for management audits.
 
 ---
 
-## 2. The Complete Stack Layer Architecture
+## 2. Justification: Why Not Use *Only* Moonshot?
+Moonshot is an incredible, government-backed tool, but using it as the *sole* testing engine leaves critical gaps in a National Sandbox. A Sandbox must be comprehensive, while Moonshot is specialized for baseline compliance.
 
-To support the flow above, the architecture is specialized into layers. This strictly delineates the **Sandbox Testing Tools** (Layer 4/5) from the **Monitoring UI** (Layer 6) and the **Reporting** (Layer 7).
+1.  **Limited Attack Depth (Single vs. Multi-turn):** Moonshot primarily sends single-turn static prompts. For highly secure systems (like government chatbots), attackers use multi-turn conversational trickery (Crescendo attacks). **PyRIT** must be integrated to provide this advanced, stateful conversational red-teaming.
+2.  **Lacking Granular RAG Metrics:** Moonshot is great at checking base models for bias/toxicity, but it struggles to evaluate complex Retrieval-Augmented Generation (RAG) pipelines. **DeepEval** is required to mathematically score "Answer Relevancy" and "Faithfulness" against a live vector database.
+3.  **No Runtime Protection:** Moonshot only tests models *before* deployment. A complete Sandbox ecosystem must offer users a way to protect models in production. **LLM Guard** provides this real-time firewall capability.
+4.  **Offensive Brute-Forcing vs Compliance:** While Moonshot uses structured compliance recipes, **Garak** acts like a ruthless Nmap scanner, firing tens of thousands of exploits specifically designed to crash the system tokenizer or bypass specific guardrails.
 
-| Layer | Component Role | Selected Tool | Rationale for Integration & OSS Reality |
-| :--- | :--- | :--- | :--- |
-| **Layer 7: Reporting** | Static Compliance Output | **Pipeline PDF Generator** | *Replaces AI Verify.* A simple Python/CI script that converts the test outputs into a Management-ready PDF. Eliminates the need for buggy, low-adoption UI portals. |
-| **Layer 6: Master UI Hub** | Governance Dashboard | **Customized OSS Portal / AIVerify Moonshot (Streamlit / AI Verify Fork)** | *Replaces forcing generic Observability tools.* Instead of building a proprietary UI from scratch, the Sandbox will fork an existing open-source base (like AI Verify) or use a rapid Python framework (Streamlit). This UI is customized specifically to ingest the JSON payload from Garak/DeepEval. |
-| **Layer 5: Core Testing Engine** | Accuracy Evaluator | **DeepEval** | Acts as "Pytest for LLMs", creating a unified Python testing suite that flows perfectly into the other tools. |
-| **Layer 4: Security Scanners** | Vulnerability Probes | **Garak & Giskard** | Both are native Python libraries. Garak specifically maps its attacks to the **OWASP Top 10**. |
-| **Layer 3: Advanced Red Team & Classical ML**| Adaptive Hacking & Evasion| **PyRIT & IBM ART** | Microsoft's PyRIT orchestrates multi-turn, adaptive LLM attacks. **IBM ART** operates in parallel to test classical ML models (vision/tabular) for evasion and poisoning. |
-| **Layer 2: Privacy Firewall** | Real-time Filtering | **LLM Guard** | An all-in-one Python firewall that handles PII redaction *and* prompt injection blocking. |
-| **Layer 1: AI Gateway** | Proxy & Cost Control| **LiteLLM** | The mandatory gateway. Tracks Apilogy API costs and handles rate-limiting. |
-| **Layer 0: Infrastructure** | Target APIs & Builders | **Flowise + Apilogy**| Flowise builds the Agents; Apilogy provides the foundation models. |
+---
+
+## 3. Mapping the Stack to Global Standards
+To achieve provable compliance, the Sandbox Orchestrator maps specific tools in its pipeline to specific regulatory frameworks:
+
+| Governance Standard | The Requirement | The Sandbox Tool Solution |
+| :--- | :--- | :--- |
+| **ISO/IEC 42001** | *Clause A.6.2.4 (Verification & Validation).* Requires empirical evidence of safety testing before deployment. | **Moonshot.** Using ISO-mapped Cookbooks (e.g., `mlc-ai-safety`), Moonshot provides the exact JSON metrics proving the model passed ethical and safety thresholds. |
+| **NIST AI RMF** | *MEASURE & MANAGE functions.* Requires tracking risks like demographic bias, toxicity, and hallucination. | **Moonshot & Giskard.** Both test for explicit demographic disparities and output toxicity required by NIST. |
+| **OWASP Top 10 for LLMs** | *LLM01: Prompt Injection, LLM06: Sensitive Information Disclosure, LLM02: Insecure Output Handling.* | **Garak & LLM Guard.** Garak actively attempts to breach the OWASP Top 10 during staging. LLM Guard actively blocks OWASP Top 10 attacks in production. |
+| **MITRE ATLAS** | *Advanced Threat Landscape.* Identifying sophisticated adversarial machine learning attacks. | **PyRIT.** Designed by Microsoft explicitly to simulate MITRE ATLAS multi-turn adversarial behaviors. |
+
+---
+
+## 4. The Complete Stack Layer Architecture
+
+By combining these tools, the Sandbox achieves full coverage. The architecture is specialized into layers, strictly delineating the **Sandbox Testing Tools** (Layer 3/4/5) from the **Orchestrator UI** (Layer 6).
+
+| Layer | Component Role | Selected Tool | Native Output Format | Resources & Cost (Default OSS) | Rationale for Integration |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Layer 7: Reporting** | Static Compliance Output | **Sandbox PDF Generator** | `.pdf` | **$0 API**. Minimal compute CPU script. | A simple script that converts the aggregated dashboard metrics into an official Management-ready PDF. |
+| **Layer 6: Master UI Hub** | Governance Dashboard | **Custom Sandbox App** | Aggregates JSON | **$50-$200/mo**. Standard Next.js server + PostgreSQL. | Ingests JSON/DB payloads from all underlying tools. Handles multi-tenancy auth and compliance questionnaires. |
+| **Layer 5: Compliance Base** | Baseline Ethics & Safety | **Project Moonshot** | `.json` (via CLI) <br> `.pdf` (via UI) | **$0 API**. Uses local Qwen 30B to run tests. Requires standard API orchestration compute. | Acts as the foundation, mapping technical tests to ISO 42001 and NIST requirements. |
+| **Layer 4: RAG & Accuracy** | Accuracy Evaluator | **DeepEval** | `.json` / CLI logs | **$0 API**. Uses local Qwen 30B as LLM judge. | Analyzes RAG pipelines for hallucinations and relevance. |
+| **Layer 3: Offensive Security**| Vulnerability & Red Team | **Garak & PyRIT** | `.jsonl` (Garak) <br> `.db` DuckDB (PyRIT) | **$0 API**. Extremely high prompt volume sent to local Qwen 30B. | Garak probes for OWASP vulnerabilities; PyRIT orchestrates multi-turn MITRE ATLAS attacks. |
+| **Layer 2: Privacy Firewall** | Real-time Filtering | **LLM Guard** | Native Python Dict / `.json` | **$0 API**. CPU or lightweight GPU (e.g. T4) to run local ONNX security models in real-time. | An all-in-one Python firewall that handles PII redaction and prompt injection blocking in real-time. |
+| **Layer 1: AI Gateway** | Proxy & Cost Control| **LiteLLM** | API logs / DB | **$0**. Minimal API routing compute. | Tracks Apilogy API costs and routes traffic to the target models (e.g. Qwen 30B). |
+| **Layer 0: Infrastructure** | Target APIs & Builders | **Flowise + Telkom Apilogy**| Chat / Vision API | Flowise hosting + Local GPU/Apilogy compute costs. | Flowise builds the Agents; Apilogy provides the foundation models. |
 
 ---
 
 ## 5. How the Tools Interact (Architectural Diagram)
 
 ```text
-[Pipeline PDF Generator]  <------ (Reporting for Management Audits)
-    (Static Outputs)                 |
+[Sandbox Custom PDF Generator]  <------ (Official ISO/NIST Audit Evidence)
+                                     |
                                      ^
-[Custom Sandbox Portal]   <------- (Governance Hub for Product Managers)
- (Manages Inputs: URLs,              |
+[Custom Sandbox Web Portal]   <------- (Governance Hub: Questionnaires & Dashboards)
+ (Manages Inputs: URLs,              |  <-- (Ingests JSON, JSONL, DuckDB)
   API Keys, Headers)                 ^
-          |---------------->[Secrets Vault / CI ENV Injection]
+          |---------------->[Python Orchestrator Backend API]
                                      |
                                      v
-[Unified Python Testing Pipeline] ---+ (Sandbox Execution Tools)
-  |-- DeepEval (Accuracy)            |
-  |-- Giskard (Bias/Safety)          |
-  |-- Garak (Security Probes)        |
-  |-- Developer Trace UI (Phoenix)   |
+[Unified Open-Source Testing Pipeline] ---+ (Sandbox Execution Tools)
+  |-- DeepEval (RAG Hallucination)        |
+  |-- Project Moonshot (ISO/NIST Ethics)  |
+  |-- Garak (OWASP Top 10 Security)       |
+  |-- PyRIT (MITRE ATLAS Multi-turn)      |
                                      |
-[Real-Time Firewall]                 |
+[Real-Time Firewall Deployments]     |
     (LLM Guard) ---------------------+
          |
          v
@@ -98,9 +83,7 @@ To support the flow above, the architecture is specialized into layers. This str
          |
          v
 [Base Model / Agents]
- (Apilogy / Flowise AgentLab)
+ (Apilogy / Flowise AgentLab / Ollama Qwen 30B)
 ```
 
-## 4. Summary of the Integration Strategy
-
-By pivoting away from disparate JS/TS tools (like Promptfoo and Langfuse) and standardizing entirely on a **Unified Python Stack**, the National AI Sandbox becomes infinitely easier to build and maintain. A single DevOps pipeline can orchestrate LiteLLM, DeepEval, Garak, and LLM Guard, piping all telemetry directly into Arize Phoenix for a completely free, enterprise-grade, un-gated dashboard experience.
+By leveraging this multi-tool ecosystem orchestrated by a Custom UI, the National Sandbox guarantees that AI models are not only compliant with high-level ISO/NIST frameworks via Moonshot, but are also robustly defended against granular OWASP and MITRE threats via Garak and PyRIT.

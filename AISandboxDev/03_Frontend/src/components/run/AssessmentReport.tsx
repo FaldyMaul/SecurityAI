@@ -1,18 +1,16 @@
 ﻿'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import {
+  AlertTriangle,
   Download,
   Eye,
+  EyeOff,
   FileJson,
-  Globe,
-  Lock,
-  Scale,
   Shield,
 } from 'lucide-react';
 import type { BenchmarkResult, CategoryResult, Grade } from '@/types/run';
 import styles from './AssessmentReport.module.css';
-import { RecipeBreakdown } from './RecipeBreakdown';
 
 const gradeColorMap: Record<Grade, string> = {
   A: 'var(--color-score-excellent)',
@@ -31,11 +29,10 @@ const gradeCssMap: Record<Grade, string> = {
 };
 
 const categoryIconMap: Record<string, typeof Shield> = {
-  'trust-safety': Shield,
-  security: Lock,
+  adversarial: Shield,
+  safety: AlertTriangle,
   privacy: Eye,
-  readiness: Globe,
-  compliance: Scale,
+  hallucination: EyeOff,
 };
 
 function getGradeLabel(grade: Grade): string {
@@ -92,18 +89,7 @@ function getLlmSummary(grade: Grade): { overview: string; actions: string[] } {
 }
 
 export function AssessmentReport({ result }: { result: BenchmarkResult }) {
-  const [activeCategory, setActiveCategory] = useState<string>(result.categoryResults[0]?.id || '');
-  const [showFailOnly, setShowFailOnly] = useState(false);
-
-  const selectedCategory = result.categoryResults.find((category: CategoryResult) => category.id === activeCategory);
   const llmSummary = useMemo(() => getLlmSummary(result.overallGrade), [result.overallGrade]);
-
-  const visibleRecipes = useMemo(() => {
-    if (!selectedCategory) return [];
-    if (!showFailOnly) return selectedCategory.recipes;
-
-    return selectedCategory.recipes.filter((recipe) => recipe.sampleResults.some((sample) => sample.verdict === 'fail'));
-  }, [selectedCategory, showFailOnly]);
 
   return (
     <div className={styles.reportContainer}>
@@ -169,8 +155,7 @@ export function AssessmentReport({ result }: { result: BenchmarkResult }) {
           return (
             <div
               key={category.id}
-              className={`${styles.categoryCard} ${category.id === activeCategory ? styles.active : ''}`}
-              onClick={() => setActiveCategory(category.id)}
+              className={styles.categoryCard}
             >
               <div className={styles.categoryHeader}>
                 <span className={styles.categoryName}>
@@ -189,38 +174,6 @@ export function AssessmentReport({ result }: { result: BenchmarkResult }) {
         })}
       </div>
 
-      {selectedCategory && (
-        <div className={styles.recipeSection}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem' }}>
-            <h3 className={styles.recipeSectionTitle}>{selectedCategory.name} - Rincian Recipe</h3>
-            <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>
-              <input type="checkbox" checked={showFailOnly} onChange={(event) => setShowFailOnly(event.target.checked)} />
-              Tampilkan Gagal Saja
-            </label>
-          </div>
-
-          <div className={styles.metricsRow}>
-            <div className={styles.metricBox}>
-              <div className={styles.metricValue}>{selectedCategory.score}</div>
-              <div className={styles.metricLabel}>Skor Kategori</div>
-            </div>
-            <div className={styles.metricBox}>
-              <div className={styles.metricValue}>{selectedCategory.grade}</div>
-              <div className={styles.metricLabel}>Nilai</div>
-            </div>
-            <div className={styles.metricBox}>
-              <div className={styles.metricValue}>{visibleRecipes.length}</div>
-              <div className={styles.metricLabel}>Recipe Ditampilkan</div>
-            </div>
-            <div className={styles.metricBox}>
-              <div className={styles.metricValue}>{selectedCategory.recipes.reduce((sum, recipe) => sum + recipe.totalPrompts, 0)}</div>
-              <div className={styles.metricLabel}>Total Prompt</div>
-            </div>
-          </div>
-
-          <RecipeBreakdown recipes={visibleRecipes} showFailOnly={showFailOnly} />
-        </div>
-      )}
     </div>
   );
 }

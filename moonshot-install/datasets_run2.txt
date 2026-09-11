@@ -1,0 +1,8 @@
+mmlu-all
+singapore-facts-tnf
+singapore-food-tnf
+singapore-iconic-places
+singapore-places-tnf
+singapore-political-history
+singapore-public-housing
+singapore-transport-system

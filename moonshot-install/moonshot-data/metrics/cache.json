@@ -1,0 +1,352 @@
+{
+  "bertscore": {
+    "id": "bertscore",
+    "name": "BertScore",
+    "description": "BertScore uses Bert to check for the similarity in embedding between two sentences.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "6903e6b9e8edd3d2"
+  },
+  "spelling": {
+    "id": "spelling",
+    "name": "SpellingScore",
+    "description": "SpellingScore uses Levenshetein Distance to find permutations within an edit distance of 2 from the original word before comparing to known words in a word frequency list.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "946e2dc5e9f90b66"
+  },
+  "gpt4annotator": {
+    "id": "gpt4annotator",
+    "name": "GPT4 Annotator",
+    "description": "Calculates the number of refused response using GPT4.",
+    "endpoints": [
+      "llm-judge-openai-gpt4-annotator"
+    ],
+    "configurations": {},
+    "hash": "e8efc56861391c66"
+  },
+  "bleuscore": {
+    "id": "bleuscore",
+    "name": "BleuScore",
+    "description": "Bleuscore uses Bleu to return the various rouge scores.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "01592061d69de7cf"
+  },
+  "readabilityscore": {
+    "id": "readabilityscore",
+    "name": "ReadabilityScore",
+    "description": "ReadabilityScore uses Flesch Reading Ease to compute the complexity of the output",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "852a4f342a674943"
+  },
+  "toxicity-classifier": {
+    "id": "toxicity-classifier",
+    "name": "Toxicity Classifier",
+    "description": "This classifier measures how toxic a given input isand calculates the number of toxic sentences detected.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "834c90886980dac5"
+  },
+  "rougescorer": {
+    "id": "rougescorer",
+    "name": "RougeScorer",
+    "description": "RougeScorer returns the various rouge scores.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "a243cfff2741e6b6"
+  },
+  "advglue": {
+    "id": "advglue",
+    "name": "Attack Success Rate",
+    "description": "Attack success rate measures how successful a changed prompt performs. A high score shows that the system under test is highly sensitive towards a prompt with minimal changes.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "fa6ef03eb82a3506"
+  },
+  "leakagerate": {
+    "id": "leakagerate",
+    "name": "LeakageRate",
+    "description": "Leakage Rate will compare the LCS between two string - Output and Target.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "3b2a685c989f17fe"
+  },
+  "reverseexactstrmatch": {
+    "id": "reverseexactstrmatch",
+    "name": "ReverseExactStrMatch",
+    "description": "ReverseExactStrMatch will compare the output from language model with the expected target.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "a92fcd6425b8f670"
+  },
+  "exactstrmatch": {
+    "id": "exactstrmatch",
+    "name": "ExactStrMatch",
+    "description": "ExactStrMatch will compare the output from language model with a single target or multiple expected target.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "5adb099aad7d5cb9"
+  },
+  "relaxstrmatch": {
+    "id": "relaxstrmatch",
+    "name": "RelaxStrMatch",
+    "description": "RelaxStrMatch will remove symbols and spaces before comparing the output from language model with the expected target.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "d7894377e75e63d1"
+  },
+  "llamaguardannotator": {
+    "id": "llamaguardannotator",
+    "name": "LlamaGuard Annotator",
+    "description": "Calculates the number of safe, unsafe and unknown response by using LlamaGuard.",
+    "endpoints": [
+      "together-llama-guard-2-mlccommons"
+    ],
+    "configurations": {},
+    "hash": "1ed22216398e44fb"
+  },
+  "samplemetric": {
+    "id": "samplemetric",
+    "name": "SampleMetric",
+    "description": "Sample Metric will provide examples on connecting to LLMs.",
+    "endpoints": [
+      "openai-gpt35-turbo-16k",
+      "openai-gpt35-turbo"
+    ],
+    "configurations": {
+      "threshold_value": "0.35",
+      "num_of_prompts_to_calculate": 1
+    },
+    "hash": "502421a8b1a137ac"
+  },
+  "lionguardclassifier": {
+    "id": "lionguardclassifier",
+    "name": "LionGuard Classifier",
+    "description": "This classifier measures how unsafe a given input is in the Singapore context.\nIt can calculate the number of toxic sentences detected.",
+    "endpoints": [],
+    "configurations": {
+      "grading_classifier": "toxic"
+    },
+    "hash": "e5682d5f85e24674"
+  },
+  "flagjudgeannotator": {
+    "id": "flagjudgeannotator",
+    "name": "FlagJudge Annotator",
+    "description": "Calculates the number of correct response using FlagJudge (A judge model from FlagEval Group).",
+    "endpoints": [
+      "flageval-flagjudge"
+    ],
+    "configurations": {},
+    "hash": "bf1e9441c22095f0"
+  },
+  "q16_metric": {
+    "id": "q16_metric",
+    "name": "Q16Metric",
+    "description": "Q16 is a binary classifier used to determine whether an image is inappropriate (https://github.com/ml-research/Q16)",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "1a414fae2c4b94bb"
+  },
+  "nudenet_metric": {
+    "id": "nudenet_metric",
+    "name": "NudeNetMetric",
+    "description": "NudeNet is a classifier used to deduce probabilities of exposed body parts in images.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "d5287809c91d22d3"
+  },
+  "genderbias_metric": {
+    "id": "genderbias_metric",
+    "name": "GenderBiasMetric",
+    "description": "This metric uses a CLIP based gender classifier to determine the proportion of females returning a score between 0 and 0.5. score = |female_frac - 0.5|",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "cb8e9bdd4450c54e"
+  },
+  "faithfulness": {
+    "id": "faithfulness",
+    "name": "Faithfulness",
+    "description": "This measures the factual consistency of the generated answer against the given context. It is calculated from answer and retrieved context. The answer is scaled to (0,1) range. Higher the better.",
+    "endpoints": [
+      "azure-langchain-openai-chatopenai-gpt4o"
+    ],
+    "configurations": {
+      "embeddings": [
+        "azure-langchain-openai-embedding-ada-2"
+      ]
+    },
+    "hash": "79d62689320b61dd"
+  },
+  "answercorrectness": {
+    "id": "answercorrectness",
+    "name": "AnswerCorrectness",
+    "description": "Answer correctness in the context of Ragas involves evaluating the accuracy of a generated answer compared to the ground truth. This process assesses both the semantic and factual similarities between the answer and the ground truth. Scores range from 0 to 1, where a higher score indicates a closer match, thus higher correctness.",
+    "endpoints": [
+      "azure-langchain-openai-chatopenai-gpt4o"
+    ],
+    "configurations": {
+      "embeddings": [
+        "azure-langchain-openai-embedding-ada-2"
+      ]
+    },
+    "hash": "433ec0f3e834f7b8"
+  },
+  "contextrecall": {
+    "id": "contextrecall",
+    "name": "ContextRecall",
+    "description": "Context recall measures the extent to which the retrieved context aligns with the annotated answer, treated as the ground truth. It is computed using question, ground truth and the retrieved context, and the values range between 0 and 1, with higher values indicating better performance.",
+    "endpoints": [
+      "azure-langchain-openai-chatopenai-gpt4o"
+    ],
+    "configurations": {
+      "embeddings": [
+        "azure-langchain-openai-embedding-ada-2"
+      ]
+    },
+    "hash": "bccb3c0f15bca671"
+  },
+  "contextprecision": {
+    "id": "contextprecision",
+    "name": "ContextPrecision",
+    "description": "Context Precision is a metric that evaluates whether all of the ground-truth relevant items present in the contexts are ranked higher or not. Ideally, all the relevant chunks must appear at the top ranks. This metric is computed using the question, ground_truth, and the contexts, with values ranging between 0 and 1, where higher scores indicate better precision.",
+    "endpoints": [
+      "azure-langchain-openai-chatopenai-gpt4o"
+    ],
+    "configurations": {
+      "embeddings": [
+        "azure-langchain-openai-embedding-ada-2"
+      ]
+    },
+    "hash": "51b65c5d2aa1f00c"
+  },
+  "answerrelevance": {
+    "id": "answerrelevance",
+    "name": "AnswerRelevance",
+    "description": "The evaluation metric, Answer Relevancy, focuses on assessing how pertinent the generated answer is to the given prompt. A lower score is assigned to answers that are incomplete or contain redundant information and higher scores indicate better relevancy. This metric is computed using the question, the context and the answer.",
+    "endpoints": [
+      "azure-langchain-openai-chatopenai-gpt4o"
+    ],
+    "configurations": {
+      "embeddings": [
+        "azure-langchain-openai-embedding-ada-2"
+      ]
+    },
+    "hash": "0f875827109a2636"
+  },
+  "cybersecevalannotator": {
+    "id": "cybersecevalannotator",
+    "name": "General Judge LLM",
+    "description": "Calculates number of yes and no replied by judge llm  (yes means prompt injection succeed)",
+    "endpoints": [
+      "llm-judge-azure-gpt4-annotator"
+    ],
+    "configurations": {},
+    "hash": "1d6627f2c0e9ffc0"
+  },
+  "exactstrmatch-f1-squad-v2": {
+    "id": "exactstrmatch-f1-squad-v2",
+    "name": "ExactStrMatchF1SquadV2",
+    "description": "ExactStrMatch will compare the output from language model with a single target or multiple expected target.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "ddefafcefb7e4161"
+  },
+  "exactstrmatch-gsm8k-test": {
+    "id": "exactstrmatch-gsm8k-test",
+    "name": "ExactStrMatchGSM8k",
+    "description": "ExactStrMatch will compare the output from language model with a single target or multiple expected target.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "4d450d456a5f16f8"
+  },
+  "mlcprv-annotator": {
+    "id": "mlcprv-annotator",
+    "name": "MLCPRVAnnotator",
+    "description": "Calculates the number of acceptable, unacceptable and unknown response by using GPT4o.",
+    "endpoints": [
+      "openai-gpt4o"
+    ],
+    "configurations": {},
+    "hash": "38949a8a3d4c3370"
+  },
+  "mlcipv-annotator": {
+    "id": "mlcipv-annotator",
+    "name": "MLCIPV Annotator",
+    "description": "Calculates the number of acceptable, unacceptable and unknown response by using GPT4o.",
+    "endpoints": [
+      "openai-gpt4o"
+    ],
+    "configurations": {},
+    "hash": "b292c4e07bb64e45"
+  },
+  "mlcncr-annotator": {
+    "id": "mlcncr-annotator",
+    "name": "MLCNCR Annotator",
+    "description": "Calculates the number of acceptable, unacceptable and unknown response by using GPT4o.",
+    "endpoints": [
+      "openai-gpt4o"
+    ],
+    "configurations": {},
+    "hash": "d1a99d7f22e9a201"
+  },
+  "mlcvcr-annotator": {
+    "id": "mlcvcr-annotator",
+    "name": "MLCVCR Annotator",
+    "description": "Calculates the number of acceptable, unacceptable and unknown response by using GPT4o.",
+    "endpoints": [
+      "openai-gpt4o"
+    ],
+    "configurations": {},
+    "hash": "896192cc04dc5a33"
+  },
+  "answercarefully-annotator": {
+    "id": "answercarefully-annotator",
+    "name": "AnswerCarefullyAnnotator",
+    "description": "Calculates the number of undesired, no undesired and unknown response by using GPT4o.",
+    "endpoints": [
+      "openai-gpt4o"
+    ],
+    "configurations": {},
+    "hash": "a4638195154e6b37"
+  },
+  "cybersecevalannotator2": {
+    "id": "cybersecevalannotator2",
+    "name": "Cybersec Eval Prompt Injection v2",
+    "description": "Calculates number of Success and Unsuccessful reply by judge llm.",
+    "endpoints": [
+      "openai-gpt4o"
+    ],
+    "configurations": {},
+    "hash": "191cc536e4bb4232"
+  },
+  "refusal": {
+    "id": "refusal",
+    "name": "Refusal Evaluator",
+    "description": "This metric calculates the number of refused response using GPT4o.",
+    "endpoints": [
+      "refusal-evaluator"
+    ],
+    "configurations": {},
+    "hash": "36cbaa6c90bef673"
+  },
+  "entity_processor": {
+    "id": "entity_processor",
+    "name": "EntityProcessor",
+    "description": "This metric is designed to process and analyse text to identify entities using the spaCy library.The class also has searches for entities in a given text that do not appear in a source text, labeling them as \"unmatched\" or \"hallucinated\" entities.",
+    "endpoints": [],
+    "configurations": {},
+    "hash": "c59d94b9e752215d"
+  },
+  "llamaguardannotator3": {
+    "id": "llamaguardannotator3",
+    "name": "LlamaGuard Annotator",
+    "description": "Calculates the number of safe, unsafe and unknown response by using LlamaGuard.",
+    "endpoints": [
+      "together-llama-guard-8b-assistant"
+    ],
+    "configurations": {},
+    "hash": "ca29dc8558a9e9d7"
+  }
+}

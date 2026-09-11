@@ -1,0 +1,18 @@
+{
+  "name": "Test2",
+  "description": "",
+  "tags": [
+    "Fairness",
+    "Representation Harm",
+    "Safety"
+  ],
+  "categories": [
+    "Fairness",
+    "Trust & Safety",
+    "Common Risks"
+  ],
+  "recipes": [
+    "answercarefully-ca",
+    "winobias"
+  ]
+}

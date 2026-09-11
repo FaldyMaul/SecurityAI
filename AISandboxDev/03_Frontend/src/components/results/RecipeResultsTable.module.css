@@ -1,0 +1,166 @@
+.filterRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.filterTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.failOnly {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.failOnly input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--color-primary);
+}
+
+.tableWrap {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 980px;
+  font-size: 0.82rem;
+}
+
+.table thead {
+  background: var(--color-bg-secondary);
+}
+
+.table th {
+  text-align: left;
+  padding: 0.72rem 0.55rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.72rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.table td {
+  padding: 0.72rem 0.55rem;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.rowHover:hover {
+  background: var(--color-bg-secondary);
+}
+
+.recipeName {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.recipeMeta {
+  margin-top: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  color: var(--color-text-secondary);
+}
+
+.datasetBadge {
+  font-family: var(--font-mono);
+  background: var(--color-bg-tertiary);
+  border-radius: 4px;
+  padding: 0.12rem 0.35rem;
+  color: var(--color-text-secondary);
+  font-size: 0.68rem;
+}
+
+.scoreCell {
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.statusPassed { color: var(--color-score-excellent); font-weight: 700; }
+.statusFailed { color: var(--color-score-critical); font-weight: 700; }
+.statusWarning { color: var(--color-score-poor); font-weight: 700; }
+
+.actionCell {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.expandBtn {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-secondary);
+  border-radius: 6px;
+  width: 1.65rem;
+  height: 1.65rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.expandedRow {
+  background: color-mix(in srgb, var(--color-primary-light) 35%, white);
+}
+
+.expandedBody {
+  padding: 0.85rem 0.65rem;
+}
+
+.briefSection {
+  margin-bottom: 0.8rem;
+}
+
+.briefTitle {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  color: var(--color-text-primary);
+}
+
+.briefList {
+  margin: 0;
+  padding-left: 1rem;
+  color: var(--color-text-secondary);
+  font-size: 0.76rem;
+}
+
+.emptyStateCell {
+  padding: 1.25rem 0.75rem;
+  text-align: center;
+}
+
+.emptyStateText {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 900px) {
+  .filterRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .table {
+    min-width: 860px;
+  }
+}

@@ -1,0 +1,9 @@
+# AAS Q3 Final Answer v3 - Contribution to Change or Reform
+
+My strongest recent contribution is helping build AI Playground capabilities at Telkom's AI Center of Excellence through AgentLab and ModelHub. The challenge was that AI adoption inside a large institution could become fragmented. Employees wanted to build AI use cases quickly, but building from scratch took too long, while using uncontrolled public AI models could expose confidential information. This connects to Strong Institutions and cyber security because responsible AI adoption requires secure, standardised, and governable infrastructure.
+
+As Team Lead, I guided the development direction of AgentLab, a low-code drag-and-drop workflow platform, and ModelHub, a secure internal gateway for approved on-premise or sovereign LLM access. I worked with AI Center of Excellence colleagues, engineers, product and business units, and governance-related stakeholders. My leadership practice combined platform thinking, secure architecture, stakeholder translation, mentoring, and governance-aware product design.
+
+The creative method was to make AI development easier without removing control. AgentLab provided reusable components so teams did not need to build every AI product from scratch. ModelHub reduced reliance on public models by centralising approved model access. I also used demos and internal enablement to help non-technical users understand how to build AI workflows responsibly.
+
+The outcome was more standardised and governable AI development. AgentLab can reduce development time by up to around ten times in internal use cases, while ModelHub helps protect confidential data by keeping model access within approved channels. This experience taught me that speed and security must grow together. It also showed me the next reform needed: adding Indonesian-language safety evaluation so fast AI development remains explainable, reviewable, and accountable.

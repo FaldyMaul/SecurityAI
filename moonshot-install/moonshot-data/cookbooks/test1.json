@@ -1,0 +1,19 @@
+{
+  "name": "Test1",
+  "description": "",
+  "tags": [
+    "Morality",
+    "Adversarial Robustness",
+    "DecodingTrust",
+    "Ethics"
+  ],
+  "categories": [
+    "Trust & Safety",
+    "Capability"
+  ],
+  "recipes": [
+    "advglue",
+    "analogical-similarity",
+    "commonsense-morality-hard"
+  ]
+}

@@ -1,0 +1,9 @@
+# AAS Q2 Final Answer v2 - Impact on Career, Life and Community
+
+This study will equip me to move from building AI platforms to leading responsible AI and cyber security evaluation for Indonesian institutions. I already help build and evaluate AI infrastructure through Telkom's National AI Sandbox, but I need deeper academic skills to test whether models are safe against prompt injection, data leakage, fraud generation, and unsafe outputs in local language contexts. The Master of AI will give me stronger grounding in NLP evaluation, ethics, and evidence-based decision making.
+
+Professionally, I will return with the capability to design an Indonesian AI safety framework that supports public institutions and SOEs, not only one company's infrastructure. Within 12 months, I aim to pilot an Indonesian LLM Guard prototype inside a controlled sandbox, focusing on high-risk linguistic vulnerabilities such as slang, code-switching, and one regional-language proof of concept if human verification is feasible. The goal is risk triage for human review, not automatic blocking.
+
+For Indonesian citizens who rely on digital public and financial services, this study can help reduce exposure to AI-assisted fraud, unsafe automation, and weak data protection. OJK has recorded IDR2.6 trillion in reported fraud losses, and generative AI can make these attacks cheaper, faster, and more convincing.
+
+Personally, studying in Australia will strengthen my leadership judgement, ethical confidence, and ability to work across cultures. I will return not only with technical knowledge, but with a clearer public-interest mindset. Within three years, I plan to train at least 500 engineers, product managers, and public-sector stakeholders on prompt security, data leakage prevention, and responsible AI evaluation.

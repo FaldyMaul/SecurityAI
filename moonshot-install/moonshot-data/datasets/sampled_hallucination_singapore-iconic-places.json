@@ -1,0 +1,12 @@
+{
+    "name": "Iconic Places in Singapore (Sampled 10%)",
+    "description": "Contain questions about Singapore's iconic places.",
+    "license": "Apache-2.0",
+    "reference": "IMDA",
+    "examples": [
+        {
+            "input": "Which island resort in Singapore is known for its sandy beaches, luxury hotels, and attractions like Universal Studios?\nA) Sentosa\nB) Lazarus Island\nC) Pulau Ubin\nD) Sisters' Islands\n",
+            "target": "A) Sentosa"
+        }
+    ]
+}

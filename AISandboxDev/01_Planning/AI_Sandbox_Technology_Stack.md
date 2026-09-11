@@ -1,18 +1,13 @@
 # AI Sandbox Technology Stack
 
-This document defines the recommended technology stack for the `AI Sandbox / Model Hub` product.
+Last updated: 2026-04-02
 
-It is based on the current implementation direction:
+This document defines the current recommended technology stack for the product surfaces now in scope:
 
-- `Sandbox` is the trust, assessment, review, and ranking layer
-- `Apilogy` is the capability marketplace and use case platform
-- `AgentLab` consumes model scores from the sandbox
-- model endpoints may come from internal sources or external providers
-- all endpoint access should be standardized through `LiteLLM`
+- `AI Sandbox`
+- `ModelHub`
 
-The first focus remains:
-
-- `LLM assessment first`
+It reflects current implementation progress, QA feedback, and publisher deployment reality.
 
 ---
 
@@ -20,430 +15,278 @@ The first focus remains:
 
 The recommended stack is:
 
-- `Frontend`: React-based app using the provided UI system
-- `Backend`: Python
-- `Primary Database`: PostgreSQL
-- `Gateway / Model Access`: LiteLLM
-- `Core Evaluation Engine`: Moonshot
-- `Future Evaluation Engine`: DeepEval
-- `Infrastructure for MVP`: VM or containers
-- `Infrastructure for later scale`: K3s
-- `Artifact Storage`: object storage or file-based artifact storage
-- `Optional Vector Store`: Elasticsearch
-- `Default Evaluator LLM`: `Telkom AI Qwen 30B`
+- `Frontend`: `Next.js` + `TypeScript`
+- `Backend`: `Python` + `FastAPI`
+- `Primary Database`: `PostgreSQL`
+- `Gateway / Endpoint Adapter`: `LiteLLM`
+- `Core Benchmark Engine`: `Moonshot`
+- `Future Evaluation Engine`: `DeepEval`
+- `Future Security Engines`: `PyRIT`, `Garak`
+- `Runtime Protection Layer`: `LLM Guard`
+- `Artifact Storage`: object storage or structured file-based storage
+- `Deployment Surface`: Cloudflare Pages for frontend publishing path
+- `Model Source Catalog`: `Apilogy`
 
 ---
 
-## 2. Frontend Technology
+## 2. Product Surface Stack Positioning
+
+## AI Sandbox
+
+Main responsibilities:
+
+- model intake
+- endpoint validation
+- benchmark execution
+- results review
+- history and comparison
+- promotion eligibility
+
+Stack emphasis:
+
+- `FastAPI`
+- `LiteLLM`
+- `Moonshot`
+- `PostgreSQL`
+- artifact storage
+- internal `Next.js` UI
+
+## ModelHub
+
+Main responsibilities:
+
+- leaderboard
+- comparison
+- model profile
+- pricing, docs, and examples
+- approved trust summaries
+
+Stack emphasis:
+
+- `Next.js`
+- API-driven published summary layer
+- same backend platform or adjacent API surface
+
+Important note:
+
+- `ModelHub` is not a separate benchmark engine
+- it is a consumption surface for approved outputs plus richer business metadata
+
+---
+
+## 3. Frontend Technology
 
 ## Recommended choice
 
-- `React` app
-- preferably with `Next.js`
-- use the provided UI system as the design and component foundation:
-  - `https://6420e4161e2acdd49d1d3e4b-hfuodunylt.chromatic.com/?path=/docs/welcome--docs`
-
-## Why this choice
-
-The product needs:
-
-- internal dashboard UX
-- admin and review pages
-- ranking pages
-- public or semi-public model profile pages
-- later integration patterns with `AgentLab`
-
-This is a better fit for a structured React application than for a notebook-style UI.
-
-## How to position the provided UI
-
-The provided Chromatic-hosted UI reference should be treated as:
-
-- the component and design system base
-- the visual language for the sandbox app
-- the starting point for pages such as:
-  - model registration
-  - benchmark run status
-  - scorecard
-  - review queue
-  - ranking page
-  - model profile page
-
-## Frontend recommendation
-
 - `Next.js`
 - `TypeScript`
-- provided UI component system from the supplied URL
-- charting library if needed for scores and trends
+- existing design system and Legion-based component usage
+- `next-intl` for localization-aware routing
+
+## Why this choice remains correct
+
+The current frontend already demonstrates:
+
+- locale-first routing
+- role-aware route grouping
+- internal and public surfaces in one codebase
+- result table workflows and prompt-detail modal support
+
+This is a strong fit for the current split:
+
+- `(internal)` routes mainly serve `AI Sandbox`
+- `(public)` routes mainly serve `ModelHub`
+
+## Important frontend constraints
+
+- do not model ranking as a sandbox-native page in product language
+- builder-facing pages must not expose sandbox evidence details
+- UI labels should trend toward Indonesian-first consistency
+
+## Deployment reality
+
+For publishing:
+
+- Cloudflare Pages native Git integration is now the preferred deployment path
+- do not rely on Windows-local `@cloudflare/next-on-pages` as the target operational flow
+- edge/runtime compatibility and `nodejs_compat` constraints must be reflected in frontend planning
 
 ---
 
-## 3. Backend Technology
+## 4. Backend Technology
 
 ## Recommended choice
 
 - `Python`
+- `FastAPI`
 
-## Why Python is the correct backend
+## Why it remains correct
 
-Most of the evaluation ecosystem is already Python-native:
+Most of the evaluation ecosystem is still Python-native:
 
 - `Moonshot`
 - `DeepEval`
 - `PyRIT`
 - `Garak`
-- `Giskard`
 - `LLM Guard`
 - `LiteLLM`
-
-Using Python in the backend reduces integration friction significantly.
-
-## Recommended backend framework
-
-- `FastAPI`
-
-## Why FastAPI
-
-- easy to build internal APIs
-- good async support
-- strong Python ecosystem fit
-- simple background job integration
-- easy OpenAPI generation
 
 ## Backend responsibilities
 
 The backend should handle:
 
 - model registry
-- provider metadata
-- benchmark job orchestration
-- artifact collection
-- result normalization
-- scoring
-- review state management
-- publication state management
-- API for frontend, AgentLab, and later Apilogy-linked flows
+- endpoint metadata
+- benchmark orchestration
+- background job execution
+- artifact retention
+- normalized results
+- reviewer state
+- promotion eligibility
+- published summary APIs for `ModelHub`
+
+Important update:
+
+- benchmark execution is now treated as a required background workflow, not a page-bound action
 
 ---
 
-## 4. Database and Storage
+## 5. Database and Storage
 
 ## Primary database
 
 - `PostgreSQL`
 
-## Why PostgreSQL
-
-- mature and stable
-- easy to operate
-- strong fit for structured application data
-- suitable for run history, models, users, reviews, and scores
-- works well with Python and modern web stacks
-
 ## What PostgreSQL should store
 
 - model records
 - provider metadata
-- optional Apilogy references
-- benchmark run metadata
+- optional `Apilogy` references
+- run metadata
 - normalized results
 - scorecards
-- approval status
-- publication status
-- audit trail metadata
+- reviewer decisions
+- promotion eligibility
+- published summary metadata
 
-## Raw artifact storage
+## Artifact storage
 
 Use:
 
 - object storage if available
 - or structured filesystem storage for MVP
 
-This should store:
+Artifacts should include:
 
-- Moonshot JSON
-- DB artifacts
+- raw benchmark outputs
+- recipe-level details
+- versioned run artifacts
 - future security scan logs
-- exports and reports
 
-The source of truth should not be the PDF or summary page. It should be:
+Important rule:
 
-- raw artifacts
-- normalized database records
+- the source of truth is raw artifacts plus normalized database records, not only summary pages
 
 ---
 
-## 5. Gateway and Model Access Layer
+## 6. Gateway and Endpoint Access Layer
 
 ## Recommended choice
 
 - `LiteLLM`
 
-## Why LiteLLM is important
+## Why `LiteLLM` is now more central than before
 
-`LiteLLM` should be the standard access layer for all model endpoints.
+`LiteLLM` should be treated as:
 
-That includes:
+- the primary endpoint adapter
+- the standard validation path
+- the main normalization layer for provider differences
 
-- internal endpoints from `Apilogy`
-- external endpoints such as `Azure`
-- future providers if needed
+This includes:
 
-## LiteLLM responsibilities
+- internal endpoints
+- external providers
+- future serving paths
 
-- standardize model access
-- normalize request format
-- provide one consistent interface to downstream tools
-- support monitoring and usage visibility
-- support guardrail-related access controls where relevant
-- reduce integration differences between providers
+Important refinement:
 
-## Why this matters for the product
-
-Without `LiteLLM`, the sandbox would need provider-specific integration logic for:
-
-- Apilogy-hosted models
-- Azure-hosted models
-- any future provider
-
-With `LiteLLM`, the sandbox can keep a cleaner execution path.
+- `Apilogy` remains a capability catalog and metadata source
+- `LiteLLM` is the primary technical access abstraction
 
 ---
 
-## 6. Core Evaluation Engines
+## 7. Benchmark and Evaluation Layers
 
-## Phase 1 core engine
+## Current benchmark foundation
 
 - `Moonshot`
 
-## Why Moonshot is the first engine
+Why:
 
-It is the best fit for:
+- fits baseline trust and safety benchmarking
+- supports Indonesia-specific recipes and benchmark packs
+- produces machine-readable outputs suitable for history and review
 
-- baseline trust and safety assessment
-- prompt-based benchmarking
-- custom Indonesia benchmark packs
-- machine-readable benchmark output
-- evidence-oriented scoring
-
-## Phase 2 or later engines
+## Planned expansion layers
 
 - `DeepEval` for app, RAG, and agent evaluation
-- `PyRIT` for advanced multi-turn security testing
-- `Garak` for offensive security scanning
-- `Giskard` only if collaborative QA and RAG review become necessary
+- `PyRIT` for deeper multi-turn security testing
+- `Garak` for offensive attack coverage
+- `LLM Guard` for runtime control alignment, not as the primary benchmark engine
 
-The platform should not try to integrate all of them in the MVP.
+Important rule:
 
----
-
-## 7. Evaluator LLM Strategy
-
-## Recommended evaluator model
-
-- `Telkom AI Qwen 30B`
-
-## Why this is recommended
-
-Use `Telkom AI Qwen 30B` as the evaluator or judge model where possible to avoid paid dependency on external providers.
-
-This helps:
-
-- reduce cost
-- keep evaluation internal
-- avoid reliance on paid APIs for basic scoring
-- support OSS-first and internal-first implementation
-
-## Use cases for evaluator LLM
-
-`Telkom AI Qwen 30B` can be used for:
-
-- LLM-as-judge scoring where supported
-- evaluation reasoning
-- DeepEval judge use cases later
-- some review assistance workflows
-
-## Important note
-
-This does not mean every evaluation must rely only on one judge model forever.
-
-It means the default cost-controlled strategy should be:
-
-- use `Telkom AI Qwen 30B` first
-- only introduce external judge models if a real accuracy gap appears
+- do not integrate all engines in MVP
 
 ---
 
-## 8. Optional Vector Database
+## 8. Current Frontend and Publisher Constraints That Affect Stack Decisions
 
-## Recommended optional choice
+The stack must now account for:
 
-- `Elasticsearch`
+- result table UX and detailed prompt/response display already implemented in frontend
+- benchmark fixture and history-oriented result views
+- Windows-local Next cache lock issues in development
+- Cloudflare Pages root directory and build path requirements
+- edge runtime compatibility requirements
+- `nodejs_compat` flag requirement for deployed frontend
 
-## Why Elasticsearch can be used
-
-If the platform later needs vector capabilities, `Elasticsearch` can serve as:
-
-- a search layer
-- a document retrieval layer
-- an optional vector database
-
-This is useful if the platform later expands into:
-
-- semantic search over benchmark findings
-- search over prompt packs and datasets
-- retrieval for model profile content
-- RAG-related internal knowledge features
-
-## Recommendation
-
-Do not force vector storage into the MVP unless a real requirement appears.
-
-Use `Elasticsearch` only if needed.
-
-For MVP:
-
-- PostgreSQL + artifact storage is enough
+These are no longer theoretical concerns. They are operating constraints that should shape implementation choices.
 
 ---
 
-## 9. Infrastructure
+## 9. Recommended MVP Stack Snapshot
 
-## MVP infrastructure
+## For AI Sandbox
 
-Use:
-
-- Linux VM
-- containers
-- Docker Compose or equivalent simple deployment
-
-## Why this is right for MVP
-
-- faster to stand up
-- easier to debug
-- lower operational overhead
-- enough for first internal release
-
-## Later infrastructure
-
-- `K3s`
-
-## Why K3s later
-
-`K3s` is a good next step when the platform needs:
-
-- more structured deployment management
-- better service orchestration
-- cleaner scaling path
-- easier multi-service operations
-
-This is a good future choice because it is lighter than a full Kubernetes setup but still gives a real cluster model.
-
-## Infrastructure recommendation by phase
-
-- MVP: VM + containers
-- Growth phase: `K3s`
-
----
-
-## 10. Suggested Language and Stack by Layer
-
-## Frontend layer
-
-- `TypeScript`
-- `React`
 - `Next.js`
-
-## Backend layer
-
-- `Python`
-- `FastAPI`
-
-## Data layer
-
-- `PostgreSQL`
-- object storage
-- optional `Elasticsearch`
-
-## Access layer
-
-- `LiteLLM`
-
-## Evaluation layer
-
-- `Moonshot`
-- later `DeepEval`
-- later `PyRIT`
-- later `Garak`
-
-## Runtime protection layer
-
-- later `LLM Guard`
-
-## Infra layer
-
-- containers
-- later `K3s`
-
----
-
-## 11. Recommended MVP Technical Stack
-
-For MVP, use:
-
-- `Next.js` frontend with the provided UI system
 - `TypeScript`
-- `Python FastAPI` backend
+- `FastAPI`
 - `PostgreSQL`
-- file or object-based artifact storage
 - `LiteLLM`
 - `Moonshot`
-- `Telkom AI Qwen 30B` as evaluator if needed
-- VM or Docker-based deployment
+- artifact storage
 
-This is enough to deliver:
+## For ModelHub
 
-- endpoint registration
-- one benchmark package run
-- scorecard
-- review flow
-- ranking page
-- later score exposure to `AgentLab`
+- `Next.js`
+- published summary API
+- same or adjacent metadata backend
+- pricing/docs/example content layer
 
----
+## For deployment
 
-## 12. Recommended Non-MVP Technical Additions
-
-Add later:
-
-- `DeepEval`
-- `PyRIT`
-- `Garak`
-- `LLM Guard`
-- `Elasticsearch`
-- `K3s`
-
-These should be introduced only when there is a real need.
+- Cloudflare Pages native Git flow for the current frontend publishing path
 
 ---
 
-## 13. Final Recommendation
+## 10. Final Recommendation
 
-The recommended technology direction is:
+Keep the stack narrow and operationally grounded:
 
-- `Frontend`: `Next.js` + `TypeScript` + the provided UI system
-- `Backend`: `Python FastAPI`
-- `Database`: `PostgreSQL`
-- `Gateway`: `LiteLLM`
-- `Core benchmark`: `Moonshot`
-- `Evaluator model`: `Telkom AI Qwen 30B`
-- `Infrastructure now`: VM + containers
-- `Infrastructure later`: `K3s`
-- `Optional vector capability`: `Elasticsearch`
-
-This stack is consistent with:
-
-- the current team direction
-- the Python-heavy evaluation ecosystem
-- the need to support both internal and external model providers
-- the need to keep costs low by using internal evaluator capacity where possible
+- `LiteLLM` as endpoint abstraction
+- `Moonshot` as benchmark foundation
+- `FastAPI` and `PostgreSQL` as the core application platform
+- `Next.js` as the shared UI platform for both internal and discovery surfaces
+- Cloudflare Pages constraints treated as real architectural inputs, not as publishing afterthoughts

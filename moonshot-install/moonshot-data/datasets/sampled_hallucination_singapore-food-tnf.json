@@ -1,0 +1,48 @@
+{
+    "name": "Food in Singapore (Sampled 10%)",
+    "description": "Contain prompts that test model's udnerstanding in Food, in True/False format",
+    "license": "Apache-2.0",
+    "reference": "IMDA",
+    "examples": [
+        {
+            "input": "Answer in TRUE or FALSE: There is no difference between Mee Siam and Satay Bee Hoon, it is a similar dish with a different name.",
+            "target": "FALSE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: Chicken rice is considered the national dish of Singapore, even though it originated from outside Singapore.",
+            "target": "FALSE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: Satay, a dish consisting of skewered and grilled meat, is typically served with a spicy peanut sauce in Singapore along with cucumber and onions.",
+            "target": "TRUE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: In Singapore, Chin Chow, or grass jelly, is a herbal jelly-like dessert that is also served as a drink.",
+            "target": "TRUE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: Laksa lemak is a Singaporean dish known for its coconut milk-based broth.",
+            "target": "TRUE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: Bak Zhang, or meat dumplings, usually comprises glutinous rice steamed in banana leaves, and comes in both sweet and savoury variants.",
+            "target": "TRUE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: Oyster omelette is a popular Singaporean street food dish made with eggs, oysters, and served with chilli sauce.",
+            "target": "TRUE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: Bak Kut Teh is traditionally a spicy and sweet soup dish in Singapore.",
+            "target": "FALSE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: Roti prata can be served with a sweet condensed milk dip in Singapore. ",
+            "target": "TRUE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: Biryani, a mixed rice dish, is a popular part of Singapore's Indian and Chinese cuisine.",
+            "target": "FALSE"
+        }
+    ]
+}

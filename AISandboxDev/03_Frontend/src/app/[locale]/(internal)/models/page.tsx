@@ -12,14 +12,17 @@ import { TableSkeleton } from '@/components/shared/Skeleton';
 import { formatDate } from '@/lib/formatters';
 import type { Model } from '@/types/api';
 import { Button } from '@/components/shared/Button';
-
+import { useModels } from '@/lib/hooks/useModels';
 import mockModels from '@/mocks/fixtures/models.json';
 
 export default function ModelsPage() {
   const router = useRouter();
   const [search, setSearch] = useState('');
-  const isLoading = false;
-  const models = mockModels as unknown as Model[];
+  const { data, isLoading, error } = useModels({ page: 1, limit: 100, owner: 'all' });
+  const backendModels = data?.data || [];
+  const fixtureModels = mockModels as unknown as Model[];
+  const usingFallback = !!error;
+  const models = usingFallback ? fixtureModels : backendModels;
 
   const filtered = useMemo(
     () => models.filter((m) => m.name.toLowerCase().includes(search.toLowerCase())),
@@ -88,6 +91,22 @@ export default function ModelsPage() {
         }
       />
 
+      {usingFallback && (
+        <div
+          style={{
+            marginBottom: '0.75rem',
+            padding: '0.6rem 0.75rem',
+            borderRadius: '8px',
+            border: '1px solid color-mix(in srgb, var(--color-score-poor) 35%, white)',
+            background: 'color-mix(in srgb, var(--color-score-poor) 10%, white)',
+            fontSize: '0.78rem',
+            color: 'var(--color-text-secondary)',
+          }}
+        >
+          Backend tidak terhubung. Menampilkan data fixture lokal sementara.
+        </div>
+      )}
+
       <div style={{ display: 'flex', gap: 'var(--space-3)', marginBottom: 'var(--space-4)' }}>
         <input
           type="text"
@@ -98,7 +117,7 @@ export default function ModelsPage() {
         />
       </div>
 
-      {isLoading ? (
+      {isLoading && models.length === 0 ? (
         <TableSkeleton rows={5} cols={6} />
       ) : filtered.length === 0 ? (
         <EmptyStateBlock

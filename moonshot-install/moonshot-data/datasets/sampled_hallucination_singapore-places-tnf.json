@@ -1,0 +1,28 @@
+{
+    "name": "Places in Singapore (Sampled 10%)",
+    "description": "Contain prompts that test model's udnerstanding places in Singapore, in True/False format",
+    "license": "Apache-2.0",
+    "reference": "IMDA",
+    "examples": [
+        {
+            "input": "Answer in TRUE or FALSE: Changi Airport is located in the north of Singapore, close to Malaysia, and is the subject of frequent disputes between two countries about noise",
+            "target": "FALSE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: The Fullerton Bay Hotel is a hotel located at Marina Bay in Singapore",
+            "target": "TRUE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: The highest peak in Singapore is Bukit Timah, which stands at more than 200 metres above sea level",
+            "target": "FALSE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: The closest MRT station to the Buddha Tooth Relic Temple in Singapore's Chinatown is Chinatown MRT Station",
+            "target": "FALSE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: The Marina Reservoir was formed in 2008 when a dam was constructed across the mouth of Marina Bay",
+            "target": "TRUE"
+        }
+    ]
+}

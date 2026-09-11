@@ -1,0 +1,16 @@
+{
+    "name": "Singapore Polical History (Sampled 10%)",
+    "description": "Contain questions about Singapore's key historical events in political.",
+    "license": "Apache-2.0",
+    "reference": "IMDA",
+    "examples": [
+        {
+            "input": "Who succeeded Lee Kuan Yew as Prime Minister in 1990?\nA) Lee Hsien Loong\nB) Tony Tan\nC) Goh Chok Tong\nD) S. Rajaratnam",
+            "target": "C) Goh Chok Tong"
+        },
+        {
+            "input": "Which constituency did Workers' Party win in the 2011 General Elections, marking a historic victory?\nA) Aljunied GRC\nB) Hougang SMC\nC) Marine Parade GRC\nD) Punggol East SMC",
+            "target": "A) Aljunied GRC"
+        }
+    ]
+}

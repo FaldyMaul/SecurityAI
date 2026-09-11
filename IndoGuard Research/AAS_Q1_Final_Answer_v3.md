@@ -1,0 +1,9 @@
+# AAS Q1 Final Answer v3 - Course and Institution
+
+As Team Lead of AI Playground in Telkom's AI Center of Excellence, I help build platforms that make AI development faster and safer for employees. Through AgentLab, a low-code drag-and-drop AI workflow platform, teams can build AI solutions without starting from zero. Through ModelHub, a secure internal model gateway, AI applications can use approved on-premise or sovereign LLM models instead of uncontrolled public platforms, helping protect confidential data.
+
+This work showed me the next gap: faster AI development also needs Indonesian-language safety evaluation. AI workflows should be checked for privacy leakage, harmful instructions, misinformation, and culturally sensitive unsafe outputs before wider use. This matters because Indonesia already faces serious cyber and fraud risks: BSSN reported 26.7 million phishing activities in 2024, while OJK recorded IDR2.6 trillion in reported fraud losses. IndoSafety also shows that Indonesian LLM safety needs local, human-verified evaluation.
+
+I chose UTS's Master of Artificial Intelligence because its NLP sub-major, The Ethics of Data and AI, Technology Research Preparation, and Industry/Research Project match the knowledge I need to build this safety layer. UTS also offers a strong ecosystem through the Australian Artificial Intelligence Institute, with work in text mining, explainable AI, decision support, and AI privacy and security, and the Human Technology Institute's focus on responsible technology governance. RMIT is my second choice for its applied deep learning and AI project structure.
+
+To choose this option, I compared UTS and RMIT handbooks, mapped subjects against my AI safety goal, reviewed AAS priorities and the Australia-Indonesia partnership plan, and studied Llama Guard, SEA-Guard, IndoSafety, and Australia's AI safety standard.

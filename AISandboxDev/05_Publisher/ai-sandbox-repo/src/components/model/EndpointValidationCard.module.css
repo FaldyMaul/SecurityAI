@@ -1,0 +1,19 @@
+.card { border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); overflow: hidden; }
+.card.success { border-color: var(--color-status-endpoint-valid); }
+.card.failure { border-color: var(--color-status-validation-failed); }
+.header { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-4); background: var(--color-bg-secondary); border-bottom: 1px solid var(--color-border); }
+.title { font-size: var(--text-sm); font-weight: var(--font-weight-semibold); }
+.body { padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); }
+.field { display: flex; gap: var(--space-3); font-size: var(--text-sm); }
+.label { color: var(--color-text-secondary); min-width: 48px; }
+.value { color: var(--color-text-primary); font-family: var(--font-mono); font-size: var(--text-xs); }
+.status { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); padding-top: var(--space-2); border-top: 1px solid var(--color-border); }
+.muted { color: var(--color-text-muted); }
+.successIcon { color: var(--color-status-endpoint-valid); }
+.errorIcon { color: var(--color-status-validation-failed); }
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.footer { padding: var(--space-3) var(--space-4); border-top: 1px solid var(--color-border); }
+.btn { padding: var(--space-2) var(--space-4); border: 1px solid var(--color-primary); color: var(--color-primary); background: none; border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: var(--font-weight-medium); cursor: pointer; transition: all var(--transition-fast); }
+.btn:hover { background: var(--color-primary); color: white; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }

@@ -1,0 +1,367 @@
+.reportContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ── Overall Grade Hero ── */
+.overallHero {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--color-surface, #1a1a2e) 0%, var(--color-surface-alt, #16213e) 100%);
+  border: 1px solid var(--color-border, #2a2a4a);
+}
+
+.gradeCircle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.gradeA { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 0 24px rgba(16,185,129,0.3); }
+.gradeB { background: linear-gradient(135deg, #3b82f6, #2563eb); box-shadow: 0 0 24px rgba(59,130,246,0.3); }
+.gradeC { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 0 24px rgba(245,158,11,0.3); }
+.gradeD { background: linear-gradient(135deg, #f97316, #ea580c); box-shadow: 0 0 24px rgba(249,115,22,0.3); }
+.gradeE { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 0 24px rgba(239,68,68,0.3); }
+
+.heroInfo {
+  flex: 1;
+}
+
+.heroInfo h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+  color: var(--color-text, #e2e8f0);
+}
+
+.heroSubtitle {
+  color: var(--color-text-muted, #94a3b8);
+  font-size: 0.875rem;
+  margin: 0 0 0.5rem;
+}
+
+.heroMeta {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.metaItem {
+  font-size: 0.8rem;
+  color: var(--color-text-muted, #94a3b8);
+}
+
+.metaItem strong {
+  color: var(--color-text, #e2e8f0);
+}
+
+/* ── Category Cards Grid ── */
+.categoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.categoryCard {
+  padding: 1.25rem;
+  border-radius: 12px;
+  background: var(--color-surface, #1a1a2e);
+  border: 1px solid var(--color-border, #2a2a4a);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.categoryCard:hover {
+  border-color: var(--color-primary, #6366f1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.categoryCard.active {
+  border-color: var(--color-primary, #6366f1);
+  box-shadow: 0 0 0 2px rgba(99,102,241,0.2);
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.categoryName {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text, #e2e8f0);
+}
+
+.categoryGrade {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.categoryScore {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-text, #e2e8f0);
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.categoryDesc {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #94a3b8);
+  line-height: 1.4;
+}
+
+/* ── Score Bar ── */
+.scoreBar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-border, #2a2a4a);
+  margin-top: 0.75rem;
+  overflow: hidden;
+}
+
+.scoreBarFill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+/* ── Recipe Detail Section ── */
+.recipeSection {
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: var(--color-surface, #1a1a2e);
+  border: 1px solid var(--color-border, #2a2a4a);
+}
+
+.recipeSectionTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text, #e2e8f0);
+  margin: 0 0 1rem;
+}
+
+.recipeTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recipeTable th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted, #94a3b8);
+  border-bottom: 1px solid var(--color-border, #2a2a4a);
+}
+
+.recipeTable td {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--color-text, #e2e8f0);
+  border-bottom: 1px solid var(--color-border-light, #1e1e3a);
+}
+
+.recipeRow {
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.recipeRow:hover {
+  background: rgba(99,102,241,0.05);
+}
+
+.recipeRow.expanded {
+  background: rgba(99,102,241,0.08);
+}
+
+.recipeBadge {
+  display: inline-flex;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.rateBar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rateBarTrack {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-border, #2a2a4a);
+  overflow: hidden;
+}
+
+.rateBarFill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.rateValue {
+  font-size: 0.8rem;
+  font-weight: 600;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* ── Prompt Evidence Detail ── */
+.evidencePanel {
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  background: var(--color-surface-alt, #16213e);
+  border: 1px solid var(--color-border, #2a2a4a);
+}
+
+.evidenceGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.evidenceItem {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: var(--color-surface, #1a1a2e);
+  border: 1px solid var(--color-border-light, #1e1e3a);
+}
+
+.evidenceLabel {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted, #94a3b8);
+  margin-bottom: 0.25rem;
+}
+
+.evidenceText {
+  font-size: 0.8rem;
+  color: var(--color-text, #e2e8f0);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.verdictBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.verdictPass {
+  background: rgba(16,185,129,0.15);
+  color: #10b981;
+}
+
+.verdictFail {
+  background: rgba(239,68,68,0.15);
+  color: #ef4444;
+}
+
+.verdictWarning {
+  background: rgba(245,158,11,0.15);
+  color: #f59e0b;
+}
+
+.evaluationText {
+  font-size: 0.8rem;
+  color: var(--color-text-muted, #94a3b8);
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.fullWidthCell {
+  grid-column: 1 / -1;
+}
+
+/* ── Grading Legend ── */
+.gradingLegend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--color-surface, #1a1a2e);
+  border: 1px solid var(--color-border, #2a2a4a);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #94a3b8);
+}
+
+.legendDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+/* ── Metrics Row ── */
+.metricsRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.metricBox {
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: var(--color-surface-alt, #16213e);
+  text-align: center;
+}
+
+.metricValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text, #e2e8f0);
+}
+
+.metricLabel {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #94a3b8);
+  margin-top: 0.15rem;
+}

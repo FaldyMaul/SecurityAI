@@ -1,0 +1,14 @@
+{
+  "name": "Telkom AI v2",
+  "connector_type": "openai-connector",
+  "uri": "https://llmgateway-stage.aiplayground.id/",
+  "token": "sk-Q_LxaUrfSmoBACbxAh8WGQ",
+  "max_calls_per_second": 10,
+  "max_concurrency": 1,
+  "model": "telkom-ai-instruct",
+  "params": {
+    "timeout": 1000,
+    "max_attempts": 3,
+    "temperature": 0.5
+  }
+}

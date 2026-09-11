@@ -1,0 +1,1 @@
+{"detail":"Failed to retrieve cookbooks: [ServiceException] UnexpectedError in get_all_cookbooks - An unexpected error occurred: cannot import name 'ModelProfileRegistry' from 'langchain_core.language_models' (D:\\Work\\PAM\\SecurityAI\\moonshot-install\\venv_311\\Lib\\site-packages\\langchain_core\\language_models\\__init__.py)"}

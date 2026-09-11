@@ -1,0 +1,117 @@
+/* SummaryTile - Legion UI Card based */
+.tile {
+  display: block;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.tile:hover {
+  text-decoration: none;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top accent bar using new palette */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.tile:hover .card::before {
+  opacity: 1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+  background: var(--color-primary-light);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+}
+
+.icon {
+  color: var(--color-primary);
+  transition: all var(--transition-fast);
+}
+
+.tile:hover .iconWrapper {
+  background: var(--color-primary);
+}
+
+.tile:hover .icon {
+  color: white;
+}
+
+.value {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  transition: color var(--transition-fast);
+}
+
+.tile:hover .value {
+  color: var(--color-primary);
+}
+
+.label {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Highlight variant for pending items */
+.highlight .iconWrapper {
+  background: var(--color-secondary-light);
+}
+
+.highlight .icon {
+  color: var(--color-secondary);
+}
+
+.highlight:hover .iconWrapper {
+  background: var(--color-secondary);
+}
+
+.highlight .value {
+  color: var(--color-secondary);
+}
+
+.highlight .card::before {
+  background: linear-gradient(90deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+  opacity: 1;
+}
+
+/* Pulse animation for urgent items */
+@keyframes pulse-tile {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(119, 64, 181, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(119, 64, 181, 0);
+  }
+}
+
+.highlight {
+  animation: pulse-tile 2s ease-in-out infinite;
+}

@@ -32,3 +32,22 @@ thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Generated runtime data, build metadata, and local tooling
+*.log
+*.tsbuildinfo
+*.db-shm
+*.db-wal
+~$*
+**/__pycache__/
+AISandboxDev/03_Frontend/.next-cache/
+
+# Downloaded model caches and local Python environments
+moonshot-install/hf_cache/
+moonshot-install/venv/
+moonshot-install/venv_*/
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.onnx

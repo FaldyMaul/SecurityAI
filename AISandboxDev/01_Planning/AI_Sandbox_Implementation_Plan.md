@@ -1,558 +1,290 @@
 # AI Sandbox Implementation Plan
 
-This document defines the implementation plan for the `AI Sandbox` product, including delivery phases, technical scope, and the team or role in charge of each workstream.
+Last updated: 2026-04-02
 
-It is aligned to the current target:
+Important planning note:
 
-- assess internal models first, starting with `Telkom AI`
-- build a unified sandbox workflow for scoring and review
-- publish approved results for internal consumption
-- later surface model scores and recommendations inside `AgentLab`
+- the current April 2 implementation state is treated as part of Q1 2026 closeout progress
+- future-quarter planning should use this document as the post-Q1 baseline
 
-An important implementation context is that Telkom already has `Apilogy`, an internal API marketplace containing many AI endpoints. For this plan, `Apilogy` should be treated as an important internal capability marketplace and use case platform, while the sandbox remains the benchmark, review, and ranking layer. Endpoints may come from Apilogy or from external providers such as `Azure`, but they should be standardized through `LiteLLM`.
+This document is the canonical implementation plan for the current phase of the product.
 
-It also reflects the current implementation reality:
+It reflects the April 2026 product reality:
 
-- the `AI Engineer` is already trying to deploy `LiteLLM` to monitor model usage and apply guardrails around model access
+- `AI Sandbox` is the internal workspace for `Model Owner`, `Model Vendor`, and `Admin / Reviewer`
+- `ModelHub` is the discovery and leaderboard surface for `Developer` and `Use Case Owner`
+- `AgentLab` is a downstream consumer of approved model guidance
+- `Apilogy` remains the capability marketplace and metadata source
+
+The current implementation focus is:
+
+- deliver a reliable end-to-end `AI Sandbox` workflow
+- prepare trusted outputs for promotion into `ModelHub`
+- keep the stack narrow and operationally stable before broader expansion
 
 ---
 
 ## 1. Implementation Objective
 
-The implementation goal is to deliver the platform in controlled stages.
-
-The first version should not try to solve the full national hub problem immediately.
+The implementation goal is to deliver a usable internal trust workflow before expanding into full platform breadth.
 
 The first practical outcome should be:
 
-- one working model assessment workflow
-- one review and publication workflow
-- one model scorecard that can be consumed by internal builders
+- one working model registration and endpoint validation workflow
+- one working benchmark execution workflow
+- one working review and promotion-eligibility workflow
+- one structured output that can later feed `ModelHub`
 
-That trust output should later be consumable in two places:
+This means the implementation order is now:
 
-- inside `AgentLab`
-- inside Apilogy-related use case and subscription flows
-
-The implementation should therefore move in this order:
-
-1. establish model access and observability
-2. establish baseline benchmark execution
-3. establish review and publication workflow
-4. establish model discovery and selection experience
-5. later integrate scores into `AgentLab`
+1. establish model access, guardrail path, and observability
+2. establish background benchmark execution with stored artifacts
+3. establish scorecard, history, and version comparison
+4. establish review gate and promotion eligibility
+5. expose approved summaries into `ModelHub`
+6. later integrate approved guidance into `AgentLab` and `Apilogy`-linked flows
 
 ---
 
-## 2. Current Starting Point
+## 2. Current Product Split
+
+## AI Sandbox
+
+Purpose:
+
+- internal intake, validation, testing, scoring, rerun, and review preparation
+
+Primary users:
+
+- `Model Owner`
+- `Model Vendor`
+- `Admin / Reviewer`
+
+Core outputs:
+
+- run history
+- raw artifacts
+- scorecards
+- findings
+- reviewer decision
+- promotion eligibility
+
+## ModelHub
+
+Purpose:
+
+- developer-facing discovery, comparison, and model selection
+
+Primary users:
+
+- `Developer`
+- `Use Case Owner`
+- `Product Owner`
+
+Core outputs:
+
+- leaderboard
+- model profile
+- pricing and documentation context
+- trust summary
+- security summary
+- use case examples
+
+Important rule:
+
+- `ModelHub` consumes approved outputs from the sandbox, but it is not the sandbox itself
+
+---
+
+## 3. Current Starting Point
 
 The current known starting point is:
 
 - internal model target: `Telkom AI`
-- base model: `Qwen 30B`
-- internal capability marketplace: `Apilogy`
-- current engineering activity: `LiteLLM` deployment for monitoring and guardrails
+- base model reference: `Qwen 30B`
+- endpoint access layer: `LiteLLM`
+- benchmark foundation: `Moonshot`
+- frontend prototype with internal routes, result table UX, prompt detail modal, and benchmark fixture coverage
+- publisher flow validated through Cloudflare Pages native Git deployment
 
-This is a good starting point because `LiteLLM` can become the first operational access layer for:
+The current implementation reality also includes:
 
-- endpoint normalization
-- usage logging
-- request monitoring
-- model routing
-- basic gateway-level policy control
-- request standardization across Apilogy-hosted and external providers such as `Azure`
-
-Important note:
-
-- `LiteLLM` is part of the access and control plane
-- it is not the main benchmark engine
-- benchmark scoring should still be handled by the sandbox evaluation workflow
+- benchmark runs are expected to be background-safe
+- benchmark history is required
+- version comparison is required
+- promotion into `ModelHub` must be guarded, not automatic
 
 ---
 
-## 3. Delivery Principles
+## 4. Delivery Principles
 
 The implementation should follow these principles:
 
 - keep MVP narrow
-- use OSS-first components
+- keep `AI Sandbox` and `ModelHub` conceptually separate
+- use OSS-first components where practical
 - preserve raw evidence from the start
-- make the workflow usable before making it broad
-- separate review decision from public publication
-- avoid building too many benchmark integrations in the first release
+- make benchmark execution resilient before making it broad
+- make review and promotion gating explicit
+- avoid integrating too many benchmark engines too early
+- reflect deployment reality, not idealized local-only assumptions
 
 ---
 
-## 4. Delivery Phases
+## 5. Delivery Phases
 
-## Phase 0: Foundation and Access Layer
+## Phase 0: Access, Guardrail, and Observability Foundation
 
 ### Goal
 
-Create the minimum technical foundation required to connect to models and observe traffic.
+Create the technical path required to access models consistently and observe runtime behavior.
 
 ### Main deliverables
 
-- working `LiteLLM` deployment
-- initial endpoint mapping for LLM assessment
-- connection to `Telkom AI`
-- usage logging or request visibility
-- basic guardrail policy at the gateway layer if available
+- working `LiteLLM` deployment or equivalent access path
+- endpoint validation path through the standard adapter layer
+- basic guardrail and observability alignment
 - initial backend and storage setup
-
-### Why this phase matters
-
-Without a stable access layer, the rest of the sandbox workflow will be fragile.
-
-### Team or role in charge
-
-- `AI Engineer`
-  - deploy `LiteLLM`
-  - validate access path from Apilogy-hosted or external endpoints into the gateway
-  - connect model endpoints
-  - configure gateway and routing
-  - validate observability and guardrail behavior
-
-- `Backend Engineer`
-  - prepare service integration points
-  - prepare model registry schema
-  - define how sandbox metadata, Apilogy references, and provider metadata are stored
-
-- `Platform / DevOps`
-  - provision VM, containers, network, secrets, and storage
 
 ### Exit criteria
 
-- `LiteLLM` is running reliably
-- `Telkom AI` endpoint details are mapped into the sandbox access flow through `LiteLLM`
-- `Telkom AI` can be accessed through the gateway
-- gateway logs or monitoring are visible
+- target model can be reached through the standard access path
+- validation and access logs are visible
+- backend can persist model and endpoint metadata
 
----
-
-## Phase 1: Baseline Model Assessment MVP
+## Phase 1: Sandbox Assessment MVP
 
 ### Goal
 
-Deliver the first end-to-end benchmark workflow for `Telkom AI`.
+Deliver the first end-to-end `AI Sandbox` assessment workflow for `Telkom AI`.
 
 ### Main deliverables
 
 - model registration flow
-- endpoint intake flow with optional Apilogy linkage
 - endpoint validation flow
-- one benchmark package execution flow
+- benchmark package execution flow
+- background benchmark handling
 - raw artifact storage
 - normalized scorecard
-- internal review flow
+- internal run history
 
-### Recommended technical scope
+### Current evidence of progress
 
-- `Moonshot` integration for baseline benchmark execution
-- backend job orchestration
-- `PostgreSQL` for metadata and normalized results
-- object storage or structured artifact storage
-- simple web UI for:
-  - add model with optional linkage to `Apilogy`
-  - run benchmark
-  - view result
-  - review result
-
-### Team or role in charge
-
-- `AI Engineer`
-  - integrate `Moonshot`
-  - define first benchmark run configuration
-  - validate model behavior under baseline tests
-
-- `Backend Engineer`
-  - build run orchestration
-  - persist provider metadata and optional `Apilogy` source reference in the model record
-  - store run metadata
-  - parse artifacts into normalized schema
-  - expose API for result pages
-
-- `Frontend Engineer`
-  - build MVP UI flow for model submission, run status, and scorecard
-
-- `Platform / DevOps`
-  - maintain service deployment
-  - configure storage
-  - ensure job execution environment is stable
-
-- `Product Owner / Business Analyst`
-  - define MVP scope
-  - define result language and decision labels
-  - align the flow with internal users
+- FE work has already restored the recipe result table
+- prompt detail modal is implemented
+- category filtering and fail-oriented review support are implemented in the frontend prototype
+- fixture-backed completed runs exist for testing result views
 
 ### Exit criteria
 
-- a user can register `Telkom AI`
-- the `Telkom AI` record can be standardized through `LiteLLM` and optionally linked to an `Apilogy` source record
-- a benchmark run completes successfully
-- a scorecard is generated
-- an internal reviewer can review the result
+- a model can be registered and validated
+- a background benchmark run completes
+- scorecard and detailed recipe results can be reviewed
+- history is stored for repeated runs
 
----
-
-## Phase 2: Review, Approval, and Publication Workflow
+## Phase 2: Review Gate and Promotion Eligibility
 
 ### Goal
 
-Turn the benchmark result into a usable internal trust signal.
+Convert benchmark outputs into a reliable internal trust decision.
 
 ### Main deliverables
 
 - review queue
-- final decision status
-- publish or hide control
-- ranking page or landing page summary
-- model profile page
-
-### Why this phase matters
-
-The benchmark result only becomes useful when someone can approve it and others can consume it.
-
-### Team or role in charge
-
-- `Frontend Engineer`
-  - build review queue
-  - build approval action UX
-  - build ranking page and model summary page
-
-- `Backend Engineer`
-  - implement review status model
-  - implement publication status model
-  - secure public vs internal data access
-
-- `Admin / Reviewer`
-  - define approval statuses
-  - define what can be published
-  - validate the review workflow
-
-- `Product Owner / Business Analyst`
-  - define public-facing language for rating and summary
-  - define what information should remain internal
+- reviewer decision workflow
+- promotion eligibility state
+- restriction and reassessment handling
+- version comparison and audit trail support
 
 ### Exit criteria
 
-- reviewed models can be approved or restricted
-- approved models can be published
-- builders can browse published model ratings
+- reviewers can inspect evidence and history
+- high-risk or incomplete results are blocked from promotion
+- approved outputs are explicitly marked as eligible for `ModelHub`
 
----
-
-## Phase 3: AgentLab Integration
+## Phase 3: ModelHub MVP
 
 ### Goal
 
-Surface model rating and guidance directly inside `AgentLab`.
+Expose approved model summaries to builders without giving them access to sandbox internals.
 
 ### Main deliverables
 
-- model rating API for `AgentLab`
-- model picker metadata
-- warning labels and recommended controls inside the model selection experience
-- foundation for later trust signal reuse in Apilogy use case and subscription flows
-
-### Why this phase matters
-
-This turns the sandbox from a separate governance tool into a decision layer that directly influences model usage. A similar trust signal should later be consumable in Apilogy-related use case flows as well.
-
-### Team or role in charge
-
-- `Backend Engineer`
-  - expose model rating API
-  - expose approved model list
-  - expose model guidance and status
-
-- `Frontend Engineer` or `AgentLab Engineer`
-  - integrate score badges and warning labels into `AgentLab`
-
-- `Product Owner / Business Analyst`
-  - define what minimum score or status is shown to builders
-  - define what actions should be blocked or warned
+- leaderboard
+- model profile
+- comparison view
+- pricing and documentation placeholders or initial integrations
+- trust and security summary from sandbox outputs
 
 ### Exit criteria
 
-- `AgentLab` users can see model rating and approval guidance at selection time
+- builders can discover promoted models
+- internal evidence is not leaked to `ModelHub`
+- promotion and hiding rules work as intended
 
-### Follow-on from this phase
-
-After the same trust signal is working in `AgentLab`, it can be exposed into Apilogy-linked use case selection and subscription journeys.
-
----
-
-## Phase 4: Expansion Layers
+## Phase 4: AgentLab and Apilogy Consumption
 
 ### Goal
 
-Add depth after the baseline workflow is stable.
+Reuse approved trust signals in downstream product flows.
+
+### Main deliverables
+
+- `AgentLab` model selection guidance
+- API shape for trusted model consumption
+- optional `Apilogy` enrichment or linkage
+
+### Exit criteria
+
+- downstream products can consume approved model guidance without reading sandbox internals directly
+
+## Phase 5: Expanded Evaluation Layers
+
+### Goal
+
+Expand beyond baseline model benchmarking after the MVP flow is stable.
 
 ### Candidate expansions
 
 - `DeepEval` for app, RAG, and agent evaluation
-- `PyRIT` for advanced multi-turn red teaming
+- `PyRIT` for deeper conversational red teaming
 - `Garak` for offensive security scanning
-- `LLM Guard` integration guidance for runtime protection patterns
-- model comparison across multiple providers
-
-### Team or role in charge
-
-- `AI Engineer`
-  - evaluate and integrate additional testing tools
-  - validate scoring quality and fit
-
-- `Backend Engineer`
-  - extend orchestration and normalization layer
-
-- `Frontend Engineer`
-  - add new result pages, comparison views, and package selection UX
-
-- `Security Team` optional later
-  - validate advanced testing scenarios
-
-### Exit criteria
-
-- additional tools add clear value without breaking the core workflow
+- `LLM Guard` for runtime control guidance
 
 ---
 
-## 5. Workstream Breakdown
+## 6. Current Progress Summary
 
-The implementation can be managed as parallel workstreams.
+## Completed or materially advanced
 
-## Workstream A: Model Access and Gateway
+- March product split clarification between `AI Sandbox` and `ModelHub`
+- frontend result review experience improvements
+- prompt detail modal and table-based recipe results
+- fixture-backed completed run for QA and FE validation
+- Cloudflare Pages deployment pivot and successful build-path resolution
+- initial aligned documentation for agents and planning
 
-### Scope
+## In progress
 
-- `LiteLLM`
-- optional `Apilogy` endpoint mapping
-- endpoint routing
-- usage logging
-- guardrail-related gateway configuration
+- canonical planning refresh
+- promotion terminology and workflow consistency across docs
+- stronger API and schema alignment beyond fixtures
 
-### Owner
+## Pending
 
-- `AI Engineer`
-
-### Support
-
-- `Platform / DevOps`
-
-### Current status
-
-- already in progress
+- full API-backed data flow replacing fixture-only views
+- stable promotion flow from sandbox into `ModelHub`
+- deeper reviewer workflow hardening
+- stakeholder-ready `ModelHub` metadata completeness
 
 ---
 
-## Workstream B: Evaluation Engine
-
-### Scope
-
-- `Moonshot` integration
-- benchmark execution
-- baseline package setup
-
-### Owner
-
-- `AI Engineer`
-
-### Support
-
-- `Backend Engineer`
-
----
-
-## Workstream C: Orchestration and Data Layer
-
-### Scope
-
-- job runner
-- model registry
-- optional `Apilogy` source reference
-- run registry
-- normalized results
-- artifact mapping
-
-### Owner
-
-- `Backend Engineer`
-
-### Support
-
-- `AI Engineer`
-- `Platform / DevOps`
-
----
-
-## Workstream D: UX and Product Interface
-
-### Scope
-
-- model registration
-- run status
-- result scorecard
-- review queue
-- ranking page
-
-### Owner
-
-- `Frontend Engineer`
-
-### Support
-
-- `Product Owner / Business Analyst`
-- `Backend Engineer`
-
----
-
-## Workstream E: Review and Publication
-
-### Scope
-
-- approval status model
-- publish or hide flow
-- summary content structure
-
-### Owner
-
-- `Admin / Reviewer`
-
-### Support
-
-- `Frontend Engineer`
-- `Backend Engineer`
-- `Product Owner / Business Analyst`
-
----
-
-## 6. Suggested Team Structure
-
-The smallest practical team for MVP is:
-
-- `1 AI Engineer`
-- `1 Backend Engineer`
-- `1 Frontend Engineer`
-- `1 Product Owner / Business Analyst`
-- shared `Platform / DevOps` support
-- `1 Admin / Reviewer` acting as operational reviewer and product validator
-
-If the team is smaller, one person may cover multiple roles:
-
-- `AI Engineer` can also help backend integration
-- `Frontend Engineer` can implement a simple admin interface
-- `Product Owner` can also act as workflow validator
-
----
-
-## 7. RACI-Style Ownership Summary
-
-## LiteLLM deployment and monitoring
-
-- Responsible: `AI Engineer`
-- Accountable: `Tech Lead` or engineering owner
-- Consulted: `Platform / DevOps`, `Backend Engineer`
-- Informed: `Product Owner`
-
-## Provider metadata and optional Apilogy mapping
-
-- Responsible: `Backend Engineer`
-- Accountable: `Tech Lead`
-- Consulted: `AI Engineer`
-- Informed: `Product Owner`
-
-## Moonshot integration
-
-- Responsible: `AI Engineer`
-- Accountable: `Tech Lead`
-- Consulted: `Backend Engineer`
-- Informed: `Admin / Reviewer`
-
-## Model registry and scoring backend
-
-- Responsible: `Backend Engineer`
-- Accountable: `Tech Lead`
-- Consulted: `AI Engineer`
-- Informed: `Frontend Engineer`
-
-## MVP web UI
-
-- Responsible: `Frontend Engineer`
-- Accountable: `Product Owner`
-- Consulted: `Backend Engineer`
-- Informed: `Admin / Reviewer`
-
-## Review and publication workflow
-
-- Responsible: `Backend Engineer` and `Frontend Engineer`
-- Accountable: `Admin / Reviewer`
-- Consulted: `Product Owner`
-- Informed: `Model Owner`
-
-## Ranking page and model summary
-
-- Responsible: `Frontend Engineer`
-- Accountable: `Product Owner`
-- Consulted: `Admin / Reviewer`
-- Informed: `Use Case Builders`
-
-## AgentLab integration
-
-- Responsible: `Backend Engineer` and `AgentLab Engineer`
-- Accountable: `Product Owner`
-- Consulted: `AI Engineer`
-- Informed: `Use Case Builders`
-
----
-
-## 8. Immediate Next Steps
-
-The most practical next steps are:
-
-1. Stabilize `LiteLLM` deployment and confirm logging and guardrail behavior.
-2. Define how provider metadata and optional `Apilogy` references will be represented in the sandbox model registry.
-3. Create the `Telkom AI` record in the sandbox and standardize access through `LiteLLM`.
-4. Integrate `Moonshot` for one baseline benchmark package.
-5. Implement normalized score storage.
-6. Build the MVP UI flow:
-   - add model with optional linkage to `Apilogy`
-   - run benchmark
-   - review scorecard
-   - approve and publish
-7. Build the first ranking page.
-
-This sequence will create the first usable version quickly.
-
----
-
-## 9. MVP Definition in Implementation Terms
-
-The MVP is complete when:
-
-- `Telkom AI` is accessible through the chosen model access path
-- the sandbox can run one benchmark package
-- the result is stored and normalized
-- an `Admin / Reviewer` can set final status
-- an approved model can appear on a ranking page
-- a `Use Case Builder` can use that result to guide model selection
-
-That is the correct implementation target for the first release.
-
----
-
-## 10. Final Recommendation
-
-The implementation should be staged, not tool-heavy from day one.
-
-The recommended order is:
-
-1. `LiteLLM` foundation
-2. `Moonshot` baseline evaluation
-3. backend normalization and storage
-4. review and publication workflow
-5. ranking and discovery UX
-6. `AgentLab` integration
-7. advanced tools later
-
-This keeps the team focused on a real working product instead of a wide but unfinished platform.
+## 7. Immediate Next Steps
+
+These are next-quarter starting priorities from the current Q1 closeout baseline.
+
+1. Finish canonical planning and roadmap refresh.
+2. Stabilize benchmark run, history, and comparison behavior in the frontend and API contract.
+3. Make promotion-to-`ModelHub` behavior explicit and reliable.
+4. Define the minimum `ModelHub` MVP content model: score summary, restrictions, pricing, docs, and use case examples.
+5. Keep deployment guidance aligned with Cloudflare Pages native Git flow.

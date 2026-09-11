@@ -11,11 +11,12 @@ import { ScoreCardGrid } from '@/components/score/ScoreCardGrid';
 import { FindingsAccordion } from '@/components/findings/FindingsAccordion';
 import { BenchmarkWizard } from '@/components/run/BenchmarkWizard';
 import { EmptyStateBlock } from '@/components/shared/EmptyStateBlock';
-import type { Model } from '@/types/api';
+import type { ApiResponse, Model, PaginatedResponse } from '@/types/api';
 import { Button } from '@/components/shared/Button';
 import { DataAccessBadge, type DataAccessLevel } from '@/components/security/DataAccessBadge';
 import { LifecycleStageBadge, type LifecycleStage } from '@/components/security/LifecycleStageBadge';
-import type { FindingCategory } from '@/types/run';
+import type { FindingCategory, ScoreBreakdown } from '@/types/run';
+import { api } from '@/lib/api';
 import {
   clearActiveBenchmark,
   getBenchmarkEtaMinutes,
@@ -24,6 +25,7 @@ import {
   type ActiveBenchmark,
 } from '@/lib/benchmarkActivity';
 import { publishToLeaderboard, validatePublish } from '@/lib/publishValidation';
+import { isRunInProgressStatus, isRunQueuedStatus, isRunSuccessStatus, mapRunStatusToModelStatus } from '@/lib/runLifecycle';
 
 import mockModels from '@/mocks/fixtures/models.json';
 import mockRuns from '@/mocks/fixtures/runs.json';
@@ -50,19 +52,32 @@ function getDataAccessLevel(score: number): DataAccessLevel {
   return 'pdp-sensitive';
 }
 
+type BackendRun = {
+  id: string;
+  modelId: string;
+  packageName: string;
+  status: string;
+  overallScore?: number;
+  scores?: ScoreBreakdown;
+  findings?: FindingCategory[];
+  createdAt: string;
+};
+
 export default function ModelDetailPage() {
   const params = useParams<{ id: string }>();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const model = (mockModels as unknown as Model[]).find((item) => item.id === params.id);
+  const [apiModel, setApiModel] = useState<Model | null>(null);
+  const [apiRuns, setApiRuns] = useState<BackendRun[]>([]);
+  const [isApiConnected, setIsApiConnected] = useState(false);
+  const fallbackModel = (mockModels as unknown as Model[]).find((item) => item.id === params.id);
 
-  const runs = useMemo(
-    () =>
-      [...mockRuns]
-        .filter((item) => item.modelId === params.id)
-        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
-    [params.id]
-  );
+  const runs = useMemo(() => {
+    const sourceRuns =
+      apiRuns.length > 0 ? apiRuns : [...mockRuns].filter((item) => item.modelId === params.id);
+    return [...sourceRuns].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }, [apiRuns, params.id]);
+  const model = apiModel || fallbackModel;
 
   const latestRun = runs[0];
   const [showWizard, setShowWizard] = useState(false);
@@ -76,6 +91,52 @@ export default function ModelDetailPage() {
       setShowWizard(true);
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    let cancelled = false;
+    let interval: ReturnType<typeof setInterval> | null = null;
+
+    const fetchLifecycle = async () => {
+      try {
+        const [modelRes, runsRes] = await Promise.all([
+          api.get<ApiResponse<Model>>(`/api/models/${params.id}`),
+          api.get<PaginatedResponse<BackendRun>>(`/api/models/${params.id}/runs`),
+        ]);
+        if (cancelled) return;
+
+        setIsApiConnected(true);
+        setApiModel(modelRes.data);
+        setApiRuns(runsRes.data || []);
+
+        const latest = (runsRes.data || [])[0];
+        const modelActive = modelRes.data.status === 'run_queued' || modelRes.data.status === 'run_in_progress';
+        const runActive = latest ? isRunQueuedStatus(latest.status) || isRunInProgressStatus(latest.status) : false;
+        const shouldPoll = modelActive || runActive;
+
+        if (shouldPoll && !interval) {
+          interval = setInterval(fetchLifecycle, 2000);
+        }
+        if (!shouldPoll && interval) {
+          clearInterval(interval);
+          interval = null;
+        }
+      } catch {
+        if (cancelled) return;
+        setIsApiConnected(false);
+        if (interval) {
+          clearInterval(interval);
+          interval = null;
+        }
+      }
+    };
+
+    fetchLifecycle();
+
+    return () => {
+      cancelled = true;
+      if (interval) clearInterval(interval);
+    };
+  }, [params.id]);
 
   useEffect(() => {
     const activity = readActiveBenchmark();
@@ -146,6 +207,22 @@ export default function ModelDetailPage() {
         subtitle={`${model.provider} | Dibuat ${new Date(model.createdAt).toLocaleDateString('id-ID')}`}
         actions={<StatusBadge status={model.status} />}
       />
+
+      {!isApiConnected && (
+        <div
+          style={{
+            marginBottom: '0.8rem',
+            padding: '0.65rem 0.8rem',
+            borderRadius: '8px',
+            border: '1px solid color-mix(in srgb, var(--color-score-poor) 35%, white)',
+            background: 'color-mix(in srgb, var(--color-score-poor) 10%, white)',
+            fontSize: '0.78rem',
+            color: 'var(--color-text-secondary)',
+          }}
+        >
+          Backend tidak terhubung. Halaman memakai fallback fixture lokal sementara.
+        </div>
+      )}
 
       <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
         <LifecycleStageBadge stage={getLifecycleStage(model.status)} />
@@ -251,17 +328,7 @@ export default function ModelDetailPage() {
                 </span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                   {run.overallScore !== undefined && <span style={{ fontWeight: 700, color: 'var(--color-primary)' }}>Skor: {run.overallScore}</span>}
-                  <StatusBadge
-                    status={
-                      run.status === 'completed'
-                        ? 'assessment_completed'
-                        : run.status === 'failed'
-                          ? 'run_failed'
-                          : run.status === 'in_progress' || run.status === 'running'
-                            ? 'run_in_progress'
-                            : 'run_queued'
-                    }
-                  />
+                  <StatusBadge status={mapRunStatusToModelStatus(run.status)} />
                 </span>
               </button>
             ))}
@@ -280,7 +347,7 @@ export default function ModelDetailPage() {
             borderTop: '1px solid var(--color-border)',
           }}
         >
-          {latestRun?.status === 'completed' && !canPublish && (
+          {isRunSuccessStatus(latestRun?.status) && !canPublish && (
             <div
               style={{
                 padding: '0.75rem',
@@ -320,7 +387,7 @@ export default function ModelDetailPage() {
             {(model.status === 'endpoint_valid' || model.status === 'assessment_completed' || model.status === 'draft') && (
               <Button onClick={() => setShowWizard(true)}>Mulai Benchmark</Button>
             )}
-            {latestRun?.status === 'completed' && (
+            {isRunSuccessStatus(latestRun?.status) && (
               <Button disabled={publishing || !canPublish} onClick={handlePublish}>
                 {publishing ? 'Memproses promosi...' : 'Promosikan ke ModelHub'}
               </Button>

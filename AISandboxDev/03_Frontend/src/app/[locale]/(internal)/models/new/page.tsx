@@ -1,25 +1,69 @@
 ﻿'use client';
 
 import { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { ModelForm } from '@/components/model/ModelForm';
 import { Button } from '@/components/shared/Button';
 import { ImpactAssessmentForm, type ImpactAssessmentValue } from '@/components/security/ImpactAssessmentForm';
+import { useCreateModel } from '@/lib/hooks/useModels';
+import type { AuthMethod } from '@/types/api';
 
 type TabMode = 'litellm' | 'manual';
 type StepMode = 1 | 2 | 3;
 
+interface ManualFormValue {
+  name: string;
+  provider: string;
+  baseModel: string;
+  endpointUrl: string;
+  authMethod: AuthMethod;
+  apiKey: string;
+}
+
 export default function AddModelPage() {
+  const router = useRouter();
+  const createModelMutation = useCreateModel();
   const [tab, setTab] = useState<TabMode>('litellm');
   const [step, setStep] = useState<StepMode>(1);
   const [impact, setImpact] = useState<ImpactAssessmentValue | null>(null);
   const [litellmProvider, setLitellmProvider] = useState('openai');
   const [litellmAlias, setLitellmAlias] = useState('');
+  const [manualForm, setManualForm] = useState<ManualFormValue | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const canContinueFromStep1 = useMemo(() => {
-    if (tab === 'manual') return true;
+    if (tab === 'manual') return manualForm !== null;
     return litellmAlias.trim().length >= 3;
-  }, [litellmAlias, tab]);
+  }, [litellmAlias, manualForm, tab]);
+
+  const handleSaveModel = async () => {
+    setSubmitError(null);
+    const isManual = tab === 'manual';
+
+    const payload = {
+      name: isManual ? manualForm?.name || '' : litellmAlias.trim(),
+      provider: isManual ? manualForm?.provider || '' : litellmProvider,
+      baseModel: isManual ? manualForm?.baseModel || '' : litellmAlias.trim(),
+      endpointUrl: isManual
+        ? manualForm?.endpointUrl || ''
+        : process.env.NEXT_PUBLIC_LITELLM_PROXY_URL || 'http://localhost:4000',
+      authMethod: isManual ? manualForm?.authMethod || 'bearer' : 'bearer',
+      apiKey: isManual ? manualForm?.apiKey || '' : '',
+      modelVersion: 'v1',
+      intendedUseCase: impact?.processingPurpose || 'Asisten operasional internal perusahaan',
+      description: impact?.mitigationPlan || 'Model didaftarkan dari AI Sandbox',
+      source: 'manual' as const,
+    };
+
+    try {
+      const response = await createModelMutation.mutateAsync(payload);
+      const modelId = response.data.id;
+      router.push(`/models?saved=${modelId}`);
+    } catch {
+      setSubmitError('Gagal menyimpan model ke backend. Pastikan backend aktif di port 8000.');
+    }
+  };
 
   return (
     <div style={{ maxWidth: '860px', margin: '0 auto' }}>
@@ -30,6 +74,7 @@ export default function AddModelPage() {
           onClick={() => {
             setTab('litellm');
             setStep(1);
+            setSubmitError(null);
           }}
           style={{
             padding: '0.75rem 1.25rem',
@@ -49,6 +94,7 @@ export default function AddModelPage() {
           onClick={() => {
             setTab('manual');
             setStep(1);
+            setSubmitError(null);
           }}
           style={{
             padding: '0.75rem 1.25rem',
@@ -125,14 +171,20 @@ export default function AddModelPage() {
               <Button disabled={!canContinueFromStep1} onClick={() => setStep(2)}>
                 Continue to Impact Assessment
               </Button>
-              <Button variant="outline" onClick={() => setTab('manual')}>Switch to Manual</Button>
+              <Button variant="outline" onClick={() => { setTab('manual'); setSubmitError(null); }}>Switch to Manual</Button>
             </div>
           </div>
         )}
 
         {step === 1 && tab === 'manual' && (
           <ModelForm
-            onSubmit={() => setStep(2)}
+            onSubmit={(value) => {
+              setManualForm({
+                ...value,
+                authMethod: (value.authMethod as AuthMethod) || 'bearer',
+              });
+              setStep(2);
+            }}
             onCancel={() => {
               setStep(1);
             }}
@@ -170,6 +222,11 @@ export default function AddModelPage() {
               <p style={{ margin: 0, color: 'var(--color-text-secondary)' }}>
                 {tab === 'litellm' ? `LiteLLM (${litellmProvider} / ${litellmAlias || '-'})` : 'Manual Entry'}
               </p>
+              {tab === 'manual' && manualForm && (
+                <p style={{ margin: '0.45rem 0 0 0', color: 'var(--color-text-secondary)' }}>
+                  {manualForm.name} | {manualForm.provider} | {manualForm.endpointUrl}
+                </p>
+              )}
               <p style={{ margin: '0.7rem 0 0.45rem 0', fontWeight: 600 }}>Impact assessment</p>
               <p style={{ margin: 0, color: 'var(--color-text-secondary)' }}>
                 Level dampak: {impact?.impactLevel || '-'} | Personal data: {impact?.containsPersonalData ? 'Ya' : 'Tidak'}
@@ -177,9 +234,25 @@ export default function AddModelPage() {
             </div>
 
             <div style={{ display: 'flex', gap: '0.6rem' }}>
-              <Button>Simpan Model</Button>
+              <Button onClick={handleSaveModel} disabled={createModelMutation.isPending}>
+                {createModelMutation.isPending ? 'Menyimpan...' : 'Simpan Model'}
+              </Button>
               <Button variant="outline" onClick={() => setStep(2)}>Edit Assessment</Button>
             </div>
+            {submitError && (
+              <div
+                style={{
+                  padding: '0.65rem 0.8rem',
+                  borderRadius: '8px',
+                  border: '1px solid color-mix(in srgb, var(--color-score-critical) 40%, white)',
+                  background: 'color-mix(in srgb, var(--color-score-critical) 10%, white)',
+                  color: 'var(--color-text-primary)',
+                  fontSize: '0.8rem',
+                }}
+              >
+                {submitError}
+              </div>
+            )}
           </div>
         )}
       </div>

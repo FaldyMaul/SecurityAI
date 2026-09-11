@@ -1,0 +1,380 @@
+@import '../colors/colors.css';
+@tailwind base;
+@layer base {
+  img {
+    /* this is needed to correct alignments in the pdf generation that uses html2canvas */
+    @apply inline-block;
+  }
+}
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+
+  /* Moonwine colors */
+  --color-moonwine-50: #f9f8fb;
+  --color-moonwine-100: #f4f1f6;
+  --color-moonwine-200: #e8e3eb;
+  --color-moonwine-300: #d5ccdb;
+  --color-moonwine-400: #bcadc5;
+  --color-moonwine-500: #9f8baa;
+  --color-moonwine-600: #826d8c;
+  --color-moonwine-700: #6a5873;
+  --color-moonwine-800: #594a60;
+  --color-moonwine-900: #4b3f50;
+  --color-moonwine-950: #2c2230;
+
+  /* Moongray colors */
+  --color-moongray-50: #f7f7f8;
+  --color-moongray-100: #efeef0;
+  --color-moongray-200: #dbdadd;
+  --color-moongray-300: #bcb9c0;
+  --color-moongray-400: #97939d;
+  --color-moongray-500: #7a7582;
+  --color-moongray-600: #645f6a;
+  --color-moongray-700: #524e56;
+  --color-moongray-800: #464349;
+  --color-moongray-900: #3d3a40;
+  --color-moongray-950: #2d2b2f;
+  --color-moongray-1000: #202020;
+
+  /* Imdalight colors */
+  --color-imdalight-50: #fdf4ff;
+  --color-imdalight-100: #fae8ff;
+  --color-imdalight-200: #f5d0fe;
+  --color-imdalight-300: #f0abfc;
+  --color-imdalight-400: #e879f9;
+  --color-imdalight-500: #d946ef;
+  --color-imdalight-600: #c026d3;
+  --color-imdalight-700: #a21caf;
+  --color-imdalight-800: #86198f;
+  --color-imdalight-900: #701a75;
+  --color-imdalight-950: #4a044e;
+  --color-imdalight-980: #702f8a;
+  --color-imdalight-1000: #4c2b5d;
+}
+
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes fadeScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translate(-35px, -35px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translate(0px, 0px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
+input[type="checkbox"] {
+  @apply appearance-none relative border border-slate-400 w-6 h-6 cursor-pointer
+}
+
+input[type="checkbox"]:hover {
+  @apply border-slate-500
+}
+
+input[type="checkbox"]:checked {
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  clip-path: polygon(0px 42.5%, 30.24% 26.33%, 36.16% 59.49%, 91.08% 22.41%, 100.08% 53.65%, 19% 91.57%);
+}
+
+input[type="checkbox"]:checked::before {
+  @apply absolute w-5 h-5 left-[2px] top-[-1px] rotate-[-15deg] bg-moongray-300
+}
+
+.scroll-container {
+  @apply snap-mandatory overflow-y-auto overflow-x-hidden;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  @apply w-2 h-2 rounded-md;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-gray-200/70 rounded-md;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-moonwine-800/80 rounded-md;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-moonwine-800/60;
+}
+
+.fadeScaleInAnimation {
+  animation: fadeScaleIn 0.2s ease-out forwards;
+}
+
+.ring
+{
+  @apply text-moonpurplelight;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:80px;
+  height:80px;
+  background:transparent;
+  border:3px solid #3c3c3c;
+  border-radius:50%;
+  text-align:center;
+  line-height:80px;
+  font-family:sans-serif;
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  box-shadow:0 0 20px rgba(0,0,0,.5);
+}
+
+.ring:before
+{
+  content:'';
+  position:absolute;
+  top:-3px;
+  left:-3px;
+  width:80px;
+  height:80px;
+  border:3px solid transparent;
+  border-radius:50%;
+  animation:animateC 2s linear infinite;
+  @apply border-t-moonpurplelight border-r-moonpurplelight;
+}
+
+.ring span
+{
+  display:block;
+  position:absolute;
+  top:calc(50% - 2px);
+  left:50%;
+  width:50%;
+  height:4px;
+  background:transparent;
+  transform-origin:left;
+  animation:animate 2s linear infinite;
+}
+
+.ring span:before
+{
+  @apply bg-moonpurplelight;
+  content:'';
+  position:absolute;
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  top:-6px;
+  right:-8px;
+}
+
+.dust-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url('/texture.png');
+  background-repeat: repeat;
+}
+
+@keyframes animateC
+{
+  0%
+  {
+    transform:rotate(0deg);
+  }
+  100%
+  {
+    transform:rotate(360deg);
+  }
+}
+@keyframes animate
+{
+  0%
+  {
+    transform:rotate(45deg);
+  }
+  100%
+  {
+    transform:rotate(405deg);
+  }
+}
+
+.waitspinner {
+  --uib-size: 35px;
+  --uib-color: black;
+  --uib-speed: 1.5s;
+  --uib-dot-size: calc(var(--uib-size) * 0.4);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--uib-size);
+  width: var(--uib-size);
+  animation: rotate calc(var(--uib-speed) * 1.667) infinite linear;
+}
+
+.waitspinner::before,
+.waitspinner::after {
+  content: '';
+  position: absolute;
+  height: var(--uib-dot-size);
+  width: var(--uib-dot-size);
+  border-radius: 50%;
+  background-color: var(--uib-color);
+  flex-shrink: 0;
+  transition: background-color 0.3s ease;
+}
+
+.waitspinner::before {
+  animation: orbit var(--uib-speed) linear infinite;
+}
+
+.waitspinner::after {
+  animation: orbit var(--uib-speed) linear calc(var(--uib-speed) / -2) infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit {
+  0% {
+    transform: translateX(calc(var(--uib-size) * 0.25)) scale(0.73684);
+    opacity: 0.65;
+  }
+  5% {
+    transform: translateX(calc(var(--uib-size) * 0.235)) scale(0.684208);
+    opacity: 0.58;
+  }
+  10% {
+    transform: translateX(calc(var(--uib-size) * 0.182)) scale(0.631576);
+    opacity: 0.51;
+  }
+  15% {
+    transform: translateX(calc(var(--uib-size) * 0.129)) scale(0.578944);
+    opacity: 0.44;
+  }
+  20% {
+    transform: translateX(calc(var(--uib-size) * 0.076)) scale(0.526312);
+    opacity: 0.37;
+  }
+  25% {
+    transform: translateX(0%) scale(0.47368);
+    opacity: 0.3;
+  }
+  30% {
+    transform: translateX(calc(var(--uib-size) * -0.076)) scale(0.526312);
+    opacity: 0.37;
+  }
+  35% {
+    transform: translateX(calc(var(--uib-size) * -0.129)) scale(0.578944);
+    opacity: 0.44;
+  }
+  40% {
+    transform: translateX(calc(var(--uib-size) * -0.182)) scale(0.631576);
+    opacity: 0.51;
+  }
+  45% {
+    transform: translateX(calc(var(--uib-size) * -0.235)) scale(0.684208);
+    opacity: 0.58;
+  }
+  50% {
+    transform: translateX(calc(var(--uib-size) * -0.25)) scale(0.73684);
+    opacity: 0.65;
+  }
+  55% {
+    transform: translateX(calc(var(--uib-size) * -0.235)) scale(0.789472);
+    opacity: 0.72;
+  }
+  60% {
+    transform: translateX(calc(var(--uib-size) * -0.182)) scale(0.842104);
+    opacity: 0.79;
+  }
+  65% {
+    transform: translateX(calc(var(--uib-size) * -0.129)) scale(0.894736);
+    opacity: 0.86;
+  }
+  70% {
+    transform: translateX(calc(var(--uib-size) * -0.076)) scale(0.947368);
+    opacity: 0.93;
+  }
+  75% {
+    transform: translateX(0%) scale(1);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(calc(var(--uib-size) * 0.076)) scale(0.947368);
+    opacity: 0.93;
+  }
+  85% {
+    transform: translateX(calc(var(--uib-size) * 0.129)) scale(0.894736);
+    opacity: 0.86;
+  }
+  90% {
+    transform: translateX(calc(var(--uib-size) * 0.182)) scale(0.842104);
+    opacity: 0.79;
+  }
+  95% {
+    transform: translateX(calc(var(--uib-size) * 0.235)) scale(0.789472);
+    opacity: 0.72;
+  }
+  100% {
+    transform: translateX(calc(var(--uib-size) * 0.25)) scale(0.73684);
+    opacity: 0.65;
+  }
+}
+
+
+
+/* Add this CSS to your stylesheet */
+.main-transition {
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  max-height: 0; /* Start with max-height 0 */
+  opacity: 0; /* Start with opacity 0 */
+}
+
+.no-expand-transition {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+}
+
+.main-visible {
+  max-height: 20000px; /* Adjust max-height to fit content or set to a large number */
+  opacity: 1;
+}

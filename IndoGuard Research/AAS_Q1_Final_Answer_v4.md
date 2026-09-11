@@ -1,0 +1,9 @@
+# AAS Q1 Final Answer v4 - Course and Institution
+
+At Telkom's AI Center of Excellence, I help govern internal AI adoption. This work showed a hard limit: I can engineer platforms, but I need deeper NLP, evaluation, and ethics training to test whether Indonesian prompts and outputs leak data, support fraud, or produce unsafe answers. This matters in a high-risk environment: BSSN reported 26.7 million phishing activities in 2024, and OJK recorded IDR2.6 trillion in reported fraud losses. These are not AI-caused, but generative AI can scale similar abuse.
+
+I chose the Master of Artificial Intelligence at the University of Technology Sydney because its NLP sub-major, The Ethics of Data and AI, Technology Research Preparation, and Industry/Research Project match my goal to build IndoGuard, an Indonesian AI Safety Evaluation Framework. I need this structure to move from building useful AI systems to evaluating them rigorously and responsibly.
+
+UTS is my first choice because its research ecosystem fits the problem. I reviewed the Australian Artificial Intelligence Institute, which includes Text Mining and AI Privacy & Security. I also studied A/Prof Bo Liu's UTS seminar on the Security and Privacy of Generative Data, covering identity fraud, misinformation, privacy-preserving methods, and manipulation detection. These areas match IndoGuard's need to detect unsafe prompts, data leakage, and manipulation in Indonesian contexts. The Human Technology Institute adds the governance perspective so guardrails become accountable risk management, not censorship.
+
+To verify this option, I compared UTS and RMIT handbooks, checked subjects and project streams, reviewed UTS researcher pages and seminars, mapped them against AAS priorities and the Australia-Indonesia partnership plan, and studied Llama Guard, SEA-Guard, IndoSafety, and Australia's AI safety standard. RMIT is my second choice for applied deep learning and AI projects.

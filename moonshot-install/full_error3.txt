@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "D:\Work\PAM\SecurityAI\moonshot-install\test_cookbooks_env3.py", line 24, in <module>
+    api_get_all_cookbook()
+  File "D:\Work\PAM\SecurityAI\moonshot-install\venv_311\Lib\site-packages\moonshot\src\api\api_cookbook.py", line 164, in api_get_all_cookbook
+    _, cookbooks = Cookbook.get_available_items()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Work\PAM\SecurityAI\moonshot-install\venv_311\Lib\site-packages\moonshot\src\cookbooks\cookbook.py", line 250, in get_available_items
+    raise e
+  File "D:\Work\PAM\SecurityAI\moonshot-install\venv_311\Lib\site-packages\moonshot\src\cookbooks\cookbook.py", line 242, in get_available_items
+    cb_info = CookbookArguments(**Cookbook._read_cookbook(Path(cb).stem))
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Work\PAM\SecurityAI\moonshot-install\venv_311\Lib\site-packages\moonshot\src\cookbooks\cookbook.py", line 147, in _read_cookbook
+    Storage.read_object(EnvVariables.COOKBOOKS.name, cb_id, "json")
+  File "D:\Work\PAM\SecurityAI\moonshot-install\venv_311\Lib\site-packages\pydantic\validate_call_decorator.py", line 60, in wrapper_function
+    return validate_call_wrapper(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Work\PAM\SecurityAI\moonshot-install\venv_311\Lib\site-packages\pydantic\_internal\_validate_call.py", line 96, in __call__
+    res = self.__pydantic_validator__.validate_python(pydantic_core.ArgsKwargs(args, kwargs))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Work\PAM\SecurityAI\moonshot-install\venv_311\Lib\site-packages\moonshot\src\storage\storage.py", line 204, in read_object
+    raise RuntimeError(
+RuntimeError: Unable to get defined object module instance - None

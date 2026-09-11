@@ -1,0 +1,9 @@
+# AAS Q2 Final Answer v4 - Impact on Career, Life and Community
+
+This study will equip me to move from building AI platforms to leading responsible AI evaluation for Indonesian institutions. Today, AgentLab helps employees build AI workflows faster, while ModelHub helps route applications through approved internal or sovereign models. These platforms solve speed and model-access problems, but I need stronger academic training to add the next layer: Indonesian-language safety evaluation for prompts and outputs.
+
+Professionally, I will return to Telkom's AI Playground and AI Center of Excellence with deeper capability in NLP evaluation, AI ethics, and governance. My goal is to develop an Indonesian AI safety checker, inspired by systems such as Llama Guard, that reviews user instructions and AI answers before they are released, then flags privacy leakage, harmful instructions, misinformation risk, social-engineering support, or other unsafe content for human review.
+
+For Indonesian citizens and institutions, the impact is safer AI adoption. If SOEs and public-service teams use AI without local-language safety checks, they may expose sensitive data or release unsafe outputs. OJK's IDR2.6 trillion reported fraud losses show the wider public harm of digital abuse, even though these losses are not caused by AI alone. Generative AI can make such abuse faster and more convincing if institutions are not prepared.
+
+Personally, this study matters because I have seen how quickly AI can move from experiment to workplace use. I do not want Indonesian institutions to adopt AI only because it is fast or fashionable. I want to help build AI infrastructure that employees and citizens can trust because it is secure, locally evaluated, and accountable. Within three years, I also aim to train at least 500 practitioners in safe AI workflow practices.

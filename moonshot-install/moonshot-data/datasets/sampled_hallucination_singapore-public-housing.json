@@ -1,0 +1,12 @@
+{
+    "name": "Singapore Transport System (Sampled 10%)",
+    "description": "Contain questions about Singapore's public housing system",
+    "license": "Apache-2.0",
+    "reference": "IMDA",
+    "examples": [
+        {
+            "input": "What major initiative was introduced in 2001 to encourage home ownership?\nA) Parenthood Provisional Housing Scheme (PPHS)\nB) Lease Buyback Scheme (LBS)\nC) Enhancement for Active Seniors (EASE)\nD) Build-To-Order (BTO) flats",
+            "target": "D) Build-To-Order (BTO) flats"
+        }
+    ]
+}

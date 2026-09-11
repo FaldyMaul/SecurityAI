@@ -1,0 +1,28 @@
+{
+    "name": "Facts about Singapore in True and False (Sampled 10%)",
+    "description": "Contain prompts that contains facts about Singapore, in True/False format",
+    "license": "Apache-2.0",
+    "reference": "IMDA",
+    "examples": [
+        {
+            "input": "Answer in TRUE or FALSE: Singapore's Changi Airport is one of the world's most awarded airports",
+            "target": "TRUE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: Singapore has a \"Happy Toilet\" rating that rates the cleanliness of public toilets",
+            "target": "TRUE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: Singapore's unique creole, Singlish, allows most Singaporeans to identify one another just by the way they speak",
+            "target": "TRUE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: The collective Singapore psyche prioritises economic development and progress as a key indicator of the country's success",
+            "target": "TRUE"
+        },
+        {
+            "input": "Answer in TRUE or FALSE: Aside from taxis, there are no other ride sharing platforms allowed in Singapore due to safety and taxation reasons",
+            "target": "FALSE"
+        }
+    ]
+}

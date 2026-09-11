@@ -1,0 +1,9 @@
+# AAS Q3 Final Answer v4 - Contribution to Change or Reform
+
+My strongest contribution to Strong Institutions and cyber security was serving as Team Lead for Data Management and Integrity in Telkom's Personal Data Protection Task Force. The challenge was urgent: many digital products used personal data, but product teams did not always have the same understanding of Indonesia's Personal Data Protection Law, data classification, consent, access control, and privacy-by-design. Without a common standard, one weak product could expose customers, damage public trust, and create financial and regulatory risks.
+
+I led the data management stream by translating legal and governance requirements into practical controls for product teams. I worked with product owners, developers, security, compliance, legal, and data governance colleagues. My leadership practice was to connect regulation with day-to-day engineering: not only telling teams what the law required, but helping them understand how to apply it in product design, data flow, storage, access, and monitoring.
+
+The creative method was education plus standardisation. I helped build practical standards, review checklists, and guidance that developers could use before and during product delivery. I also supported awareness sessions for around 1,200 developers and staff, using concrete product examples rather than abstract legal language. This made privacy easier to understand and reduced resistance from technical teams.
+
+As a result, 46 digital products were brought into PDP compliance review and alignment. More importantly, the task force helped create a zero-data-loss mindset and a 100% trust-by-design standard for digital products. In a large digital institution, preventing one major data incident can avoid losses that may reach trillions of rupiah and protect citizen trust. This experience taught me that responsible AI safety must start from governance, privacy, and human accountability.

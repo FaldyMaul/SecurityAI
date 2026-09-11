@@ -1,0 +1,1 @@
+{"detail":"Failed to retrieve cookbooks: [ServiceException] UnexpectedError in get_all_cookbooks - An unexpected error occurred: No module named 'torchvision'"}

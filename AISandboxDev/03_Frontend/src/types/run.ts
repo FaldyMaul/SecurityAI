@@ -8,6 +8,7 @@ export type RunStatus =
 export type SeverityLevel = 'critical' | 'high' | 'medium' | 'low' | 'info';
 export type Grade = 'A' | 'B' | 'C' | 'D' | 'E';
 export type Verdict = 'pass' | 'fail' | 'warning';
+export type AssessmentModuleId = 'adversarial' | 'safety' | 'privacy' | 'hallucination';
 
 export interface Run {
   id: string;
@@ -21,6 +22,9 @@ export interface Run {
   duration?: number;
   progress?: RunProgress;
   findings?: FindingCategory[];
+  selectedCategories?: AssessmentModuleId[];
+  selectedRecipes?: string[];
+  recipeResults?: Record<string, SelectedRecipeResult>;
   error?: RunError;
   createdAt: string;
 }
@@ -37,13 +41,22 @@ export interface RunProgress {
   percentComplete: number;
 }
 
-export interface ScoreBreakdown {
+export interface ModuleScoreBreakdown {
+  adversarial: number;
+  safety: number;
+  privacy: number;
+  hallucination: number;
+}
+
+export interface LegacyScoreBreakdown {
   trust: number;
   security: number;
   privacy: number;
   readiness: number;
   compliance: number;
 }
+
+export type ScoreBreakdown = ModuleScoreBreakdown | LegacyScoreBreakdown;
 
 export interface FindingCategory {
   category: string;
@@ -133,4 +146,54 @@ export interface PromptResult {
   verdict: Verdict;
   evaluation: string;
   refusal: boolean;
+}
+
+export interface AssessmentRecipeDefinition {
+  id: string;
+  name: string;
+  description: string;
+  method: string;
+  dataset: string;
+  source: 'Standard' | 'Indonesia';
+  isIndonesiaSpecific?: boolean;
+}
+
+export interface AssessmentModuleDefinition {
+  id: AssessmentModuleId;
+  name: string;
+  description: string;
+  estimatedTests: number;
+  estimatedMinutes: [number, number];
+  colorVar: string;
+  methodology: string;
+  recipes: AssessmentRecipeDefinition[];
+}
+
+export interface RecipeFindingSummary {
+  id: string;
+  severity: SeverityLevel;
+  description: string;
+  verdict?: Verdict;
+  testId?: string;
+  analysis?: string;
+  prompt?: string;
+  response?: string;
+}
+
+export interface SelectedRecipeResult {
+  recipeId: string;
+  categoryId: AssessmentModuleId;
+  categoryName: string;
+  recipeName: string;
+  method: string;
+  dataset: string;
+  score: number;
+  grade: Grade;
+  status: 'passed' | 'failed' | 'warning';
+  totalTests: number;
+  passed: number;
+  failed: number;
+  critical: number;
+  findings: RecipeFindingSummary[];
+  recommendations: string[];
 }

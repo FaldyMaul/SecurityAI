@@ -1,0 +1,9 @@
+# AAS Q1 Final Answer v2 - Course and Institution
+
+When developing the National AI Sandbox at Telkom Indonesia, I saw a gap that worried me: global AI guardrails can miss unsafe prompts, phishing scripts, or data-leakage attempts when they are written in informal Bahasa Indonesia, mixed English-Indonesian, or local expressions. Building AI infrastructure is not enough; Indonesia must be able to test whether AI is safe in daily language.
+
+This is urgent because AI-scaled fraud could affect citizens before Indonesian institutions have reliable local-language safety evaluation tools. BSSN reported 26.7 million phishing activities in 2024, while OJK recorded IDR2.6 trillion in reported fraud losses. IndoSafety and SEA-Guard show that regional AI safety research is growing, but local evaluation remains an open academic and practical challenge.
+
+I chose UTS's Master of Artificial Intelligence because its NLP sub-major, The Ethics of Data and AI, Technology Research Preparation, and Industry/Research Project directly fit my goal of building an Indonesian AI safety evaluation framework. UTS's hands-on project approach and Australian research culture will help me test the framework with academic discipline, not only engineering instinct. After comparing UTS and RMIT, I placed UTS first because it links NLP, ethics, and applied project work more directly to my goal; RMIT remains my second choice for its applied deep learning and AI project structure.
+
+To choose my study option, I reviewed the UTS and RMIT course structures, AAS priority fields, the Australia-Indonesia Development Partnership Plan, and AI safety references including Llama Guard, SEA-Guard, and IndoSafety. I already lead AI platform and sandbox work, but I need rigorous training in NLP safety, algorithmic auditing, and governance to help secure AI systems before they affect Indonesian citizens.

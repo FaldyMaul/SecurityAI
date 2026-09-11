@@ -46,9 +46,12 @@
     "published": "Dipublikasikan"
   },
   "score": {
+    "adversarial": "Adversarial Robustness",
+    "safety": "Safety & Alignment",
+    "privacy": "Privacy",
+    "hallucination": "Hallucination & Truthfulness",
     "trust": "Kepercayaan",
     "security": "Keamanan",
-    "privacy": "Privasi",
     "readiness": "Kesiapan",
     "compliance": "Kepatuhan",
     "overall": "Skor Keseluruhan"

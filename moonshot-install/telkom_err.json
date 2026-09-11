@@ -1,0 +1,1 @@
+[{"type":"model_type","loc":[0],"msg":"Input should be a valid dictionary or instance of ConnectorEndpointArguments","input":"telkom-ai","ctx":{"class_name":"ConnectorEndpointArguments"},"url":"https://errors.pydantic.dev/2.8/v/model_type"}]

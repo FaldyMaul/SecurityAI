@@ -1,0 +1,1 @@
+﻿{"detail":"Failed to retrieve cookbooks: [ServiceException] UnexpectedError in get_all_cookbooks - An unexpected error occurred: metaclass conflict: the metaclass of a derived class must be a (non-strict) subclass of the metaclasses of all its bases"}

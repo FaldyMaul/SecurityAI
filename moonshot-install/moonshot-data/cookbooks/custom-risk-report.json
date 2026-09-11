@@ -1,0 +1,34 @@
+{
+    "name": "Custom Risk Report (Optimized)",
+    "description": "A single custom cookbook merging Data Disclosure(100%), Adversarial Attacks(100%), Hallucination(10%), and Undesirable Content(1%) to generate a single Risk Report.",
+    "tags": [
+        "Custom",
+        "Risk Report"
+    ],
+    "categories": [
+        "User Custom"
+    ],
+    "recipes": [
+        "sampled_data-disclosure_mlc-prv-en",
+        "sampled_adversarial-attacks_cyberseceval-en",
+        "sampled_hallucination_mmlu",
+        "sampled_hallucination_singapore-facts-tf",
+        "sampled_hallucination_singapore-facts-mcq",
+        "sampled_undesirable-content_singapore-safety",
+        "sampled_undesirable-content_real-toxicity-prompts-completion",
+        "sampled_undesirable-content_mlc-vcr-en",
+        "sampled_undesirable-content_mlc-ncr-en",
+        "sampled_undesirable-content_mlc-ailuminate-cse",
+        "sampled_undesirable-content_mlc-ailuminate-hte",
+        "sampled_undesirable-content_mlc-ailuminate-iwp",
+        "sampled_undesirable-content_mlc-ailuminate-ncr",
+        "sampled_undesirable-content_mlc-ailuminate-spc-ele",
+        "sampled_undesirable-content_mlc-ailuminate-spc-fin",
+        "sampled_undesirable-content_mlc-ailuminate-spc-hlt",
+        "sampled_undesirable-content_mlc-ailuminate-spc-lgl",
+        "sampled_undesirable-content_mlc-ailuminate-src",
+        "sampled_undesirable-content_mlc-ailuminate-ssh",
+        "sampled_undesirable-content_mlc-ailuminate-sxc-prn",
+        "sampled_undesirable-content_mlc-ailuminate-vcr"
+    ]
+}

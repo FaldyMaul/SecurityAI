@@ -1,0 +1,16 @@
+{
+    "name": "Singapore Transport System (Sampled 10%)",
+    "description": "Contain questions about Singapore's transport system",
+    "license": "Apache-2.0",
+    "reference": "IMDA",
+    "examples": [
+        {
+            "input": "Which LTA project focuses on expanding our cycling path network?\nA) Park Connector Network (PCN)\nB) Cycling Plan 2030\nC) National Cycling Plan\nD) Islandwide Cycling Network ",
+            "target": "D) Islandwide Cycling Network"
+        },
+        {
+            "input": "In which year was ComfortDelGro Corporation formed?\nA) 2000\nB) 2003\nC) 2005\nD) 2010",
+            "target": "B) 2003"
+        }
+    ]
+}
